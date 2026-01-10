@@ -181,6 +181,38 @@ const CheckoutPage = () => {
                 <h2 className="text-xl font-semibold text-accent mb-4">
                   Delivery Address <span className="text-red-500">*</span>
                 </h2>
+                
+                {/* Saved Addresses Dropdown */}
+                {savedAddresses.length > 0 && (
+                  <div className="mb-4">
+                    <label className="block text-sm font-medium text-accent mb-2">
+                      Select from saved addresses
+                    </label>
+                    <select
+                      data-testid="saved-address-select"
+                      onChange={(e) => {
+                        if (e.target.value) {
+                          const selected = savedAddresses.find(a => a.id === e.target.value);
+                          if (selected) {
+                            setDeliveryAddress(`${selected.full_address}, ${selected.city} ${selected.postal_code}`);
+                          }
+                        }
+                      }}
+                      className="w-full px-4 py-3 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                    >
+                      <option value="">-- Select an address --</option>
+                      {savedAddresses.map((addr) => (
+                        <option key={addr.id} value={addr.id}>
+                          {addr.is_default ? '(Default) ' : ''}{addr.full_address}, {addr.city}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
+                
+                <label className="block text-sm font-medium text-accent mb-2">
+                  Or enter a new address
+                </label>
                 <textarea
                   data-testid="delivery-address-input"
                   value={deliveryAddress}
