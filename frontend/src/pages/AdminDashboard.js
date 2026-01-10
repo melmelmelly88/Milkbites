@@ -368,6 +368,18 @@ const AdminDashboard = () => {
                         </div>
                       </div>
 
+                      {/* Customer Info */}
+                      <div className="grid grid-cols-2 gap-4 text-sm mb-2">
+                        <div>
+                          <span className="text-muted-foreground">Customer:</span>
+                          <span className="font-medium ml-2">{order.customer_name}</span>
+                        </div>
+                        <div>
+                          <span className="text-muted-foreground">WhatsApp:</span>
+                          <span className="font-medium ml-2">{order.customer_whatsapp}</span>
+                        </div>
+                      </div>
+
                       <div className="grid grid-cols-2 gap-4 text-sm">
                         <div>
                           <span className="text-muted-foreground">Total:</span>
@@ -381,8 +393,8 @@ const AdminDashboard = () => {
                         </div>
                       </div>
 
-                      {order.payment_proof && (
-                        <div className="mt-4 flex items-center gap-3">
+                      <div className="mt-4 flex items-center gap-3 flex-wrap">
+                        {order.payment_proof && (
                           <button
                             onClick={() => setShowPaymentProof(order.payment_proof)}
                             data-testid={`view-payment-proof-${order.id}`}
@@ -391,8 +403,18 @@ const AdminDashboard = () => {
                             <Eye size={16} />
                             View Payment Proof
                           </button>
-                        </div>
-                      )}
+                        )}
+                        {order.customer_whatsapp && (
+                          <button
+                            onClick={() => handleWhatsAppNotify(order)}
+                            data-testid={`whatsapp-notify-${order.id}`}
+                            className="flex items-center gap-2 bg-green-500 text-white px-3 py-1.5 rounded-lg hover:bg-green-600 text-sm font-medium transition-colors"
+                          >
+                            <Phone size={14} />
+                            WhatsApp
+                          </button>
+                        )}
+                      </div>
                       
                       <div className="mt-4 pt-4 border-t border-border/50">
                         <button
