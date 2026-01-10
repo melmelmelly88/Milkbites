@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import { Package, ShoppingBag, Settings, Download, LogOut, Plus, Edit, Trash2, Eye, X, MapPin, Calendar, User, Phone } from 'lucide-react';
+import { Package, ShoppingBag, Settings, Download, LogOut, Plus, Edit, Trash2, Eye, X, MapPin, Calendar, User, Phone, Upload, Image } from 'lucide-react';
 import ProductModal from '../components/ProductModal';
 import DiscountModal from '../components/DiscountModal';
 
@@ -21,6 +21,18 @@ const AdminDashboard = () => {
   const [editingDiscount, setEditingDiscount] = useState(null);
   const [showPaymentProof, setShowPaymentProof] = useState(null);
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [siteSettings, setSiteSettings] = useState({
+    hero_image: '',
+    hero_title: 'Milkbites',
+    hero_subtitle: 'by Keka Cakery',
+    hero_tagline: 'Premium Baked Goods for Your Celebration',
+    hero_badge: 'Eid Special Collection',
+    footer_description: 'Premium baked goods crafted with love',
+    footer_contact_1: 'Melly: 081294607788',
+    footer_contact_2: 'Fari: 081386163292',
+    footer_pickup_location: 'Cilandak & Menara Mandiri'
+  });
+  const [savingSettings, setSavingSettings] = useState(false);
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
 
