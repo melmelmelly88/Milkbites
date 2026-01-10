@@ -421,18 +421,28 @@ async def add_to_cart(item: CartItemAdd, current_user = Depends(get_current_user
     
     # Calculate price with customization
     price = product['price']
+    
+    # Products excluded from Kaastengel additional fee
+    kaastengel_excluded_products = [
+        'Hampers Double Cookies',
+        'Hampers Babka & Cookies',
+        'Hampers 4 Cookies'
+    ]
+    
     if item.customization and product.get('requires_customization'):
-        # Handle new format with variant_types
-        if item.customization.get('variant_types'):
-            # Count Kaastengel from cookies type
-            cookies_variants = item.customization['variant_types'].get('cookies', [])
-            kaastengel_count = sum(1 for v in cookies_variants if 'Kaastengel' in v)
-            price += kaastengel_count * 10000
-        # Handle old format with single variants list
-        elif item.customization.get('variants'):
-            variants = item.customization['variants'] if isinstance(item.customization['variants'], list) else [item.customization['variants']]
-            kaastengel_count = sum(1 for v in variants if 'Kaastengel' in v)
-            price += kaastengel_count * 10000
+        # Only add Kaastengel fee if product is not in excluded list
+        if product['name'] not in kaastengel_excluded_products:
+            # Handle new format with variant_types
+            if item.customization.get('variant_types'):
+                # Count Kaastengel from cookies type
+                cookies_variants = item.customization['variant_types'].get('cookies', [])
+                kaastengel_count = sum(1 for v in cookies_variants if 'Kaastengel' in v)
+                price += kaastengel_count * 10000
+            # Handle old format with single variants list
+            elif item.customization.get('variants'):
+                variants = item.customization['variants'] if isinstance(item.customization['variants'], list) else [item.customization['variants']]
+                kaastengel_count = sum(1 for v in variants if 'Kaastengel' in v)
+                price += kaastengel_count * 10000
     
     cart_item = CartItem(
         product_id=item.product_id,
