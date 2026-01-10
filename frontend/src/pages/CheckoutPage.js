@@ -127,7 +127,7 @@ const CheckoutPage = () => {
           <div className="lg:col-span-2 space-y-6">
             {/* Delivery Type */}
             <div className="bg-white rounded-xl p-6 shadow-sm border border-border/50">
-              <h2 className="text-xl font-semibold text-accent mb-4">Tipe Pengiriman</h2>
+              <h2 className="text-xl font-semibold text-accent mb-4">Delivery Type</h2>
               <div className="grid grid-cols-2 gap-4">
                 <button
                   data-testid="delivery-option"
@@ -159,24 +159,24 @@ const CheckoutPage = () => {
             {/* Delivery Address or Pickup Location */}
             {deliveryType === 'delivery' ? (
               <div className="bg-white rounded-xl p-6 shadow-sm border border-border/50">
-                <h2 className="text-xl font-semibold text-accent mb-4">Alamat Pengiriman</h2>
+                <h2 className="text-xl font-semibold text-accent mb-4">Delivery Address</h2>
                 <textarea
                   data-testid="delivery-address-input"
                   value={deliveryAddress}
                   onChange={(e) => setDeliveryAddress(e.target.value)}
                   className="w-full px-4 py-3 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                   rows="4"
-                  placeholder="Masukkan alamat lengkap (JABODETABEK only)"
+                  placeholder="Enter full address (JABODETABEK only)"
                   required
                 />
               </div>
             ) : (
               <div className="bg-white rounded-xl p-6 shadow-sm border border-border/50">
-                <h2 className="text-xl font-semibold text-accent mb-4">Lokasi & Tanggal Pickup</h2>
+                <h2 className="text-xl font-semibold text-accent mb-4">Pickup Location & Date</h2>
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-accent mb-2">
-                      Lokasi Pickup
+                      Pickup Location
                     </label>
                     <select
                       data-testid="pickup-location-select"
@@ -190,7 +190,7 @@ const CheckoutPage = () => {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-accent mb-2">
-                      Tanggal Pickup
+                      Pickup Date
                     </label>
                     <input
                       data-testid="pickup-date-input"
@@ -207,7 +207,7 @@ const CheckoutPage = () => {
 
             {/* Discount Code */}
             <div className="bg-white rounded-xl p-6 shadow-sm border border-border/50">
-              <h2 className="text-xl font-semibold text-accent mb-4">Kode Diskon</h2>
+              <h2 className="text-xl font-semibold text-accent mb-4">Discount Code</h2>
               <div className="flex gap-2">
                 <input
                   data-testid="discount-code-input"
@@ -215,28 +215,28 @@ const CheckoutPage = () => {
                   value={discountCode}
                   onChange={(e) => setDiscountCode(e.target.value.toUpperCase())}
                   className="flex-1 px-4 py-3 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                  placeholder="Masukkan kode (e.g., EID2025)"
+                  placeholder="Enter code (e.g., EID2025)"
                 />
                 <button
                   data-testid="apply-discount-button"
                   onClick={handleApplyDiscount}
                   className="px-6 py-3 bg-secondary text-secondary-foreground rounded-lg hover:bg-secondary/80 transition-colors"
                 >
-                  Terapkan
+                  Apply
                 </button>
               </div>
             </div>
 
             {/* Notes */}
             <div className="bg-white rounded-xl p-6 shadow-sm border border-border/50">
-              <h2 className="text-xl font-semibold text-accent mb-4">Catatan Pesanan</h2>
+              <h2 className="text-xl font-semibold text-accent mb-4">Order Notes</h2>
               <textarea
                 data-testid="order-notes-input"
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
                 className="w-full px-4 py-3 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                 rows="3"
-                placeholder="Catatan khusus untuk pesanan Anda (opsional)"
+                placeholder="Special notes for your order (optional)"
               />
             </div>
           </div>
@@ -244,7 +244,7 @@ const CheckoutPage = () => {
           {/* Order Summary */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-xl p-6 shadow-lg border border-border/50 sticky top-24">
-              <h2 className="text-2xl font-bold text-accent mb-6">Ringkasan Pesanan</h2>
+              <h2 className="text-2xl font-bold text-accent mb-6">Order Summary</h2>
               
               <div className="space-y-3 mb-6">
                 <div className="flex justify-between text-muted-foreground">
@@ -252,12 +252,12 @@ const CheckoutPage = () => {
                   <span>Rp {calculateSubtotal().toLocaleString('id-ID')}</span>
                 </div>
                 <div className="flex justify-between text-muted-foreground">
-                  <span>Ongkir</span>
+                  <span>Shipping</span>
                   <span>Rp {getShippingFee().toLocaleString('id-ID')}</span>
                 </div>
                 {discountAmount > 0 && (
                   <div className="flex justify-between text-green-600">
-                    <span>Diskon</span>
+                    <span>Discount</span>
                     <span>- Rp {discountAmount.toLocaleString('id-ID')}</span>
                   </div>
                 )}
@@ -275,7 +275,7 @@ const CheckoutPage = () => {
                 disabled={loading}
                 className="w-full bg-primary text-white py-3 rounded-full hover:bg-primary/90 transition-all disabled:opacity-50 font-semibold"
               >
-                {loading ? 'Memproses...' : 'Buat Pesanan'}
+                {loading ? 'Processing...' : 'Place Order'}
               </button>
             </div>
           </div>
