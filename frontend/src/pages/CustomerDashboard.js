@@ -113,7 +113,7 @@ const CustomerDashboard = () => {
             {orders.length === 0 ? (
               <div className="bg-white rounded-xl p-12 text-center shadow-sm">
                 <Package className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-                <p className="text-xl text-muted-foreground">Belum ada pesanan</p>
+                <p className="text-xl text-muted-foreground">No orders yet</p>
               </div>
             ) : (
               orders.map((order) => (
