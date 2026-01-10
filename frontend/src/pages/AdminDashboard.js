@@ -306,6 +306,17 @@ const AdminDashboard = () => {
                           </button>
                         </div>
                       )}
+                      
+                      <div className="mt-4 pt-4 border-t border-border/50">
+                        <button
+                          onClick={() => setSelectedOrder(order)}
+                          data-testid={`view-order-details-${order.id}`}
+                          className="flex items-center gap-2 bg-sky-100 text-sky-700 px-4 py-2 rounded-lg hover:bg-sky-200 text-sm font-medium transition-colors"
+                        >
+                          <Eye size={16} />
+                          View Order Details
+                        </button>
+                      </div>
                     </div>
                   ))}
                 </div>
