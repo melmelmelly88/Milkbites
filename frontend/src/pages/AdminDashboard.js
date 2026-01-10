@@ -505,6 +505,148 @@ const AdminDashboard = () => {
           </div>
         </div>
       )}
+
+      {/* Order Details Modal */}
+      {selectedOrder && (
+        <div
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          onClick={() => setSelectedOrder(null)}
+        >
+          <div 
+            className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="sticky top-0 bg-white border-b border-border px-6 py-4 flex justify-between items-center">
+              <h2 className="text-2xl font-bold text-accent">
+                Order #{selectedOrder.order_number}
+              </h2>
+              <button
+                onClick={() => setSelectedOrder(null)}
+                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+              >
+                <X size={24} />
+              </button>
+            </div>
+            
+            <div className="p-6 space-y-6">
+              {/* Order Status */}
+              <div className="flex items-center justify-between">
+                <span className="text-muted-foreground">Status:</span>
+                <span className={`px-4 py-2 rounded-full text-sm font-medium ${getStatusColor(selectedOrder.status)}`}>
+                  {selectedOrder.status.charAt(0).toUpperCase() + selectedOrder.status.slice(1)}
+                </span>
+              </div>
+
+              {/* Customer Info */}
+              <div className="bg-sky-50 rounded-xl p-4">
+                <h3 className="font-semibold text-accent mb-3 flex items-center gap-2">
+                  <User size={18} />
+                  Customer Information
+                </h3>
+                <div className="space-y-2 text-sm">
+                  <p><span className="text-muted-foreground">Name:</span> <span className="font-medium">{selectedOrder.customer_name || 'N/A'}</span></p>
+                  <p className="flex items-center gap-2">
+                    <Phone size={14} className="text-muted-foreground" />
+                    <span className="font-medium">{selectedOrder.customer_whatsapp || 'N/A'}</span>
+                  </p>
+                </div>
+              </div>
+
+              {/* Delivery Info */}
+              <div className="bg-gray-50 rounded-xl p-4">
+                <h3 className="font-semibold text-accent mb-3 flex items-center gap-2">
+                  {selectedOrder.delivery_type === 'delivery' ? <MapPin size={18} /> : <Calendar size={18} />}
+                  {selectedOrder.delivery_type === 'delivery' ? 'Delivery Address' : 'Pickup Details'}
+                </h3>
+                {selectedOrder.delivery_type === 'delivery' ? (
+                  <p className="text-sm">{selectedOrder.delivery_address || 'No address provided'}</p>
+                ) : (
+                  <div className="space-y-2 text-sm">
+                    <p><span className="text-muted-foreground">Location:</span> <span className="font-medium">{selectedOrder.pickup_location || 'N/A'}</span></p>
+                    <p><span className="text-muted-foreground">Date:</span> <span className="font-medium">{selectedOrder.pickup_date || 'N/A'}</span></p>
+                  </div>
+                )}
+              </div>
+
+              {/* Order Items */}
+              <div>
+                <h3 className="font-semibold text-accent mb-3">Order Items</h3>
+                <div className="space-y-3">
+                  {selectedOrder.items?.map((item, index) => (
+                    <div key={index} className="flex justify-between items-start bg-gray-50 rounded-lg p-3">
+                      <div className="flex-1">
+                        <p className="font-medium">{item.product_id}</p>
+                        <p className="text-sm text-muted-foreground">Qty: {item.quantity}</p>
+                        {item.customization && (
+                          <div className="text-xs text-muted-foreground mt-1">
+                            {item.customization.selected_variants && (
+                              <p>Variants: {item.customization.selected_variants.join(', ')}</p>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                      <p className="font-semibold text-primary">
+                        Rp {(item.price * item.quantity).toLocaleString('id-ID')}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Order Notes */}
+              {selectedOrder.notes && (
+                <div className="bg-yellow-50 rounded-xl p-4">
+                  <h3 className="font-semibold text-accent mb-2">Notes</h3>
+                  <p className="text-sm">{selectedOrder.notes}</p>
+                </div>
+              )}
+
+              {/* Order Summary */}
+              <div className="border-t border-border pt-4 space-y-2">
+                <div className="flex justify-between text-sm">
+                  <span className="text-muted-foreground">Subtotal</span>
+                  <span>Rp {selectedOrder.total_amount?.toLocaleString('id-ID')}</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-muted-foreground">Shipping</span>
+                  <span>Rp {selectedOrder.shipping_fee?.toLocaleString('id-ID')}</span>
+                </div>
+                {selectedOrder.discount_amount > 0 && (
+                  <div className="flex justify-between text-sm text-green-600">
+                    <span>Discount</span>
+                    <span>- Rp {selectedOrder.discount_amount?.toLocaleString('id-ID')}</span>
+                  </div>
+                )}
+                <div className="flex justify-between font-bold text-lg pt-2 border-t border-border">
+                  <span>Total</span>
+                  <span className="text-primary">Rp {selectedOrder.final_amount?.toLocaleString('id-ID')}</span>
+                </div>
+              </div>
+
+              {/* Payment Proof */}
+              {selectedOrder.payment_proof && (
+                <div>
+                  <h3 className="font-semibold text-accent mb-3">Payment Proof</h3>
+                  <img 
+                    src={selectedOrder.payment_proof} 
+                    alt="Payment Proof" 
+                    className="w-full max-h-64 object-contain rounded-lg border border-border cursor-pointer"
+                    onClick={() => setShowPaymentProof(selectedOrder.payment_proof)}
+                  />
+                </div>
+              )}
+
+              {/* Order Date */}
+              <p className="text-center text-sm text-muted-foreground">
+                Ordered on: {new Date(selectedOrder.created_at).toLocaleString('en-US', {
+                  dateStyle: 'medium',
+                  timeStyle: 'short'
+                })}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
