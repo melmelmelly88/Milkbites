@@ -45,6 +45,7 @@ function App() {
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
         </Routes>
+        <ThemeCustomizer />
       </BrowserRouter>
       <Toaster position="top-right" />
     </div>
