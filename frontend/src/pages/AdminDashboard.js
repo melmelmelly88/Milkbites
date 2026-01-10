@@ -241,7 +241,7 @@ const AdminDashboard = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Tabs */}
-        <div className="bg-white rounded-xl shadow-sm p-2 mb-8 inline-flex gap-2">
+        <div className="bg-white rounded-xl shadow-sm p-2 mb-8 inline-flex gap-2 flex-wrap">
           <button
             data-testid="admin-orders-tab"
             onClick={() => setActiveTab('orders')}
@@ -270,7 +270,17 @@ const AdminDashboard = () => {
             }`}
           >
             <Settings className="inline-block w-5 h-5 mr-2" />
-            Discounts & Promos
+            Discounts
+          </button>
+          <button
+            data-testid="admin-settings-tab"
+            onClick={() => setActiveTab('settings')}
+            className={`px-6 py-3 rounded-lg font-medium transition-all ${
+              activeTab === 'settings' ? 'bg-primary text-white' : 'text-accent hover:bg-secondary/50'
+            }`}
+          >
+            <Image className="inline-block w-5 h-5 mr-2" />
+            Site Settings
           </button>
         </div>
 
