@@ -80,16 +80,16 @@ const HomePage = () => {
 
       {/* Category Tabs */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
-        <div className="bg-white rounded-2xl shadow-lg p-2 md:p-3 flex gap-2 overflow-x-auto">
+        <div className="bg-gradient-to-r from-green-50 to-yellow-50 rounded-2xl shadow-xl p-2 md:p-3 flex gap-2 overflow-x-auto border-2 border-yellow-200/50">
           {categories.map((category) => (
             <button
               key={category}
               data-testid={`tab-${category.toLowerCase()}`}
               onClick={() => setActiveCategory(category)}
-              className={`px-4 md:px-6 py-2 md:py-3 rounded-xl font-medium whitespace-nowrap transition-all text-sm md:text-base ${
+              className={`px-4 md:px-6 py-2 md:py-3 rounded-xl font-semibold whitespace-nowrap transition-all text-sm md:text-base ${
                 activeCategory === category
-                  ? 'bg-primary text-white shadow-md'
-                  : 'text-accent hover:bg-secondary/50'
+                  ? 'bg-gradient-to-r from-green-500 to-green-600 text-white shadow-lg transform scale-105'
+                  : 'text-amber-800 hover:bg-white/60 hover:shadow-md'
               }`}
             >
               {category}
