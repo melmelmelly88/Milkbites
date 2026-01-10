@@ -63,9 +63,10 @@ const HomePage = () => {
         />
         <div className="absolute inset-0 bg-gradient-to-b from-[#6d8fa9]/80 to-[#5fc1d7]/60 flex items-center justify-center">
           <div className="text-center text-white px-4">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 md:mb-4 drop-shadow-lg">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 md:mb-3 drop-shadow-lg">
               Milkbites
             </h1>
+            <p className="text-sm md:text-base text-white/90 mb-2 md:mb-3">by Keka Cakery</p>
             <p className="text-base md:text-lg lg:text-xl font-medium drop-shadow-md">Premium Baked Goods for Your Celebration</p>
             <p className="text-xs md:text-sm text-white/90 mt-2">Eid Special Collection</p>
           </div>
