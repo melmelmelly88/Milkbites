@@ -192,20 +192,73 @@ const ProductModal = ({ show, onClose, product, onSave }) => {
 
           <div>
             <label className="block text-sm font-medium text-accent mb-2">
-              Image URL *
+              Product Image *
             </label>
-            <input
-              data-testid="product-image-input"
-              type="url"
-              name="image_url"
-              value={formData.image_url}
-              onChange={handleChange}
-              className="w-full px-4 py-3 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-              placeholder="https://example.com/image.jpg"
-              required
-            />
+            
+            {/* Image Mode Toggle */}
+            <div className="flex gap-2 mb-3">
+              <button
+                type="button"
+                onClick={() => setImageMode('url')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                  imageMode === 'url' 
+                    ? 'bg-sky-500 text-white' 
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                }`}
+              >
+                <LinkIcon size={16} />
+                URL
+              </button>
+              <button
+                type="button"
+                onClick={() => setImageMode('upload')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                  imageMode === 'upload' 
+                    ? 'bg-sky-500 text-white' 
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                }`}
+              >
+                <Upload size={16} />
+                Upload
+              </button>
+            </div>
+
+            {imageMode === 'url' ? (
+              <input
+                data-testid="product-image-input"
+                type="url"
+                name="image_url"
+                value={formData.image_url.startsWith('data:') ? '' : formData.image_url}
+                onChange={handleChange}
+                className="w-full px-4 py-3 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                placeholder="https://example.com/image.jpg"
+              />
+            ) : (
+              <div className="border-2 border-dashed border-input rounded-lg p-6 text-center hover:border-primary transition-colors">
+                <input
+                  data-testid="product-image-upload"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  className="hidden"
+                  id="image-upload"
+                  disabled={uploading}
+                />
+                <label htmlFor="image-upload" className="cursor-pointer">
+                  <Upload className="w-10 h-10 text-gray-400 mx-auto mb-2" />
+                  <p className="text-sm text-muted-foreground">
+                    {uploading ? 'Uploading...' : 'Click to upload image'}
+                  </p>
+                  <p className="text-xs text-gray-400 mt-1">
+                    JPG, PNG, WEBP, GIF (Max 5MB)
+                  </p>
+                </label>
+              </div>
+            )}
+
             {formData.image_url && (
-              <div className="mt-2">
+              <div className="mt-3">
+                <p className="text-sm text-muted-foreground mb-2">Preview:</p>
                 <img
                   src={formData.image_url}
                   alt="Preview"
