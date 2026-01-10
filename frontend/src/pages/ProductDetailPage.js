@@ -44,18 +44,38 @@ const ProductDetailPage = () => {
 
     // Validate customization
     if (product.requires_customization && product.customization_options) {
-      const requiredCount = product.customization_options.required_count || 1;
-      if (selectedVariants.length !== requiredCount) {
-        toast.error(`Pilih ${requiredCount} varian`);
-        return;
+      // Check if product has variant_types (new format)
+      if (product.customization_options.variant_types) {
+        const variantTypes = product.customization_options.variant_types;
+        for (const [typeName, typeConfig] of Object.entries(variantTypes)) {
+          const selectedCount = selectedVariantsByType[typeName]?.length || 0;
+          if (selectedCount !== typeConfig.required_count) {
+            toast.error(`Pilih ${typeConfig.required_count} ${typeConfig.label}`);
+            return;
+          }
+        }
+      } else {
+        // Old format - single variant list
+        const requiredCount = product.customization_options.required_count || 1;
+        if (selectedVariants.length !== requiredCount) {
+          toast.error(`Pilih ${requiredCount} varian`);
+          return;
+        }
       }
     }
 
     setAdding(true);
     try {
-      const customization = product.requires_customization
-        ? { variants: selectedVariants }
-        : null;
+      let customization = null;
+      if (product.requires_customization) {
+        if (product.customization_options.variant_types) {
+          // New format with variant types
+          customization = { variant_types: selectedVariantsByType };
+        } else {
+          // Old format
+          customization = { variants: selectedVariants };
+        }
+      }
 
       await axios.post(
         `${API}/cart/add`,
