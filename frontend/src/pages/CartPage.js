@@ -110,14 +110,14 @@ const CartPage = () => {
                       <div className="flex-1">
                         <h3 className="text-lg font-semibold text-accent mb-2">{product.name}</h3>
                         {item.customization && item.customization.variants && (
-                          <p className="text-sm text-muted-foreground mb-2">
-                            Varian: {Array.isArray(item.customization.variants) ? item.customization.variants.join(', ') : item.customization.variants}
+                          <p className="text-xs md:text-sm text-muted-foreground mb-2">
+                            Variants: {Array.isArray(item.customization.variants) ? item.customization.variants.join(', ') : item.customization.variants}
                           </p>
                         )}
                         <div className="flex items-center justify-between">
                           <div>
-                            <p className="text-sm text-muted-foreground">Jumlah: {item.quantity}</p>
-                            <p className="text-lg font-bold text-primary mt-1">
+                            <p className="text-xs md:text-sm text-muted-foreground">Quantity: {item.quantity}</p>
+                            <p className="text-base md:text-lg font-bold text-primary mt-1">
                               Rp {(item.price * item.quantity).toLocaleString('id-ID')}
                             </p>
                           </div>
