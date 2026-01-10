@@ -47,7 +47,7 @@ const LoginPage = () => {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label className="block text-sm font-medium text-accent mb-2">
-                Nomor WhatsApp
+                WhatsApp Number
               </label>
               <input
                 data-testid="whatsapp-input"
