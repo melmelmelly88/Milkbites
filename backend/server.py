@@ -737,8 +737,10 @@ async def update_discount(discount_id: str, discount_data: DiscountCreate, admin
     await db.discounts.update_one({"id": discount_id}, {"$set": update_data})
     
     updated = await db.discounts.find_one({"id": discount_id}, {"_id": 0})
-    if isinstance(updated['created_at'], str):
+    if 'created_at' in updated and isinstance(updated['created_at'], str):
         updated['created_at'] = datetime.fromisoformat(updated['created_at'])
+    elif 'created_at' not in updated:
+        updated['created_at'] = datetime.now(timezone.utc)
     return Discount(**updated)
 
 @api_router.post("/discounts/validate")
