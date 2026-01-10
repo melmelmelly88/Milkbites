@@ -381,11 +381,14 @@ const AdminDashboard = () => {
                   <h2 className="text-2xl font-bold text-accent">Diskon & Promo</h2>
                   <button
                     data-testid="add-discount-button"
-                    onClick={() => setShowDiscountModal(true)}
+                    onClick={() => {
+                      setEditingDiscount(null);
+                      setShowDiscountModal(true);
+                    }}
                     className="flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-full hover:bg-primary/90 transition-all"
                   >
                     <Plus size={20} />
-                    Tambah Diskon
+                    Add Discount
                   </button>
                 </div>
 
