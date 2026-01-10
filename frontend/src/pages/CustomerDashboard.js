@@ -292,6 +292,14 @@ const CustomerDashboard = () => {
                     
                     <div className="flex gap-2">
                       <button
+                        data-testid={`edit-address-${address.id}`}
+                        onClick={() => handleEditAddress(address)}
+                        className="flex items-center gap-2 text-primary hover:bg-primary/10 px-3 py-2 rounded-lg transition-colors text-sm"
+                      >
+                        <Edit size={14} />
+                        Edit
+                      </button>
+                      <button
                         data-testid={`delete-address-${address.id}`}
                         onClick={() => handleDeleteAddress(address.id)}
                         className="flex items-center gap-2 text-red-600 hover:bg-red-50 px-3 py-2 rounded-lg transition-colors text-sm"
