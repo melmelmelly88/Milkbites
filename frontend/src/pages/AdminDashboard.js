@@ -514,6 +514,147 @@ const AdminDashboard = () => {
                 </div>
               </div>
             )}
+
+            {activeTab === 'settings' && (
+              <div>
+                <div className="flex justify-between items-center mb-6">
+                  <h2 className="text-2xl font-bold text-accent">Site Settings</h2>
+                  <button
+                    data-testid="save-settings-button"
+                    onClick={handleSaveSettings}
+                    disabled={savingSettings}
+                    className="flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-full hover:bg-primary/90 transition-all disabled:opacity-50"
+                  >
+                    {savingSettings ? 'Saving...' : 'Save Changes'}
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  {/* Hero Section Settings */}
+                  <div className="bg-white rounded-xl p-6 shadow-sm border border-border/50">
+                    <h3 className="text-lg font-semibold text-accent mb-4 flex items-center gap-2">
+                      <Image size={20} />
+                      Hero Section
+                    </h3>
+                    
+                    <div className="space-y-4">
+                      <div>
+                        <label className="block text-sm font-medium text-accent mb-2">Hero Image</label>
+                        <div className="flex gap-2">
+                          <input
+                            type="text"
+                            value={siteSettings.hero_image?.startsWith('data:') ? 'Uploaded Image' : siteSettings.hero_image}
+                            onChange={(e) => setSiteSettings(prev => ({ ...prev, hero_image: e.target.value }))}
+                            className="flex-1 px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-sm"
+                            placeholder="Image URL"
+                            disabled={siteSettings.hero_image?.startsWith('data:')}
+                          />
+                          <label className="cursor-pointer bg-sky-100 text-sky-700 px-4 py-2 rounded-lg hover:bg-sky-200 transition-colors">
+                            <Upload size={18} />
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={handleHeroImageUpload}
+                              className="hidden"
+                            />
+                          </label>
+                        </div>
+                        {siteSettings.hero_image && (
+                          <img src={siteSettings.hero_image} alt="Hero Preview" className="mt-2 w-full h-32 object-cover rounded-lg" />
+                        )}
+                      </div>
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-accent mb-2">Title</label>
+                        <input
+                          type="text"
+                          value={siteSettings.hero_title}
+                          onChange={(e) => setSiteSettings(prev => ({ ...prev, hero_title: e.target.value }))}
+                          className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                        />
+                      </div>
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-accent mb-2">Subtitle</label>
+                        <input
+                          type="text"
+                          value={siteSettings.hero_subtitle}
+                          onChange={(e) => setSiteSettings(prev => ({ ...prev, hero_subtitle: e.target.value }))}
+                          className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                        />
+                      </div>
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-accent mb-2">Tagline</label>
+                        <input
+                          type="text"
+                          value={siteSettings.hero_tagline}
+                          onChange={(e) => setSiteSettings(prev => ({ ...prev, hero_tagline: e.target.value }))}
+                          className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                        />
+                      </div>
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-accent mb-2">Badge Text</label>
+                        <input
+                          type="text"
+                          value={siteSettings.hero_badge}
+                          onChange={(e) => setSiteSettings(prev => ({ ...prev, hero_badge: e.target.value }))}
+                          className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Footer Settings */}
+                  <div className="bg-white rounded-xl p-6 shadow-sm border border-border/50">
+                    <h3 className="text-lg font-semibold text-accent mb-4">Footer Information</h3>
+                    
+                    <div className="space-y-4">
+                      <div>
+                        <label className="block text-sm font-medium text-accent mb-2">Description</label>
+                        <textarea
+                          value={siteSettings.footer_description}
+                          onChange={(e) => setSiteSettings(prev => ({ ...prev, footer_description: e.target.value }))}
+                          className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                          rows="2"
+                        />
+                      </div>
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-accent mb-2">Contact 1</label>
+                        <input
+                          type="text"
+                          value={siteSettings.footer_contact_1}
+                          onChange={(e) => setSiteSettings(prev => ({ ...prev, footer_contact_1: e.target.value }))}
+                          className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                        />
+                      </div>
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-accent mb-2">Contact 2</label>
+                        <input
+                          type="text"
+                          value={siteSettings.footer_contact_2}
+                          onChange={(e) => setSiteSettings(prev => ({ ...prev, footer_contact_2: e.target.value }))}
+                          className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                        />
+                      </div>
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-accent mb-2">Pickup Location</label>
+                        <input
+                          type="text"
+                          value={siteSettings.footer_pickup_location}
+                          onChange={(e) => setSiteSettings(prev => ({ ...prev, footer_pickup_location: e.target.value }))}
+                          className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </>
         )}
       </div>
