@@ -128,7 +128,7 @@ const AdminDashboard = () => {
           productData,
           { headers: { Authorization: `Bearer ${token}` } }
         );
-        toast.success('Produk berhasil diupdate');
+        toast.success('Product updated successfully');
       } else {
         // Create new product
         await axios.post(
@@ -136,13 +136,40 @@ const AdminDashboard = () => {
           productData,
           { headers: { Authorization: `Bearer ${token}` } }
         );
-        toast.success('Produk berhasil ditambahkan');
+        toast.success('Product added successfully');
       }
       setShowProductModal(false);
       setEditingProduct(null);
       fetchData();
     } catch (error) {
-      toast.error('Gagal menyimpan produk');
+      toast.error('Failed to save product');
+    }
+  };
+
+  const handleSaveDiscount = async (discountData) => {
+    try {
+      if (editingDiscount) {
+        // Update existing discount
+        await axios.put(
+          `${API}/admin/discounts/${editingDiscount.id}`,
+          discountData,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        toast.success('Discount updated successfully');
+      } else {
+        // Create new discount
+        await axios.post(
+          `${API}/admin/discounts`,
+          discountData,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        toast.success('Discount added successfully');
+      }
+      setShowDiscountModal(false);
+      setEditingDiscount(null);
+      fetchData();
+    } catch (error) {
+      toast.error('Failed to save discount');
     }
   };
 
