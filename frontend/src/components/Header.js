@@ -83,14 +83,14 @@ const Header = () => {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="p-4">
-              <h3 className="text-sm font-bold text-accent mb-4 pb-2 border-b border-border uppercase tracking-wide">Categories</h3>
+              <h3 className="text-sm font-bold text-gray-900 mb-4 pb-2 border-b border-gray-200 uppercase tracking-wide">Categories</h3>
               <nav className="space-y-1">
                 {categories.map((category) => (
                   <Link
                     key={category.name}
                     to={category.path}
                     data-testid={`category-${category.name.toLowerCase()}`}
-                    className="block px-3 py-2.5 text-sm font-medium text-accent hover:bg-primary/10 hover:text-primary rounded-lg transition-all"
+                    className="block px-3 py-2.5 text-sm font-medium text-gray-800 hover:bg-sky-50 hover:text-sky-600 rounded-lg transition-all"
                     onClick={() => setMenuOpen(false)}
                   >
                     {category.name}
@@ -99,7 +99,7 @@ const Header = () => {
               </nav>
               
               {token && (
-                <div className="mt-6 pt-4 border-t border-border">
+                <div className="mt-6 pt-4 border-t border-gray-200">
                   <button
                     onClick={() => {
                       handleLogout();
