@@ -15,6 +15,7 @@ const ProductDetailPage = () => {
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
   const [selectedVariants, setSelectedVariants] = useState([]);
+  const [selectedVariantsByType, setSelectedVariantsByType] = useState({});
   const [adding, setAdding] = useState(false);
 
   useEffect(() => {
