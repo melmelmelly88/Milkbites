@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import Header from '../components/Header';
-import { Trash2 } from 'lucide-react';
+import { Trash2, Plus, Minus } from 'lucide-react';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
@@ -12,6 +12,7 @@ const CartPage = () => {
   const [cart, setCart] = useState(null);
   const [products, setProducts] = useState({});
   const [loading, setLoading] = useState(true);
+  const [updating, setUpdating] = useState(null);
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
 
@@ -51,6 +52,36 @@ const CartPage = () => {
       fetchCart();
     } catch (error) {
       toast.error('Failed to remove product');
+    }
+  };
+
+  const handleUpdateQuantity = async (productId, newQuantity) => {
+    if (newQuantity < 1) {
+      handleRemoveItem(productId);
+      return;
+    }
+    
+    setUpdating(productId);
+    try {
+      await axios.put(
+        `${API}/cart/item/${productId}`,
+        { quantity: newQuantity },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      
+      // Update local state immediately for better UX
+      setCart(prev => ({
+        ...prev,
+        items: prev.items.map(item => 
+          item.product_id === productId 
+            ? { ...item, quantity: newQuantity }
+            : item
+        )
+      }));
+    } catch (error) {
+      toast.error('Failed to update quantity');
+    } finally {
+      setUpdating(null);
     }
   };
 
@@ -114,10 +145,31 @@ const CartPage = () => {
                             Variants: {Array.isArray(item.customization.variants) ? item.customization.variants.join(', ') : item.customization.variants}
                           </p>
                         )}
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <p className="text-xs md:text-sm text-muted-foreground">Quantity: {item.quantity}</p>
-                            <p className="text-base md:text-lg font-bold text-primary mt-1">
+                        <div className="flex items-center justify-between mt-3">
+                          <div className="flex items-center gap-3">
+                            {/* Quantity Controls */}
+                            <div className="flex items-center border border-border rounded-lg">
+                              <button
+                                data-testid={`decrease-qty-${item.product_id}`}
+                                onClick={() => handleUpdateQuantity(item.product_id, item.quantity - 1)}
+                                disabled={updating === item.product_id}
+                                className="p-2 hover:bg-gray-100 rounded-l-lg transition-colors disabled:opacity-50"
+                              >
+                                <Minus size={16} />
+                              </button>
+                              <span className="px-4 py-2 font-semibold min-w-[40px] text-center">
+                                {updating === item.product_id ? '...' : item.quantity}
+                              </span>
+                              <button
+                                data-testid={`increase-qty-${item.product_id}`}
+                                onClick={() => handleUpdateQuantity(item.product_id, item.quantity + 1)}
+                                disabled={updating === item.product_id}
+                                className="p-2 hover:bg-gray-100 rounded-r-lg transition-colors disabled:opacity-50"
+                              >
+                                <Plus size={16} />
+                              </button>
+                            </div>
+                            <p className="text-base md:text-lg font-bold text-primary">
                               Rp {(item.price * item.quantity).toLocaleString('id-ID')}
                             </p>
                           </div>
@@ -129,6 +181,9 @@ const CartPage = () => {
                             <Trash2 size={20} />
                           </button>
                         </div>
+                        <p className="text-xs text-muted-foreground mt-2">
+                          Rp {item.price.toLocaleString('id-ID')} each
+                        </p>
                       </div>
                     </div>
                   </div>
