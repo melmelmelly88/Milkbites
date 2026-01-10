@@ -399,6 +399,39 @@ const AdminDashboard = () => {
           </>
         )}
       </div>
+
+      {/* Product Modal */}
+      <ProductModal
+        show={showProductModal}
+        product={editingProduct}
+        onClose={() => {
+          setShowProductModal(false);
+          setEditingProduct(null);
+        }}
+        onSave={handleSaveProduct}
+      />
+
+      {/* Payment Proof Modal */}
+      {showPaymentProof && (
+        <div
+          className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          onClick={() => setShowPaymentProof(null)}
+        >
+          <div className="relative max-w-4xl w-full" onClick={(e) => e.stopPropagation()}>
+            <button
+              onClick={() => setShowPaymentProof(null)}
+              className="absolute -top-12 right-0 text-white hover:text-gray-300 text-lg font-bold"
+            >
+              Tutup ✕
+            </button>
+            <img
+              src={showPaymentProof}
+              alt="Bukti Pembayaran"
+              className="w-full h-auto rounded-lg shadow-2xl"
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
