@@ -6,25 +6,25 @@
 
 @layer base {
   :root {
-    --background: 43 32% 99%;
+    --background: 45 35% 98%;
     --foreground: 0 0% 10%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 10%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 10%;
-    --primary: 157 21% 57%;
+    --primary: 142 76% 36%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 33 37% 93%;
-    --secondary-foreground: 114 13% 21%;
+    --secondary: 35 75% 92%;
+    --secondary-foreground: 25 65% 30%;
     --muted: 0 0% 91%;
     --muted-foreground: 0 0% 40%;
-    --accent: 114 13% 21%;
+    --accent: 25 85% 45%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89%;
-    --input: 0 0% 89%;
-    --ring: 157 21% 57%;
+    --border: 35 40% 85%;
+    --input: 35 40% 85%;
+    --ring: 142 76% 36%;
     --radius: 0.5rem;
   }
 }
@@ -36,6 +36,10 @@
   body {
     @apply bg-background text-foreground;
     font-family: 'Lato', sans-serif;
+    background-image: 
+      radial-gradient(circle at 20% 50%, rgba(255, 237, 213, 0.3) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(144, 238, 144, 0.2) 0%, transparent 50%);
+    background-attachment: fixed;
   }
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Playfair Display', serif;
@@ -44,12 +48,18 @@
 
 @layer utilities {
   .glass-card {
-    @apply backdrop-blur-md bg-white/70 border border-white/30;
+    @apply backdrop-blur-md bg-white/80 border border-white/40 shadow-lg;
   }
   .shadow-soft {
-    box-shadow: 0 4px 20px -2px rgba(47, 62, 48, 0.05);
+    box-shadow: 0 4px 20px -2px rgba(142, 76, 36, 0.1);
   }
   .shadow-hover {
-    box-shadow: 0 10px 25px -5px rgba(47, 62, 48, 0.1);
+    box-shadow: 0 10px 30px -5px rgba(142, 76, 36, 0.15);
+  }
+  .festive-gradient {
+    background: linear-gradient(135deg, #22c55e 0%, #fbbf24 100%);
+  }
+  .festive-border {
+    border-image: linear-gradient(to right, #22c55e, #fbbf24) 1;
   }
 }
