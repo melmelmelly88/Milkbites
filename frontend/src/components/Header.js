@@ -68,27 +68,42 @@ const Header = () => {
 
       {/* Sidebar Menu */}
       {menuOpen && (
-        <div className="fixed inset-0 top-16 bg-black/20 backdrop-blur-sm z-40" onClick={() => setMenuOpen(false)}>
+        <div className="fixed inset-0 top-14 md:top-16 bg-black/40 backdrop-blur-sm z-40" onClick={() => setMenuOpen(false)}>
           <div
             data-testid="sidebar-menu"
-            className="absolute left-0 top-0 w-72 h-full bg-white shadow-2xl"
+            className="absolute left-0 top-0 w-72 h-full bg-white shadow-2xl border-r border-border"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="p-6">
-              <h3 className="text-lg font-bold text-accent mb-4">Kategori Produk</h3>
+              <h3 className="text-lg font-bold text-accent mb-6 pb-3 border-b border-border">Product Categories</h3>
               <nav className="space-y-2">
                 {categories.map((category) => (
                   <Link
                     key={category.name}
                     to={category.path}
                     data-testid={`category-${category.name.toLowerCase()}`}
-                    className="block px-4 py-3 text-accent hover:bg-primary/10 hover:text-primary rounded-lg transition-all font-medium"
+                    className="block px-4 py-3 text-accent hover:bg-primary/10 hover:text-primary rounded-lg transition-all font-medium border border-transparent hover:border-primary/20"
                     onClick={() => setMenuOpen(false)}
                   >
                     {category.name}
                   </Link>
                 ))}
               </nav>
+              
+              {token && (
+                <div className="mt-6 pt-6 border-t border-border">
+                  <button
+                    onClick={() => {
+                      handleLogout();
+                      setMenuOpen(false);
+                    }}
+                    className="w-full flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg transition-all font-medium"
+                  >
+                    <LogOut size={18} />
+                    Sign Out
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>
