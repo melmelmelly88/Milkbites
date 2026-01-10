@@ -13,8 +13,23 @@ const HomePage = () => {
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchParams] = useSearchParams();
+  const [siteSettings, setSiteSettings] = useState({
+    hero_image: 'https://images.unsplash.com/photo-1760448199008-6078bc23bfaa?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Njl8MHwxfHNlYXJjaHwxfHxnb3VybWV0JTIwY29va2llcyUyMGFlc3RoZXRpY3xlbnwwfHx8fDE3NjgwMjkxMDB8MA&ixlib=rb-4.1.0&q=85',
+    hero_title: 'Milkbites',
+    hero_subtitle: 'by Keka Cakery',
+    hero_tagline: 'Premium Baked Goods for Your Celebration',
+    hero_badge: 'Eid Special Collection',
+    footer_description: 'Premium baked goods crafted with love',
+    footer_contact_1: 'Melly: 081294607788',
+    footer_contact_2: 'Fari: 081386163292',
+    footer_pickup_location: 'Cilandak & Menara Mandiri'
+  });
 
   const categories = ['Cookies', 'Babka', 'Cake', 'Hampers'];
+
+  useEffect(() => {
+    fetchSiteSettings();
+  }, []);
 
   useEffect(() => {
     const categoryParam = searchParams.get('category');
@@ -29,6 +44,15 @@ const HomePage = () => {
     fetchProducts();
     fetchFeaturedProducts();
   }, [activeCategory]);
+
+  const fetchSiteSettings = async () => {
+    try {
+      const response = await axios.get(`${API}/site-settings`);
+      setSiteSettings(response.data);
+    } catch (error) {
+      console.error('Error fetching site settings:', error);
+    }
+  };
 
   const fetchFeaturedProducts = async () => {
     try {
@@ -61,13 +85,24 @@ const HomePage = () => {
       {/* Hero Section */}
       <div className="relative h-[40vh] md:h-[50vh] overflow-hidden">
         <img
-          src="https://images.unsplash.com/photo-1760448199008-6078bc23bfaa?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Njl8MHwxfHNlYXJjaHwxfHxnb3VybWV0JTIwY29va2llcyUyMGFlc3RoZXRpY3xlbnwwfHx8fDE3NjgwMjkxMDB8MA&ixlib=rb-4.1.0&q=85"
+          src={siteSettings.hero_image}
           alt="Milkbites Bakery"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-sky-600/80 to-blue-700/70 flex items-center justify-center">
           <div className="text-center text-white px-4">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 md:mb-3 drop-shadow-lg">
+              {siteSettings.hero_title}
+            </h1>
+            <p className="text-sm md:text-base text-white/90 mb-2 md:mb-3">{siteSettings.hero_subtitle}</p>
+            <p className="text-base md:text-lg lg:text-xl font-medium drop-shadow-md">{siteSettings.hero_tagline}</p>
+            <p className="text-xs md:text-sm text-white/90 mt-2">{siteSettings.hero_badge}</p>
+          </div>
+        </div>
+        {/* Decorative Elements */}
+        <div className="absolute top-10 left-10 w-20 h-20 bg-sky-300/30 rounded-full blur-xl animate-pulse"></div>
+        <div className="absolute bottom-10 right-10 w-32 h-32 bg-blue-400/30 rounded-full blur-xl animate-pulse" style={{animationDelay: '1s'}}></div>
+      </div>
               Milkbites
             </h1>
             <p className="text-sm md:text-base text-white/90 mb-2 md:mb-3">by Keka Cakery</p>
