@@ -265,16 +265,15 @@ const AdminDashboard = () => {
                       </div>
 
                       {order.payment_proof && (
-                        <div className="mt-4">
-                          <a
-                            href={order.payment_proof}
-                            target="_blank"
-                            rel="noopener noreferrer"
+                        <div className="mt-4 flex items-center gap-3">
+                          <button
+                            onClick={() => setShowPaymentProof(order.payment_proof)}
                             data-testid={`view-payment-proof-${order.id}`}
-                            className="text-primary hover:underline text-sm"
+                            className="flex items-center gap-2 text-primary hover:text-primary/80 text-sm font-medium transition-colors"
                           >
-                            Lihat Bukti Pembayaran →
-                          </a>
+                            <Eye size={16} />
+                            Lihat Bukti Pembayaran
+                          </button>
                         </div>
                       )}
                     </div>
