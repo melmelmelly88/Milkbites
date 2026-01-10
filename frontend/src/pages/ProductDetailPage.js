@@ -112,6 +112,28 @@ const ProductDetailPage = () => {
     }
   };
 
+  const handleVariantTypeToggle = (typeName, variant, maxCount) => {
+    const currentSelected = selectedVariantsByType[typeName] || [];
+    
+    if (currentSelected.includes(variant)) {
+      // Remove variant
+      setSelectedVariantsByType({
+        ...selectedVariantsByType,
+        [typeName]: currentSelected.filter((v) => v !== variant)
+      });
+    } else {
+      // Add variant
+      if (currentSelected.length < maxCount) {
+        setSelectedVariantsByType({
+          ...selectedVariantsByType,
+          [typeName]: [...currentSelected, variant]
+        });
+      } else {
+        toast.error(`Maksimal ${maxCount} pilihan`);
+      }
+    }
+  };
+
   const calculatePrice = () => {
     let price = product.price;
     if (selectedVariants.length > 0) {
