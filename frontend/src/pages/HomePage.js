@@ -95,7 +95,7 @@ const HomePage = () => {
             </div>
             {products.length === 0 && (
               <div className="text-center py-16 text-muted-foreground">
-                <p className="text-xl">Belum ada produk di kategori ini</p>
+                <p className="text-xl">No products in this category yet</p>
               </div>
             )}
           </>
