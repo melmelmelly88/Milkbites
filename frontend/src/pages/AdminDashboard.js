@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import { Package, ShoppingBag, Settings, Download, LogOut, Plus, Edit, Trash2, Eye } from 'lucide-react';
+import { Package, ShoppingBag, Settings, Download, LogOut, Plus, Edit, Trash2, Eye, X, MapPin, Calendar, User, Phone } from 'lucide-react';
 import ProductModal from '../components/ProductModal';
 import DiscountModal from '../components/DiscountModal';
 
@@ -20,6 +20,7 @@ const AdminDashboard = () => {
   const [editingProduct, setEditingProduct] = useState(null);
   const [editingDiscount, setEditingDiscount] = useState(null);
   const [showPaymentProof, setShowPaymentProof] = useState(null);
+  const [selectedOrder, setSelectedOrder] = useState(null);
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
 
