@@ -31,7 +31,7 @@ const PaymentPage = () => {
         setUploaded(true);
       }
     } catch (error) {
-      toast.error('Gagal memuat pesanan');
+      toast.error('Failed to load order');
       navigate('/dashboard');
     } finally {
       setLoading(false);
@@ -45,13 +45,13 @@ const PaymentPage = () => {
     // Validate file type
     const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
     if (!allowedTypes.includes(file.type)) {
-      toast.error('Format file harus JPG, PNG, atau WEBP');
+      toast.error('File format must be JPG, PNG, or WEBP');
       return;
     }
 
     // Validate file size (max 5MB)
     if (file.size > 5 * 1024 * 1024) {
-      toast.error('Ukuran file maksimal 5MB');
+      toast.error('Maximum file size is 5MB');
       return;
     }
 
@@ -68,15 +68,15 @@ const PaymentPage = () => {
       });
 
       setUploaded(true);
-      toast.success('Bukti pembayaran berhasil diupload');
+      toast.success('Payment proof uploaded successfully');
       
       // Send WhatsApp notification
       const user = JSON.parse(localStorage.getItem('user') || '{}');
-      const message = `Pesanan baru dari ${user.full_name}\nOrder #${order.order_number}\nTotal: Rp ${order.final_amount.toLocaleString('id-ID')}\nBukti pembayaran sudah diupload.`;
+      const message = `New order from ${user.full_name}\nOrder #${order.order_number}\nTotal: Rp ${order.final_amount.toLocaleString('id-ID')}\nPayment proof has been uploaded.`;
       window.open(`https://wa.me/6281294607788?text=${encodeURIComponent(message)}`, '_blank');
       
     } catch (error) {
-      toast.error('Gagal mengupload bukti pembayaran');
+      toast.error('Failed to upload payment proof');
     } finally {
       setUploading(false);
     }
@@ -106,14 +106,14 @@ const PaymentPage = () => {
           {uploaded ? (
             <>
               <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
-              <h1 className="text-4xl font-bold text-accent mb-2">Pesanan Berhasil!</h1>
+              <h1 className="text-4xl font-bold text-accent mb-2">Order Successful!</h1>
               <p className="text-lg text-muted-foreground">
-                Terima kasih atas pesanan Anda. Kami akan segera memprosesnya.
+                Thank you for your order. We will process it shortly.
               </p>
             </>
           ) : (
             <>
-              <h1 className="text-4xl font-bold text-accent mb-2">Instruksi Pembayaran</h1>
+              <h1 className="text-4xl font-bold text-accent mb-2">Payment Instructions</h1>
               <p className="text-lg text-muted-foreground">
                 Order #{order.order_number}
               </p>
@@ -123,25 +123,25 @@ const PaymentPage = () => {
 
         {/* Order Summary */}
         <div className="bg-white rounded-xl p-6 shadow-lg border border-border/50 mb-6">
-          <h2 className="text-2xl font-semibold text-accent mb-4">Detail Pesanan</h2>
+          <h2 className="text-2xl font-semibold text-accent mb-4">Order Details</h2>
           <div className="space-y-3">
             <div className="flex justify-between">
               <span className="text-muted-foreground">Subtotal</span>
               <span className="font-semibold">Rp {order.total_amount.toLocaleString('id-ID')}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Ongkir</span>
+              <span className="text-muted-foreground">Shipping</span>
               <span className="font-semibold">Rp {order.shipping_fee.toLocaleString('id-ID')}</span>
             </div>
             {order.discount_amount > 0 && (
               <div className="flex justify-between text-green-600">
-                <span>Diskon</span>
+                <span>Discount</span>
                 <span className="font-semibold">- Rp {order.discount_amount.toLocaleString('id-ID')}</span>
               </div>
             )}
             <div className="border-t border-border pt-3">
               <div className="flex justify-between font-bold text-accent text-xl">
-                <span>Total Pembayaran</span>
+                <span>Total Payment</span>
                 <span data-testid="total-payment">Rp {order.final_amount.toLocaleString('id-ID')}</span>
               </div>
             </div>
@@ -150,7 +150,7 @@ const PaymentPage = () => {
 
         {/* Payment Instructions */}
         <div className="bg-white rounded-xl p-6 shadow-lg border border-border/50 mb-6">
-          <h2 className="text-2xl font-semibold text-accent mb-4">Informasi Pembayaran</h2>
+          <h2 className="text-2xl font-semibold text-accent mb-4">Payment Information</h2>
           <div className="space-y-4">
             <div className="p-4 bg-secondary/30 rounded-lg">
               <p className="font-medium text-accent mb-2">Bank Mandiri</p>
@@ -167,18 +167,18 @@ const PaymentPage = () => {
 
         {/* Upload Payment Proof */}
         <div className="bg-white rounded-xl p-6 shadow-lg border border-border/50">
-          <h2 className="text-2xl font-semibold text-accent mb-4">Upload Bukti Pembayaran</h2>
+          <h2 className="text-2xl font-semibold text-accent mb-4">Upload Payment Proof</h2>
           
           {uploaded ? (
             <div className="text-center py-8">
               <CheckCircle className="w-12 h-12 text-green-500 mx-auto mb-4" />
-              <p className="text-lg text-accent mb-4">Bukti pembayaran sudah diupload</p>
+              <p className="text-lg text-accent mb-4">Payment proof has been uploaded</p>
               <button
                 data-testid="view-order-button"
                 onClick={() => navigate('/dashboard')}
                 className="bg-primary text-white px-8 py-3 rounded-full hover:bg-primary/90 transition-all"
               >
-                Lihat Pesanan Saya
+                View My Orders
               </button>
             </div>
           ) : (
@@ -198,7 +198,7 @@ const PaymentPage = () => {
                 <div className="border-2 border-dashed border-primary rounded-xl p-12 hover:bg-primary/5 transition-colors">
                   <Upload className="w-12 h-12 text-primary mx-auto mb-4" />
                   <p className="text-lg text-accent font-semibold mb-2">
-                    {uploading ? 'Mengupload...' : 'Klik untuk upload bukti transfer'}
+                    {uploading ? 'Uploading...' : 'Click to upload transfer receipt'}
                   </p>
                   <p className="text-sm text-muted-foreground">
                     Format: JPG, PNG, WEBP (Max 5MB)
