@@ -67,18 +67,34 @@ const CustomerDashboard = () => {
 
   const handleSaveAddress = async (addressData) => {
     try {
-      await axios.post(
-        `${API}/addresses`,
-        addressData,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      toast.success('Address saved');
+      if (editingAddress) {
+        // Update existing address
+        await axios.put(
+          `${API}/addresses/${editingAddress.id}`,
+          addressData,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        toast.success('Address updated');
+      } else {
+        // Create new address
+        await axios.post(
+          `${API}/addresses`,
+          addressData,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        toast.success('Address saved');
+      }
       setShowAddressModal(false);
       setEditingAddress(null);
       fetchData();
     } catch (error) {
       toast.error('Failed to save address');
     }
+  };
+
+  const handleEditAddress = (address) => {
+    setEditingAddress(address);
+    setShowAddressModal(true);
   };
 
   const getStatusColor = (status) => {
