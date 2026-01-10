@@ -61,12 +61,21 @@ const HomePage = () => {
           alt="Milkbites Bakery"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/30 flex items-center justify-center">
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/40 flex items-center justify-center">
           <div className="text-center text-white px-4">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 md:mb-4">Milkbites</h1>
-            <p className="text-base md:text-lg lg:text-xl">Premium Baked Goods for Your Celebration</p>
+            <div className="inline-block mb-3">
+              <span className="text-yellow-400 text-4xl md:text-5xl">✨</span>
+            </div>
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 md:mb-4 bg-gradient-to-r from-yellow-200 via-white to-green-200 bg-clip-text text-transparent">
+              Milkbites
+            </h1>
+            <p className="text-base md:text-lg lg:text-xl font-semibold text-yellow-100 mb-2">Premium Baked Goods for Your Celebration</p>
+            <p className="text-xs md:text-sm text-green-200">🎉 Eid Special Collection 🎉</p>
           </div>
         </div>
+        {/* Decorative Elements */}
+        <div className="absolute top-10 left-10 w-20 h-20 bg-yellow-400/20 rounded-full blur-xl animate-pulse"></div>
+        <div className="absolute bottom-10 right-10 w-32 h-32 bg-green-400/20 rounded-full blur-xl animate-pulse" style={{animationDelay: '1s'}}></div>
       </div>
 
       {/* Category Tabs */}
