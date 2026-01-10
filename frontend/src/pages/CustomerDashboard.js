@@ -13,6 +13,7 @@ const CustomerDashboard = () => {
   const [orders, setOrders] = useState([]);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
   const token = localStorage.getItem('token');
 
   useEffect(() => {
