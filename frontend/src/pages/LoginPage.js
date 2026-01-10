@@ -24,10 +24,10 @@ const LoginPage = () => {
 
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('user', JSON.stringify(response.data.user));
-      toast.success('Login berhasil!');
+      toast.success('Login successful!');
       navigate('/');
     } catch (error) {
-      toast.error(error.response?.data?.detail || 'Login gagal');
+      toast.error(error.response?.data?.detail || 'Login failed');
     } finally {
       setLoading(false);
     }
