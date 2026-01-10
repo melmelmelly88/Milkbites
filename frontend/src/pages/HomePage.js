@@ -87,7 +87,7 @@ const HomePage = () => {
               className={`px-4 md:px-6 py-2 md:py-3 rounded-xl font-semibold whitespace-nowrap transition-all text-sm md:text-base ${
                 activeCategory === category
                   ? 'bg-gradient-to-r from-[#7cd1b4] to-[#5fc1d7] text-white shadow-md'
-                  : 'text-[#d28b5e] hover:bg-white/60 hover:shadow-sm'
+                  : 'text-[#5fc1d7] hover:bg-white/60 hover:shadow-sm'
               }`}
             >
               {category}
