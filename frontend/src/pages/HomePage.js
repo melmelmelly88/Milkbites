@@ -157,24 +157,29 @@ const HomePage = () => {
       </div>
 
       {/* Footer */}
-      <footer className="bg-accent text-white py-12 mt-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <footer className="bg-gradient-to-r from-amber-900 to-green-900 text-white py-12 mt-20 relative overflow-hidden">
+        {/* Decorative elements */}
+        <div className="absolute top-0 left-0 w-64 h-64 bg-yellow-400/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+        <div className="absolute bottom-0 right-0 w-64 h-64 bg-green-400/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
-              <h3 className="text-2xl font-bold mb-4">Milkbites</h3>
-              <p className="text-white/80">Premium baked goods crafted with love</p>
+              <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-yellow-200 to-green-200 bg-clip-text text-transparent">Milkbites</h3>
+              <p className="text-white/90">Premium baked goods crafted with love</p>
+              <p className="text-yellow-200 mt-2 text-sm">✨ Eid Special Collection ✨</p>
             </div>
             <div>
-              <h4 className="text-lg font-semibold mb-4">Contact</h4>
-              <p className="text-white/80">Melly: 081294607788</p>
-              <p className="text-white/80">Fari: 081386163292</p>
+              <h4 className="text-lg font-semibold mb-4 text-yellow-200">Contact</h4>
+              <p className="text-white/90">Melly: 081294607788</p>
+              <p className="text-white/90">Fari: 081386163292</p>
             </div>
             <div>
-              <h4 className="text-lg font-semibold mb-4">Pickup Location</h4>
-              <p className="text-white/80">Cilandak & Menara Mandiri</p>
+              <h4 className="text-lg font-semibold mb-4 text-yellow-200">Pickup Location</h4>
+              <p className="text-white/90">Cilandak & Menara Mandiri</p>
             </div>
           </div>
-          <div className="border-t border-white/20 mt-8 pt-8 text-center text-white/60">
+          <div className="border-t border-white/20 mt-8 pt-8 text-center text-white/80">
             <p>&copy; 2025 Milkbites. All rights reserved.</p>
           </div>
         </div>
