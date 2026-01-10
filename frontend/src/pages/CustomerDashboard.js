@@ -157,11 +157,20 @@ const CustomerDashboard = () => {
                   </div>
 
                   {order.delivery_type === 'pickup' && order.pickup_location && (
-                    <div className="text-sm text-muted-foreground">
+                    <div className="text-sm text-muted-foreground mb-4">
                       <MapPin className="inline-block w-4 h-4 mr-1" />
                       Pickup: {order.pickup_location} - {order.pickup_date}
                     </div>
                   )}
+
+                  <button
+                    onClick={() => navigate(`/order/${order.id}`)}
+                    data-testid={`view-order-detail-${order.id}`}
+                    className="flex items-center gap-2 text-primary hover:text-primary/80 font-medium transition-colors"
+                  >
+                    <Eye size={16} />
+                    Lihat Detail Pesanan
+                  </button>
                 </div>
               ))
             )}
