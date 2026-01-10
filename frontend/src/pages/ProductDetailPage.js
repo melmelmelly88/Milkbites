@@ -37,7 +37,7 @@ const ProductDetailPage = () => {
     const token = localStorage.getItem('token');
     if (!token) {
       toast.error('Silakan login terlebih dahulu');
-      navigate('/login');
+      setTimeout(() => navigate('/login'), 1000);
       return;
     }
 
