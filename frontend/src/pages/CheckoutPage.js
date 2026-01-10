@@ -32,11 +32,11 @@ const CheckoutPage = () => {
       setCart(response.data);
       
       if (!response.data.items || response.data.items.length === 0) {
-        toast.error('Keranjang kosong');
+        toast.error('Cart is empty');
         navigate('/cart');
       }
     } catch (error) {
-      toast.error('Gagal memuat keranjang');
+      toast.error('Failed to load cart');
     }
   };
 
@@ -61,21 +61,21 @@ const CheckoutPage = () => {
         `${API}/discounts/validate?code=${discountCode}&total=${calculateSubtotal()}`
       );
       setDiscountAmount(response.data.discount_amount);
-      toast.success('Kode diskon berhasil diterapkan');
+      toast.success('Discount code applied successfully');
     } catch (error) {
-      toast.error(error.response?.data?.detail || 'Kode diskon tidak valid');
+      toast.error(error.response?.data?.detail || 'Invalid discount code');
       setDiscountAmount(0);
     }
   };
 
   const handleSubmitOrder = async () => {
     if (deliveryType === 'delivery' && !deliveryAddress) {
-      toast.error('Mohon masukkan alamat pengiriman');
+      toast.error('Please enter delivery address');
       return;
     }
 
     if (deliveryType === 'pickup' && !pickupDate) {
-      toast.error('Mohon pilih tanggal pickup');
+      toast.error('Please select pickup date');
       return;
     }
 
@@ -95,10 +95,10 @@ const CheckoutPage = () => {
         headers: { Authorization: `Bearer ${token}` }
       });
 
-      toast.success('Pesanan berhasil dibuat');
+      toast.success('Order placed successfully');
       navigate(`/payment/${response.data.id}`);
     } catch (error) {
-      toast.error(error.response?.data?.detail || 'Gagal membuat pesanan');
+      toast.error(error.response?.data?.detail || 'Failed to create order');
     } finally {
       setLoading(false);
     }

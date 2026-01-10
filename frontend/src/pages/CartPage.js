@@ -36,7 +36,7 @@ const CartPage = () => {
       setProducts(productDetails);
     } catch (error) {
       console.error('Error fetching cart:', error);
-      toast.error('Gagal memuat keranjang');
+      toast.error('Failed to load cart');
     } finally {
       setLoading(false);
     }
@@ -47,10 +47,10 @@ const CartPage = () => {
       await axios.delete(`${API}/cart/item/${productId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      toast.success('Produk dihapus dari keranjang');
+      toast.success('Product removed from cart');
       fetchCart();
     } catch (error) {
-      toast.error('Gagal menghapus produk');
+      toast.error('Failed to remove product');
     }
   };
 
