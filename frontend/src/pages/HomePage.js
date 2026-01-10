@@ -94,18 +94,52 @@ const HomePage = () => {
           </div>
         ) : (
           <>
-            <h2 className="text-3xl md:text-4xl font-bold text-accent mb-8">
-              {activeCategory === 'All' ? 'All Products' : activeCategory}
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {products.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
-            {products.length === 0 && (
-              <div className="text-center py-16 text-muted-foreground">
-                <p className="text-xl">No products in this category yet</p>
-              </div>
+            {activeCategory === 'All' ? (
+              // Featured Products Section
+              <>
+                <div className="flex justify-between items-center mb-8">
+                  <h2 className="text-3xl md:text-4xl font-bold text-accent">
+                    Featured Products
+                  </h2>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {featuredProducts.map((product) => (
+                    <ProductCard key={product.id} product={product} />
+                  ))}
+                </div>
+                {featuredProducts.length > 0 && (
+                  <div className="text-center mt-12">
+                    <button
+                      onClick={() => {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                        // Trigger a full product load by changing to a category and back
+                        setActiveCategory('Cookies');
+                        setTimeout(() => setActiveCategory('All'), 10);
+                      }}
+                      className="inline-block bg-primary text-white px-8 py-3 rounded-full hover:bg-primary/90 transition-all font-semibold"
+                    >
+                      View All Products
+                    </button>
+                  </div>
+                )}
+              </>
+            ) : (
+              // Category Products Section
+              <>
+                <h2 className="text-3xl md:text-4xl font-bold text-accent mb-8">
+                  {activeCategory}
+                </h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {products.map((product) => (
+                    <ProductCard key={product.id} product={product} />
+                  ))}
+                </div>
+                {products.length === 0 && (
+                  <div className="text-center py-16 text-muted-foreground">
+                    <p className="text-xl">No products in this category yet</p>
+                  </div>
+                )}
+              </>
             )}
           </>
         )}
