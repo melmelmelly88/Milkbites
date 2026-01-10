@@ -58,12 +58,46 @@ const AdminDashboard = () => {
           headers: { Authorization: `Bearer ${token}` }
         });
         setDiscounts(res.data);
+      } else if (activeTab === 'settings') {
+        const res = await axios.get(`${API}/site-settings`);
+        setSiteSettings(res.data);
       }
     } catch (error) {
       toast.error('Failed to load data');
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSaveSettings = async () => {
+    setSavingSettings(true);
+    try {
+      await axios.put(`${API}/admin/site-settings`, siteSettings, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      toast.success('Settings saved successfully');
+    } catch (error) {
+      toast.error('Failed to save settings');
+    } finally {
+      setSavingSettings(false);
+    }
+  };
+
+  const handleHeroImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error('Image size must be less than 5MB');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setSiteSettings(prev => ({ ...prev, hero_image: reader.result }));
+      toast.success('Image uploaded');
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleStatusChange = async (orderId, newStatus) => {
