@@ -81,15 +81,15 @@ const LoginPage = () => {
               disabled={loading}
               className="w-full bg-primary text-white py-3 rounded-full hover:bg-primary/90 transition-all disabled:opacity-50 font-medium"
             >
-              {loading ? 'Memproses...' : 'Masuk'}
+              {loading ? 'Processing...' : 'Sign In'}
             </button>
           </form>
 
           <div className="mt-6 text-center">
             <p className="text-muted-foreground">
-              Belum punya akun?{' '}
+              Don't have an account?{' '}
               <Link to="/signup" className="text-primary hover:underline font-medium">
-                Daftar
+                Sign Up
               </Link>
             </p>
           </div>
