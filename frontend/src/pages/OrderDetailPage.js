@@ -196,26 +196,26 @@ const OrderDetailPage = () => {
           {/* Order Notes */}
           {order.notes && (
             <div className="mb-6">
-              <h3 className="text-lg font-semibold text-accent mb-2">Catatan</h3>
+              <h3 className="text-lg font-semibold text-accent mb-2">Notes</h3>
               <p className="text-muted-foreground bg-secondary/20 p-4 rounded-lg">{order.notes}</p>
             </div>
           )}
 
           {/* Payment Summary */}
           <div className="border-t border-border pt-6">
-            <h3 className="text-xl font-semibold text-accent mb-4">Ringkasan Pembayaran</h3>
+            <h3 className="text-xl font-semibold text-accent mb-4">Payment Summary</h3>
             <div className="space-y-2">
               <div className="flex justify-between text-muted-foreground">
                 <span>Subtotal</span>
                 <span>Rp {order.total_amount.toLocaleString('id-ID')}</span>
               </div>
               <div className="flex justify-between text-muted-foreground">
-                <span>Ongkir</span>
+                <span>Shipping</span>
                 <span>Rp {order.shipping_fee.toLocaleString('id-ID')}</span>
               </div>
               {order.discount_amount > 0 && (
                 <div className="flex justify-between text-green-600">
-                  <span>Diskon</span>
+                  <span>Discount</span>
                   <span>- Rp {order.discount_amount.toLocaleString('id-ID')}</span>
                 </div>
               )}
