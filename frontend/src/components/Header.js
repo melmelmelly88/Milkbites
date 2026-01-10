@@ -71,22 +71,25 @@ const Header = () => {
         <div className="fixed inset-0 top-16 bg-black/20 backdrop-blur-sm z-40" onClick={() => setMenuOpen(false)}>
           <div
             data-testid="sidebar-menu"
-            className="absolute left-0 top-0 w-64 h-full bg-white shadow-xl p-6"
+            className="absolute left-0 top-0 w-72 h-full bg-white shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
-            <nav className="space-y-4">
-              {categories.map((category) => (
-                <Link
-                  key={category.name}
-                  to={category.path}
-                  data-testid={`category-${category.name.toLowerCase()}`}
-                  className="block text-lg text-accent hover:text-primary hover:translate-x-2 transition-all"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  {category.name}
-                </Link>
-              ))}
-            </nav>
+            <div className="p-6">
+              <h3 className="text-lg font-bold text-accent mb-4">Kategori Produk</h3>
+              <nav className="space-y-2">
+                {categories.map((category) => (
+                  <Link
+                    key={category.name}
+                    to={category.path}
+                    data-testid={`category-${category.name.toLowerCase()}`}
+                    className="block px-4 py-3 text-accent hover:bg-primary/10 hover:text-primary rounded-lg transition-all font-medium"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    {category.name}
+                  </Link>
+                ))}
+              </nav>
+            </div>
           </div>
         </div>
       )}
