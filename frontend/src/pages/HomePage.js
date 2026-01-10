@@ -90,32 +90,32 @@ const HomePage = () => {
       </div>
 
       {/* Products Grid */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-16">
         {loading ? (
           <div className="flex justify-center items-center h-64">
             <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent"></div>
           </div>
         ) : (
           <>
-            {activeCategory === 'All' ? (
+            {activeCategory === 'Featured' || !activeCategory ? (
               // Featured Products Section
               <>
-                <div className="flex justify-between items-center mb-8">
-                  <h2 className="text-3xl md:text-4xl font-bold text-accent">
+                <div className="flex justify-between items-center mb-6 md:mb-8">
+                  <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-accent">
                     Featured Products
                   </h2>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
                   {featuredProducts.map((product) => (
                     <ProductCard key={product.id} product={product} />
                   ))}
                 </div>
                 {featuredProducts.length > 0 && (
-                  <div className="text-center mt-12">
+                  <div className="text-center mt-8 md:mt-12">
                     <Link
                       to="/products"
                       data-testid="view-all-products-link"
-                      className="inline-block bg-primary text-white px-8 py-3 rounded-full hover:bg-primary/90 transition-all font-semibold"
+                      className="inline-block bg-primary text-white px-6 md:px-8 py-2 md:py-3 rounded-full hover:bg-primary/90 transition-all font-semibold text-sm md:text-base"
                     >
                       View All Products
                     </Link>
@@ -125,17 +125,17 @@ const HomePage = () => {
             ) : (
               // Category Products Section
               <>
-                <h2 className="text-3xl md:text-4xl font-bold text-accent mb-8">
+                <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-accent mb-6 md:mb-8">
                   {activeCategory}
                 </h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
                   {products.map((product) => (
                     <ProductCard key={product.id} product={product} />
                   ))}
                 </div>
                 {products.length === 0 && (
-                  <div className="text-center py-16 text-muted-foreground">
-                    <p className="text-xl">No products in this category yet</p>
+                  <div className="text-center py-12 md:py-16 text-muted-foreground">
+                    <p className="text-lg md:text-xl">No products in this category yet</p>
                   </div>
                 )}
               </>
