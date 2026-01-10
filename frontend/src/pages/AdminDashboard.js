@@ -102,16 +102,47 @@ const AdminDashboard = () => {
 
   const handleStatusChange = async (orderId, newStatus) => {
     try {
-      await axios.put(
+      const response = await axios.put(
         `${API}/admin/orders/${orderId}/status`,
         { status: newStatus },
         { headers: { Authorization: `Bearer ${token}` } }
       );
       toast.success('Order status updated');
+      
+      // If status is confirmed, offer to send WhatsApp notification
+      if (newStatus === 'confirmed' && response.data.customer_whatsapp) {
+        const orderInfo = response.data;
+        const message = encodeURIComponent(
+          `Hi ${orderInfo.customer_name}!\n\n` +
+          `Your order #${orderInfo.order_number} has been CONFIRMED!\n\n` +
+          `Total: Rp ${orderInfo.final_amount?.toLocaleString('id-ID')}\n\n` +
+          `Thank you for ordering from Milkbites! We'll process your order soon.\n\n` +
+          `- Milkbites by Keka Cakery`
+        );
+        const whatsappUrl = `https://wa.me/${orderInfo.customer_whatsapp.replace(/^0/, '62')}?text=${message}`;
+        
+        if (window.confirm('Order confirmed! Do you want to notify the customer via WhatsApp?')) {
+          window.open(whatsappUrl, '_blank');
+        }
+      }
+      
       fetchData();
     } catch (error) {
       toast.error('Failed to update status');
     }
+  };
+
+  const handleWhatsAppNotify = (order) => {
+    const message = encodeURIComponent(
+      `Hi ${order.customer_name}!\n\n` +
+      `Update for Order #${order.order_number}:\n` +
+      `Status: ${order.status.toUpperCase()}\n` +
+      `Total: Rp ${order.final_amount?.toLocaleString('id-ID')}\n\n` +
+      `Thank you for ordering from Milkbites!\n\n` +
+      `- Milkbites by Keka Cakery`
+    );
+    const whatsappUrl = `https://wa.me/${order.customer_whatsapp?.replace(/^0/, '62')}?text=${message}`;
+    window.open(whatsappUrl, '_blank');
   };
 
   const handleDownloadCSV = async () => {
