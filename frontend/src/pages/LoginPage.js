@@ -40,7 +40,7 @@ const LoginPage = () => {
           <Link to="/" className="inline-block">
             <h1 className="text-4xl font-bold text-accent mb-2">Milkbites</h1>
           </Link>
-          <p className="text-muted-foreground">Masuk ke akun Anda</p>
+          <p className="text-muted-foreground">Sign in to your account</p>
         </div>
 
         <div className="bg-white rounded-2xl shadow-lg p-8">
