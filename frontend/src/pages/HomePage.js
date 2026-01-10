@@ -14,12 +14,14 @@ const HomePage = () => {
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchParams] = useSearchParams();
 
-  const categories = ['All', 'Cookies', 'Babka', 'Cake', 'Hampers'];
+  const categories = ['Cookies', 'Babka', 'Cake', 'Hampers'];
 
   useEffect(() => {
     const categoryParam = searchParams.get('category');
     if (categoryParam) {
       setActiveCategory(categoryParam);
+    } else {
+      setActiveCategory('Featured'); // Default to Featured view
     }
   }, [searchParams]);
 
