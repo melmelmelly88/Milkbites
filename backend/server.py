@@ -229,6 +229,31 @@ class ShippingSettings(BaseModel):
     pickup_fee: float = 0
     updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
+class SiteSettings(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    id: str = "site_settings"
+    hero_image: str = "https://images.unsplash.com/photo-1760448199008-6078bc23bfaa?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Njl8MHwxfHNlYXJjaHwxfHxnb3VybWV0JTIwY29va2llcyUyMGFlc3RoZXRpY3xlbnwwfHx8fDE3NjgwMjkxMDB8MA&ixlib=rb-4.1.0&q=85"
+    hero_title: str = "Milkbites"
+    hero_subtitle: str = "by Keka Cakery"
+    hero_tagline: str = "Premium Baked Goods for Your Celebration"
+    hero_badge: str = "Eid Special Collection"
+    footer_description: str = "Premium baked goods crafted with love"
+    footer_contact_1: str = "Melly: 081294607788"
+    footer_contact_2: str = "Fari: 081386163292"
+    footer_pickup_location: str = "Cilandak & Menara Mandiri"
+    updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+class SiteSettingsUpdate(BaseModel):
+    hero_image: Optional[str] = None
+    hero_title: Optional[str] = None
+    hero_subtitle: Optional[str] = None
+    hero_tagline: Optional[str] = None
+    hero_badge: Optional[str] = None
+    footer_description: Optional[str] = None
+    footer_contact_1: Optional[str] = None
+    footer_contact_2: Optional[str] = None
+    footer_pickup_location: Optional[str] = None
+
 # Auth endpoints
 @api_router.post("/auth/signup", response_model=AuthResponse)
 async def signup(user_data: UserSignup):
