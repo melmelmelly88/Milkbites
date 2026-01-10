@@ -177,10 +177,10 @@ const CustomerDashboard = () => {
           </div>
         ) : (
           <div className="bg-white rounded-xl p-8 shadow-sm">
-            <h2 className="text-2xl font-semibold text-accent mb-6">Informasi Profil</h2>
+            <h2 className="text-2xl font-semibold text-accent mb-6">Profile Information</h2>
             <div className="space-y-4">
               <div>
-                <label className="text-sm text-muted-foreground">Nama Lengkap</label>
+                <label className="text-sm text-muted-foreground">Full Name</label>
                 <p className="text-lg font-medium text-accent">{user?.full_name}</p>
               </div>
               <div>
