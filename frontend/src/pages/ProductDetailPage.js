@@ -198,7 +198,8 @@ const ProductDetailPage = () => {
               <span className="text-3xl font-bold text-primary">
                 Rp {calculatePrice().toLocaleString('id-ID')}
               </span>
-              {selectedVariants.some((v) => v.includes('Kaastengel')) && (
+              {(selectedVariants.some((v) => v.includes('Kaastengel')) || 
+                (selectedVariantsByType['cookies'] || []).some((v) => v.includes('Kaastengel'))) && (
                 <p className="text-sm text-muted-foreground mt-2">
                   *Termasuk biaya tambahan Kaastengel (Rp 10.000)
                 </p>
@@ -207,29 +208,68 @@ const ProductDetailPage = () => {
 
             {/* Customization Options */}
             {product.requires_customization && product.customization_options && (
-              <div className="mb-6">
-                <h3 className="text-xl font-semibold text-accent mb-4">
-                  Pilih Varian ({selectedVariants.length}/{product.customization_options.required_count})
-                </h3>
-                <div className="grid grid-cols-2 gap-3">
-                  {product.customization_options.variants.map((variant) => (
-                    <button
-                      key={variant}
-                      data-testid={`variant-${variant}`}
-                      onClick={() => handleVariantToggle(variant)}
-                      className={`px-4 py-3 rounded-lg border-2 transition-all ${
-                        selectedVariants.includes(variant)
-                          ? 'border-primary bg-primary/10 text-primary'
-                          : 'border-border hover:border-primary/50'
-                      }`}
-                    >
-                      {variant}
-                      {variant.includes('Kaastengel') && (
-                        <span className="text-xs block mt-1">+Rp 10.000</span>
-                      )}
-                    </button>
-                  ))}
-                </div>
+              <div className="mb-6 space-y-6">
+                {/* New format with variant_types */}
+                {product.customization_options.variant_types ? (
+                  Object.entries(product.customization_options.variant_types).map(([typeName, typeConfig]) => {
+                    const selectedCount = selectedVariantsByType[typeName]?.length || 0;
+                    return (
+                      <div key={typeName}>
+                        <h3 className="text-xl font-semibold text-accent mb-4">
+                          {typeConfig.label} ({selectedCount}/{typeConfig.required_count})
+                        </h3>
+                        <div className="grid grid-cols-2 gap-3">
+                          {typeConfig.variants.map((variant) => {
+                            const isSelected = (selectedVariantsByType[typeName] || []).includes(variant);
+                            return (
+                              <button
+                                key={variant}
+                                data-testid={`variant-${typeName}-${variant}`}
+                                onClick={() => handleVariantTypeToggle(typeName, variant, typeConfig.required_count)}
+                                className={`px-4 py-3 rounded-lg border-2 transition-all ${
+                                  isSelected
+                                    ? 'border-primary bg-primary/10 text-primary'
+                                    : 'border-border hover:border-primary/50'
+                                }`}
+                              >
+                                {variant}
+                                {variant.includes('Kaastengel') && (
+                                  <span className="text-xs block mt-1">+Rp 10.000</span>
+                                )}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    );
+                  })
+                ) : (
+                  /* Old format with single variant list */
+                  <div>
+                    <h3 className="text-xl font-semibold text-accent mb-4">
+                      Pilih Varian ({selectedVariants.length}/{product.customization_options.required_count})
+                    </h3>
+                    <div className="grid grid-cols-2 gap-3">
+                      {product.customization_options.variants.map((variant) => (
+                        <button
+                          key={variant}
+                          data-testid={`variant-${variant}`}
+                          onClick={() => handleVariantToggle(variant)}
+                          className={`px-4 py-3 rounded-lg border-2 transition-all ${
+                            selectedVariants.includes(variant)
+                              ? 'border-primary bg-primary/10 text-primary'
+                              : 'border-border hover:border-primary/50'
+                          }`}
+                        >
+                          {variant}
+                          {variant.includes('Kaastengel') && (
+                            <span className="text-xs block mt-1">+Rp 10.000</span>
+                          )}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             )}
 
