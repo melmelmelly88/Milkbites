@@ -77,7 +77,7 @@ const HomePage = () => {
 
       {/* Category Tabs */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
-        <div className="bg-gradient-to-r from-green-50 to-yellow-50 rounded-2xl shadow-xl p-2 md:p-3 flex gap-2 overflow-x-auto border-2 border-yellow-200/50">
+        <div className="bg-gradient-to-r from-[#f2d9a2]/40 to-[#7cd1b4]/40 rounded-2xl shadow-lg p-2 md:p-3 flex gap-2 overflow-x-auto border border-[#7cd1b4]/30">
           {categories.map((category) => (
             <button
               key={category}
@@ -85,8 +85,8 @@ const HomePage = () => {
               onClick={() => setActiveCategory(category)}
               className={`px-4 md:px-6 py-2 md:py-3 rounded-xl font-semibold whitespace-nowrap transition-all text-sm md:text-base ${
                 activeCategory === category
-                  ? 'bg-gradient-to-r from-green-500 to-green-600 text-white shadow-lg transform scale-105'
-                  : 'text-amber-800 hover:bg-white/60 hover:shadow-md'
+                  ? 'bg-gradient-to-r from-[#7cd1b4] to-[#5fc1d7] text-white shadow-md'
+                  : 'text-[#d28b5e] hover:bg-white/60 hover:shadow-sm'
               }`}
             >
               {category}
