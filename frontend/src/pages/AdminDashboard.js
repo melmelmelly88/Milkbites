@@ -399,10 +399,10 @@ const AdminDashboard = () => {
                       data-testid={`discount-${discount.id}`}
                       className="bg-white rounded-xl p-6 shadow-sm border border-border/50"
                     >
-                      <div className="flex justify-between items-start">
-                        <div>
+                      <div className="flex justify-between items-start mb-4">
+                        <div className="flex-1">
                           <h3 className="text-xl font-semibold text-accent mb-2">
-                            Kode: {discount.code}
+                            Code: {discount.code}
                           </h3>
                           <p className="text-muted-foreground">
                             {discount.discount_type === 'percentage'
@@ -410,8 +410,13 @@ const AdminDashboard = () => {
                               : `Rp ${discount.discount_value.toLocaleString('id-ID')} off`}
                           </p>
                           <p className="text-sm text-muted-foreground mt-1">
-                            Min. pembelian: Rp {discount.min_purchase.toLocaleString('id-ID')}
+                            Min. purchase: Rp {discount.min_purchase.toLocaleString('id-ID')}
                           </p>
+                          {(discount.valid_from || discount.valid_until) && (
+                            <p className="text-sm text-muted-foreground mt-1">
+                              Valid: {discount.valid_from || 'Anytime'} - {discount.valid_until || 'Forever'}
+                            </p>
+                          )}
                         </div>
                         <span
                           className={`px-4 py-2 rounded-full text-sm font-medium ${
@@ -420,8 +425,21 @@ const AdminDashboard = () => {
                               : 'bg-red-100 text-red-800'
                           }`}
                         >
-                          {discount.active ? 'Aktif' : 'Tidak Aktif'}
+                          {discount.active ? 'Active' : 'Inactive'}
                         </span>
+                      </div>
+                      <div className="flex gap-2">
+                        <button
+                          data-testid={`edit-discount-${discount.id}`}
+                          onClick={() => {
+                            setEditingDiscount(discount);
+                            setShowDiscountModal(true);
+                          }}
+                          className="flex items-center gap-2 bg-secondary text-secondary-foreground px-4 py-2 rounded-lg hover:bg-secondary/80 transition-colors"
+                        >
+                          <Edit size={16} />
+                          Edit
+                        </button>
                       </div>
                     </div>
                   ))}
