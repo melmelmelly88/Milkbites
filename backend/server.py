@@ -304,8 +304,9 @@ async def get_me(current_user = Depends(get_current_user)):
 
 # Product endpoints
 @api_router.get("/products", response_model=List[Product])
-async def get_products(category: Optional[str] = None, active: bool = True):
-    query = {"active": active} if active else {}
+async def get_products(category: Optional[str] = None, include_inactive: bool = False):
+    # By default, only return active products
+    query = {} if include_inactive else {"active": {"$ne": False}}
     if category:
         query["category"] = category
     
