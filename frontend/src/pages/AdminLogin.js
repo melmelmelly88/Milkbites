@@ -24,10 +24,10 @@ const AdminLogin = () => {
 
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('user', JSON.stringify(response.data.user));
-      toast.success('Login admin berhasil!');
+      toast.success('Admin login successful!');
       navigate('/admin');
     } catch (error) {
-      toast.error(error.response?.data?.detail || 'Login gagal');
+      toast.error(error.response?.data?.detail || 'Login failed');
     } finally {
       setLoading(false);
     }
@@ -45,7 +45,7 @@ const AdminLogin = () => {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label className="block text-sm font-medium text-accent mb-2">
-                Nomor WhatsApp Admin
+                Admin WhatsApp Number
               </label>
               <input
                 data-testid="admin-whatsapp-input"
@@ -79,13 +79,13 @@ const AdminLogin = () => {
               disabled={loading}
               className="w-full bg-primary text-white py-3 rounded-full hover:bg-primary/90 transition-all disabled:opacity-50 font-medium"
             >
-              {loading ? 'Memproses...' : 'Login sebagai Admin'}
+              {loading ? 'Processing...' : 'Login as Admin'}
             </button>
           </form>
 
           <div className="mt-6 text-center">
             <Link to="/" className="text-primary hover:underline text-sm">
-              ← Kembali ke Home
+              ← Back to Home
             </Link>
           </div>
         </div>

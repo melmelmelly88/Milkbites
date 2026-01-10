@@ -28,10 +28,10 @@ const SignupPage = () => {
       const response = await axios.post(`${API}/auth/signup`, formData);
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('user', JSON.stringify(response.data.user));
-      toast.success('Pendaftaran berhasil!');
+      toast.success('Registration successful!');
       navigate('/');
     } catch (error) {
-      toast.error(error.response?.data?.detail || 'Pendaftaran gagal');
+      toast.error(error.response?.data?.detail || 'Registration failed');
     } finally {
       setLoading(false);
     }
@@ -44,14 +44,14 @@ const SignupPage = () => {
           <Link to="/" className="inline-block">
             <h1 className="text-4xl font-bold text-accent mb-2">Milkbites</h1>
           </Link>
-          <p className="text-muted-foreground">Buat akun baru</p>
+          <p className="text-muted-foreground">Create a new account</p>
         </div>
 
         <div className="bg-white rounded-2xl shadow-lg p-8">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label className="block text-sm font-medium text-accent mb-2">
-                Nama Lengkap
+                Full Name
               </label>
               <input
                 data-testid="fullname-input"
@@ -83,7 +83,7 @@ const SignupPage = () => {
 
             <div>
               <label className="block text-sm font-medium text-accent mb-2">
-                Nomor WhatsApp
+                WhatsApp Number
               </label>
               <input
                 data-testid="whatsapp-input"
@@ -119,15 +119,15 @@ const SignupPage = () => {
               disabled={loading}
               className="w-full bg-primary text-white py-3 rounded-full hover:bg-primary/90 transition-all disabled:opacity-50 font-medium"
             >
-              {loading ? 'Memproses...' : 'Daftar'}
+              {loading ? 'Processing...' : 'Sign Up'}
             </button>
           </form>
 
           <div className="mt-6 text-center">
             <p className="text-muted-foreground">
-              Sudah punya akun?{' '}
+              Already have an account?{' '}
               <Link to="/login" className="text-primary hover:underline font-medium">
-                Masuk
+                Sign In
               </Link>
             </p>
           </div>
