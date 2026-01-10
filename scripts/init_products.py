@@ -218,7 +218,8 @@ async def init_products():
             "discount_type": "percentage",
             "discount_value": 5,
             "min_purchase": 1000000,
-            "active": True
+            "active": True,
+            "created_at": datetime.now(timezone.utc).isoformat()
         }
         await db.discounts.insert_one(discount)
         print("\nEID2025 discount initialized!")
