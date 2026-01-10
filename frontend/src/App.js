@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import '@/App.css';
 import HomePage from './pages/HomePage';
+import AllProductsPage from './pages/AllProductsPage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import ProductDetailPage from './pages/ProductDetailPage';
