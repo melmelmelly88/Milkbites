@@ -44,31 +44,30 @@ const HomePage = () => {
       <Header />
 
       {/* Hero Section */}
-      <div className="relative h-[60vh] overflow-hidden">
+      <div className="relative h-[50vh] overflow-hidden\">
         <img
-          src="https://images.unsplash.com/photo-1766072785808-0763c2e8a646?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Njl8MHwxfHNlYXJjaHwyfHxnb3VybWV0JTIwY29va2llcyUyMGFlc3RoZXRpY3xlbnwwfHx8fDE3NjgwMjkxMDB8MA&ixlib=rb-4.1.0&q=85"
+          src="https://images.unsplash.com/photo-1760448199008-6078bc23bfaa?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Njl8MHwxfHNlYXJjaHwxfHxnb3VybWV0JTIwY29va2llcyUyMGFlc3RoZXRpY3xlbnwwfHx8fDE3NjgwMjkxMDB8MA&ixlib=rb-4.1.0&q=85"
           alt="Milkbites Bakery"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/20 flex items-center justify-center">
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/30 flex items-center justify-center">
           <div className="text-center text-white px-4">
-            <h1 className="text-5xl md:text-6xl font-bold mb-4">Milkbites</h1>
-            <p className="text-xl md:text-2xl mb-8">Premium Baked Goods untuk Perayaan Anda</p>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">Milkbites</h1>
+            <p className="text-lg md:text-xl\">Premium Baked Goods untuk Perayaan Anda</p>
           </div>
         </div>
       </div>
 
       {/* Category Tabs */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8">
-        <div className="bg-white rounded-2xl shadow-lg p-2 flex gap-2 overflow-x-auto">
-          {categories.map((category) => (
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="bg-white rounded-2xl shadow-lg p-3 flex gap-2 overflow-x-auto\">\n          {categories.map((category) => (
             <button
               key={category}
               data-testid={`tab-${category.toLowerCase()}`}
               onClick={() => setActiveCategory(category)}
               className={`px-6 py-3 rounded-xl font-medium whitespace-nowrap transition-all ${
                 activeCategory === category
-                  ? 'bg-primary text-white'
+                  ? 'bg-primary text-white shadow-md'
                   : 'text-accent hover:bg-secondary/50'
               }`}
             >
