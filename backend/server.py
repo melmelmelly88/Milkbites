@@ -676,27 +676,43 @@ async def export_orders_csv(admin = Depends(get_admin_user)):
     output = io.StringIO()
     writer = csv.writer(output)
     
-    # Header
-    writer.writerow(['Order Number', 'Date', 'Customer', 'Total Amount', 'Shipping Fee', 'Final Amount', 'Delivery Type', 'Status'])
+    # Header with products column
+    writer.writerow(['Order Number', 'Date', 'Customer', 'WhatsApp', 'Products', 'Total Amount', 'Shipping Fee', 'Discount', 'Final Amount', 'Delivery Type', 'Delivery Address', 'Status'])
     
     # Rows
     for order in orders:
         # Get user info
         user = await db.users.find_one({"id": order['user_id']}, {"_id": 0})
         customer_name = user['full_name'] if user else 'Unknown'
+        customer_whatsapp = user['whatsapp'] if user else ''
         
         created_at = order['created_at']
         if isinstance(created_at, str):
             created_at = datetime.fromisoformat(created_at)
         
+        # Build products string
+        products_list = []
+        for item in order.get('items', []):
+            product = await db.products.find_one({"id": item['product_id']}, {"_id": 0})
+            product_name = product['name'] if product else item['product_id']
+            products_list.append(f"{product_name} x{item['quantity']}")
+        products_str = '; '.join(products_list)
+        
+        # Get delivery address
+        delivery_address = order.get('delivery_address', '') if order['delivery_type'] == 'delivery' else f"{order.get('pickup_location', '')} ({order.get('pickup_date', '')})"
+        
         writer.writerow([
             order['order_number'],
             created_at.strftime('%Y-%m-%d %H:%M'),
             customer_name,
+            customer_whatsapp,
+            products_str,
             order['total_amount'],
             order['shipping_fee'],
+            order.get('discount_amount', 0),
             order['final_amount'],
             order['delivery_type'],
+            delivery_address,
             order['status']
         ])
     
