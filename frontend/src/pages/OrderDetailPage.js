@@ -92,7 +92,7 @@ const OrderDetailPage = () => {
           className="flex items-center gap-2 text-primary hover:text-primary/80 mb-6 transition-colors"
         >
           <ArrowLeft size={20} />
-          Kembali ke Dashboard
+          Back to Dashboard
         </button>
 
         <div className="bg-white rounded-xl p-6 shadow-lg border border-border/50 mb-6">
@@ -102,7 +102,7 @@ const OrderDetailPage = () => {
                 Order #{order.order_number}
               </h1>
               <p className="text-muted-foreground">
-                {new Date(order.created_at).toLocaleDateString('id-ID', {
+                {new Date(order.created_at).toLocaleDateString('en-US', {
                   year: 'numeric',
                   month: 'long',
                   day: 'numeric',
