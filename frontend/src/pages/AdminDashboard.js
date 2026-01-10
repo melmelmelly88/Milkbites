@@ -830,24 +830,37 @@ const AdminDashboard = () => {
               <div>
                 <h3 className="font-semibold text-accent mb-3">Order Items</h3>
                 <div className="space-y-3">
-                  {selectedOrder.items?.map((item, index) => (
-                    <div key={index} className="flex justify-between items-start bg-gray-50 rounded-lg p-3">
-                      <div className="flex-1">
-                        <p className="font-medium">{item.product_id}</p>
-                        <p className="text-sm text-muted-foreground">Qty: {item.quantity}</p>
-                        {item.customization && (
-                          <div className="text-xs text-muted-foreground mt-1">
-                            {item.customization.selected_variants && (
-                              <p>Variants: {item.customization.selected_variants.join(', ')}</p>
-                            )}
-                          </div>
+                  {selectedOrder.items?.map((item, index) => {
+                    const product = productDetails[item.product_id];
+                    return (
+                      <div key={index} className="flex gap-4 bg-gray-50 rounded-lg p-3">
+                        {product && product.image_url && (
+                          <img
+                            src={product.image_url}
+                            alt={product.name}
+                            className="w-16 h-16 object-cover rounded-lg"
+                          />
                         )}
+                        <div className="flex-1">
+                          <p className="font-medium">{product?.name || item.product_id}</p>
+                          <p className="text-sm text-muted-foreground">Qty: {item.quantity} × Rp {item.price.toLocaleString('id-ID')}</p>
+                          {item.customization && (
+                            <div className="text-xs text-muted-foreground mt-1">
+                              {item.customization.selected_variants && (
+                                <p>Variants: {item.customization.selected_variants.join(', ')}</p>
+                              )}
+                              {item.customization.variants && (
+                                <p>Variants: {Array.isArray(item.customization.variants) ? item.customization.variants.join(', ') : item.customization.variants}</p>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                        <p className="font-semibold text-primary">
+                          Rp {(item.price * item.quantity).toLocaleString('id-ID')}
+                        </p>
                       </div>
-                      <p className="font-semibold text-primary">
-                        Rp {(item.price * item.quantity).toLocaleString('id-ID')}
-                      </p>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
 
