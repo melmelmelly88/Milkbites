@@ -9,6 +9,7 @@ const API = `${BACKEND_URL}/api`;
 
 const HomePage = () => {
   const [products, setProducts] = useState([]);
+  const [featuredProducts, setFeaturedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchParams] = useSearchParams();
@@ -32,6 +33,14 @@ const HomePage = () => {
       const url = activeCategory === 'All' ? `${API}/products` : `${API}/products?category=${activeCategory}`;
       const response = await axios.get(url);
       setProducts(response.data);
+      
+      // Select 6 random products for featured section
+      if (activeCategory === 'All') {
+        const shuffled = [...response.data].sort(() => 0.5 - Math.random());
+        setFeaturedProducts(shuffled.slice(0, 6));
+      } else {
+        setFeaturedProducts([]);
+      }
     } catch (error) {
       console.error('Error fetching products:', error);
     } finally {
