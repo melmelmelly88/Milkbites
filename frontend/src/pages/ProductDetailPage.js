@@ -28,7 +28,7 @@ const ProductDetailPage = () => {
       setProduct(response.data);
     } catch (error) {
       console.error('Error fetching product:', error);
-      toast.error('Produk tidak ditemukan');
+      toast.error('Product not found');
     } finally {
       setLoading(false);
     }
@@ -37,7 +37,7 @@ const ProductDetailPage = () => {
   const handleAddToCart = async () => {
     const token = localStorage.getItem('token');
     if (!token) {
-      toast.error('Silakan login terlebih dahulu');
+      toast.error('Please login first');
       setTimeout(() => navigate('/login'), 1000);
       return;
     }
@@ -50,7 +50,7 @@ const ProductDetailPage = () => {
         for (const [typeName, typeConfig] of Object.entries(variantTypes)) {
           const selectedCount = selectedVariantsByType[typeName]?.length || 0;
           if (selectedCount !== typeConfig.required_count) {
-            toast.error(`Pilih ${typeConfig.required_count} ${typeConfig.label}`);
+            toast.error(`Please select ${typeConfig.required_count} ${typeConfig.label}`);
             return;
           }
         }
@@ -58,7 +58,7 @@ const ProductDetailPage = () => {
         // Old format - single variant list
         const requiredCount = product.customization_options.required_count || 1;
         if (selectedVariants.length !== requiredCount) {
-          toast.error(`Pilih ${requiredCount} varian`);
+          toast.error(`Please select ${requiredCount} variants`);
           return;
         }
       }
@@ -89,10 +89,10 @@ const ProductDetailPage = () => {
         }
       );
 
-      toast.success('Produk ditambahkan ke keranjang');
+      toast.success('Product added to cart');
       navigate('/cart');
     } catch (error) {
-      toast.error(error.response?.data?.detail || 'Gagal menambahkan ke keranjang');
+      toast.error(error.response?.data?.detail || 'Failed to add to cart');
     } finally {
       setAdding(false);
     }
@@ -107,7 +107,7 @@ const ProductDetailPage = () => {
       if (selectedVariants.length < requiredCount) {
         setSelectedVariants([...selectedVariants, variant]);
       } else {
-        toast.error(`Maksimal ${requiredCount} varian`);
+        toast.error(`Maximum ${requiredCount} variants`);
       }
     }
   };
@@ -129,7 +129,7 @@ const ProductDetailPage = () => {
           [typeName]: [...currentSelected, variant]
         });
       } else {
-        toast.error(`Maksimal ${maxCount} pilihan`);
+        toast.error(`Maximum ${maxCount} selections`);
       }
     }
   };
@@ -168,7 +168,7 @@ const ProductDetailPage = () => {
       <div className="min-h-screen bg-background">
         <Header />
         <div className="text-center py-16">
-          <p className="text-xl text-muted-foreground">Produk tidak ditemukan</p>
+          <p className="text-xl text-muted-foreground">Product not found</p>
         </div>
       </div>
     );
@@ -201,7 +201,7 @@ const ProductDetailPage = () => {
               {(selectedVariants.some((v) => v.includes('Kaastengel')) || 
                 (selectedVariantsByType['cookies'] || []).some((v) => v.includes('Kaastengel'))) && (
                 <p className="text-sm text-muted-foreground mt-2">
-                  *Termasuk biaya tambahan Kaastengel (Rp 10.000)
+                  *Includes Kaastengel additional fee (Rp 10,000)
                 </p>
               )}
             </div>
@@ -247,7 +247,7 @@ const ProductDetailPage = () => {
                   /* Old format with single variant list */
                   <div>
                     <h3 className="text-xl font-semibold text-accent mb-4">
-                      Pilih Varian ({selectedVariants.length}/{product.customization_options.required_count})
+                      Select Variants ({selectedVariants.length}/{product.customization_options.required_count})
                     </h3>
                     <div className="grid grid-cols-2 gap-3">
                       {product.customization_options.variants.map((variant) => (
@@ -275,7 +275,7 @@ const ProductDetailPage = () => {
 
             {/* Quantity Selector */}
             <div className="mb-6">
-              <h3 className="text-xl font-semibold text-accent mb-4">Jumlah</h3>
+              <h3 className="text-xl font-semibold text-accent mb-4">Quantity</h3>
               <div className="flex items-center gap-4">
                 <button
                   data-testid="decrease-quantity"
@@ -302,7 +302,7 @@ const ProductDetailPage = () => {
               disabled={adding}
               className="w-full bg-primary text-white py-4 rounded-full hover:bg-primary/90 transition-all disabled:opacity-50 font-semibold text-lg"
             >
-              {adding ? 'Menambahkan...' : 'Tambah ke Keranjang'}
+              {adding ? 'Adding...' : 'Add to Cart'}
             </button>
           </div>
         </div>
