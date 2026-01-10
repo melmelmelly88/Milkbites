@@ -32,7 +32,7 @@ const AdminDashboard = () => {
         });
         setOrders(res.data);
       } else if (activeTab === 'products') {
-        const res = await axios.get(`${API}/products?active=false`, {
+        const res = await axios.get(`${API}/products`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setProducts(res.data);
