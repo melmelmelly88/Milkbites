@@ -34,13 +34,12 @@ Build an e-commerce platform for a bakery with the following functionalities:
 
 ## What's Been Implemented
 
-### Completed - January 10, 2026
+### Session 1 - January 10, 2026
 
 #### Theme & UI
 - [x] Sky blue, black, white, blue color palette
 - [x] Responsive design for mobile and desktop
 - [x] Burger menu for mobile navigation
-- [x] Logo integrated in header
 - [x] Brand name: "Milkbites by Keka Cakery"
 
 #### English Translation
@@ -54,12 +53,14 @@ Build an e-commerce platform for a bakery with the following functionalities:
 - [x] JWT token-based auth
 
 #### Customer Features
-- [x] Homepage with featured products (6 random)
+- [x] Homepage with featured products (6 random from /api/products/featured)
 - [x] Category tabs (Cookies, Babka, Cake, Hampers)
 - [x] "View All Products" page
 - [x] Product detail page with variant selection
-- [x] Shopping cart functionality
+- [x] **Quick Add button** - Add products directly from homepage
+- [x] Shopping cart with **quantity editing (+/- buttons)**
 - [x] Checkout with delivery/pickup options
+- [x] **Delivery address validation** - Required for delivery option
 - [x] Payment instructions page
 - [x] Payment proof upload
 - [x] Customer dashboard (Orders, Addresses, Profile tabs)
@@ -67,18 +68,23 @@ Build an e-commerce platform for a bakery with the following functionalities:
 - [x] Order tracking
 
 #### Admin Features
-- [x] Admin dashboard with tabs (Orders, Products, Discounts)
+- [x] Admin dashboard with tabs (Orders, Products, Discounts, Site Settings)
+- [x] **Order detail modal** - View full order info with customer details
 - [x] Order status management (pending, confirmed, processing, completed, cancelled)
 - [x] View payment proofs
 - [x] Download orders as CSV
 - [x] Add/Edit/Delete products
+- [x] **Product image upload** - URL or file upload (base64)
 - [x] Add/Edit discounts and promos
+- [x] **WhatsApp notification button** - Opens wa.me with pre-filled message
+- [x] **Site Settings** - Edit hero image, title, subtitle, tagline, footer info
 
 #### Products
 - [x] Product seeding from Jotform
 - [x] Product categories
 - [x] Product variants/customization for hampers
 - [x] Kaastengel additional fee (+Rp 10,000)
+- [x] **Product sync fix** - Deleted products don't appear on storefront
 
 #### Checkout
 - [x] Delivery option (Rp 25,000 shipping)
@@ -93,32 +99,51 @@ Build an e-commerce platform for a bakery with the following functionalities:
 ### P0 - Critical (None remaining)
 
 ### P1 - High Priority
-- [ ] Verify CSV download functionality end-to-end
-- [ ] WhatsApp notification for order details (requires Twilio integration)
+- [x] ~~Featured products not showing~~ - FIXED (new /api/products/featured endpoint)
+- [x] ~~Products not synced~~ - FIXED (filter active products properly)
+- [x] ~~Admin order details~~ - IMPLEMENTED
+- [x] ~~Cart quantity editing~~ - IMPLEMENTED
+- [x] ~~Delivery address validation~~ - IMPLEMENTED
 
 ### P2 - Medium Priority
-- [ ] Admin UI for managing shipping fees (currently hardcoded)
-- [ ] Order confirmation email
+- [x] ~~Product image upload~~ - IMPLEMENTED
+- [x] ~~Site settings (hero/footer)~~ - IMPLEMENTED
+- [x] ~~WhatsApp notification~~ - IMPLEMENTED (using wa.me deep links - **MOCKED, no actual API**)
 
 ### P3 - Low Priority / Future Enhancements
-- [ ] Product image upload (currently URL-based)
+- [ ] Admin UI for managing shipping fees (currently hardcoded)
+- [ ] Order confirmation email
 - [ ] Inventory management / stock tracking
 - [ ] Analytics dashboard for admin
 - [ ] Customer reviews/ratings
+- [ ] Full WhatsApp API integration (Twilio/Baileys)
 
 ---
 
 ## Test Credentials
 - **Admin:** WhatsApp: `08123456789`, Password: `admin123`
-- **Customer:** Create via signup page
+- **Customer:** WhatsApp: `081038982789`, Password: `testpass123`
 
 ## API Endpoints
 - Backend URL: `https://keka-ecommerce.preview.emergentagent.com/api`
-- Products: `GET /api/products`
-- Auth: `POST /api/auth/login`, `POST /api/auth/signup`
-- Cart: `GET /api/cart`, `POST /api/cart/add`
+- Products: `GET /api/products`, `GET /api/products/featured`
+- Site Settings: `GET /api/site-settings`, `PUT /api/admin/site-settings`
+- Auth: `POST /api/auth/login`, `POST /api/auth/signup`, `POST /api/auth/admin/login`
+- Cart: `GET /api/cart`, `POST /api/cart/add`, `PUT /api/cart/item/{id}`, `DELETE /api/cart/item/{id}`
 - Orders: `GET /api/orders`, `POST /api/orders`
-- Admin: `/api/admin/orders`, `/api/admin/discounts`
+- Admin: `/api/admin/orders`, `/api/admin/discounts`, `/api/admin/products`
+
+---
+
+## Testing Status
+- **Backend Tests:** 22/22 passing (100%)
+- **Frontend Tests:** All features verified via Playwright
+- **Test Files:** `/app/tests/test_milkbites_api.py`, `/app/test_reports/iteration_2.json`
+
+---
+
+## Known Limitations / Mocked Features
+- **WhatsApp Notification:** Uses wa.me deep links (opens WhatsApp app with pre-filled message). Not a true API integration - no automated sending.
 
 ---
 
@@ -132,6 +157,11 @@ Build an e-commerce platform for a bakery with the following functionalities:
 │       ├── components/    # Header, ProductCard, Modals
 │       ├── pages/         # HomePage, AdminDashboard, etc.
 │       └── index.css      # Theme CSS variables
+├── tests/
+│   └── test_milkbites_api.py  # Pytest API tests
+├── test_reports/
+│   ├── iteration_1.json
+│   └── iteration_2.json
 └── memory/
     └── PRD.md             # This file
 ```
