@@ -151,7 +151,6 @@ const ProductDetailPage = () => {
     
     return price * quantity;
   };
-  };
 
   if (loading) {
     return (
