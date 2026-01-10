@@ -163,7 +163,8 @@ const HomePage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
-              <h3 className="text-2xl font-bold mb-4">Milkbites</h3>
+              <h3 className="text-2xl font-bold mb-2">Milkbites</h3>
+              <p className="text-sm text-white/80 mb-3">by Keka Cakery</p>
               <p className="text-white/90">Premium baked goods crafted with love</p>
               <p className="text-[#f2d9a2] mt-2 text-sm">Eid Special Collection</p>
             </div>
