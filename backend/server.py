@@ -303,6 +303,21 @@ async def get_me(current_user = Depends(get_current_user)):
     return UserResponse(**user_doc)
 
 # Product endpoints
+@api_router.get("/products/featured", response_model=List[Product])
+async def get_featured_products(limit: int = 6):
+    """Get random featured products for homepage"""
+    # Use MongoDB aggregation to get random active products
+    pipeline = [
+        {"$match": {"active": {"$ne": False}}},
+        {"$sample": {"size": limit}}
+    ]
+    products = await db.products.aggregate(pipeline).to_list(limit)
+    for product in products:
+        product.pop('_id', None)
+        if isinstance(product.get('created_at'), str):
+            product['created_at'] = datetime.fromisoformat(product['created_at'])
+    return products
+
 @api_router.get("/products", response_model=List[Product])
 async def get_products(category: Optional[str] = None, include_inactive: bool = False):
     # By default, only return active products
