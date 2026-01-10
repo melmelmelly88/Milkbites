@@ -147,7 +147,7 @@ const OrderDetailPage = () => {
 
           {/* Order Items */}
           <div className="mb-6">
-            <h3 className="text-xl font-semibold text-accent mb-4">Produk</h3>
+            <h3 className="text-xl font-semibold text-accent mb-4">Products</h3>
             <div className="space-y-3">
               {order.items.map((item, index) => {
                 const product = products[item.product_id];
