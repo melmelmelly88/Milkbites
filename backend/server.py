@@ -810,6 +810,30 @@ async def delete_address(address_id: str, current_user = Depends(get_current_use
         raise HTTPException(status_code=404, detail="Address not found")
     return {"message": "Address deleted"}
 
+# Site Settings endpoints
+@api_router.get("/site-settings")
+async def get_site_settings():
+    settings = await db.site_settings.find_one({"id": "site_settings"}, {"_id": 0})
+    if not settings:
+        settings = SiteSettings()
+        doc = settings.model_dump()
+        doc['updated_at'] = doc['updated_at'].isoformat()
+        await db.site_settings.insert_one(doc)
+        return settings.model_dump()
+    return settings
+
+@api_router.put("/admin/site-settings")
+async def update_site_settings(settings_data: SiteSettingsUpdate, admin = Depends(get_admin_user)):
+    update_data = {k: v for k, v in settings_data.model_dump().items() if v is not None}
+    update_data['updated_at'] = datetime.now(timezone.utc).isoformat()
+    
+    await db.site_settings.update_one(
+        {"id": "site_settings"},
+        {"$set": update_data},
+        upsert=True
+    )
+    return {"message": "Site settings updated"}
+
 # Initialize admin user
 @api_router.post("/admin/init")
 async def init_admin():
