@@ -367,8 +367,15 @@ const AddressModal = ({ show, address, onClose, onSave }) => {
         postal_code: address.postal_code || '',
         is_default: address.is_default || false
       });
+    } else {
+      setFormData({
+        full_address: '',
+        city: '',
+        postal_code: '',
+        is_default: false
+      });
     }
-  }, [address]);
+  }, [address, show]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
