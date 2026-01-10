@@ -110,9 +110,12 @@ const HomePage = () => {
               // Featured Products Section
               <>
                 <div className="flex justify-between items-center mb-6 md:mb-8">
-                  <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-accent">
-                    Featured Products
-                  </h2>
+                  <div>
+                    <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-amber-700 via-green-600 to-amber-700 bg-clip-text text-transparent mb-2">
+                      Featured Products
+                    </h2>
+                    <p className="text-sm md:text-base text-amber-600">✨ Handpicked for you ✨</p>
+                  </div>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
                   {featuredProducts.map((product) => (
@@ -124,9 +127,9 @@ const HomePage = () => {
                     <Link
                       to="/products"
                       data-testid="view-all-products-link"
-                      className="inline-block bg-primary text-white px-6 md:px-8 py-2 md:py-3 rounded-full hover:bg-primary/90 transition-all font-semibold text-sm md:text-base"
+                      className="inline-block bg-gradient-to-r from-green-500 to-green-600 text-white px-6 md:px-8 py-3 md:py-4 rounded-full hover:from-green-600 hover:to-green-700 transition-all font-semibold text-sm md:text-base shadow-lg hover:shadow-xl transform hover:scale-105"
                     >
-                      View All Products
+                      🛍️ View All Products
                     </Link>
                   </div>
                 )}
