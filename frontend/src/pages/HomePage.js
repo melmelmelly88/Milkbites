@@ -111,12 +111,12 @@ const HomePage = () => {
               <p className="text-white/80">Premium baked goods crafted with love</p>
             </div>
             <div>
-              <h4 className="text-lg font-semibold mb-4">Kontak</h4>
+              <h4 className="text-lg font-semibold mb-4">Contact</h4>
               <p className="text-white/80">Melly: 081294607788</p>
               <p className="text-white/80">Fari: 081386163292</p>
             </div>
             <div>
-              <h4 className="text-lg font-semibold mb-4">Lokasi Pickup</h4>
+              <h4 className="text-lg font-semibold mb-4">Pickup Location</h4>
               <p className="text-white/80">Cilandak & Menara Mandiri</p>
             </div>
           </div>
