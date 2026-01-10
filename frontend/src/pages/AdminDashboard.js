@@ -4,6 +4,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { Package, ShoppingBag, Settings, Download, LogOut, Plus, Edit, Trash2, Eye } from 'lucide-react';
 import ProductModal from '../components/ProductModal';
+import DiscountModal from '../components/DiscountModal';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
