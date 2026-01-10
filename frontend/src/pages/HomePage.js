@@ -103,17 +103,6 @@ const HomePage = () => {
         <div className="absolute top-10 left-10 w-20 h-20 bg-sky-300/30 rounded-full blur-xl animate-pulse"></div>
         <div className="absolute bottom-10 right-10 w-32 h-32 bg-blue-400/30 rounded-full blur-xl animate-pulse" style={{animationDelay: '1s'}}></div>
       </div>
-              Milkbites
-            </h1>
-            <p className="text-sm md:text-base text-white/90 mb-2 md:mb-3">by Keka Cakery</p>
-            <p className="text-base md:text-lg lg:text-xl font-medium drop-shadow-md">Premium Baked Goods for Your Celebration</p>
-            <p className="text-xs md:text-sm text-white/90 mt-2">Eid Special Collection</p>
-          </div>
-        </div>
-        {/* Decorative Elements */}
-        <div className="absolute top-10 left-10 w-20 h-20 bg-sky-300/30 rounded-full blur-xl animate-pulse"></div>
-        <div className="absolute bottom-10 right-10 w-32 h-32 bg-blue-400/30 rounded-full blur-xl animate-pulse" style={{animationDelay: '1s'}}></div>
-      </div>
 
       {/* Category Tabs */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
