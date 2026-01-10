@@ -625,6 +625,18 @@ async def validate_discount(code: str, total: float):
     if not discount:
         raise HTTPException(status_code=404, detail="Invalid discount code")
     
+    # Check date validity
+    current_date = datetime.now(timezone.utc).date()
+    if discount.get('valid_from'):
+        valid_from = datetime.fromisoformat(discount['valid_from']).date() if isinstance(discount['valid_from'], str) else discount['valid_from']
+        if current_date < valid_from:
+            raise HTTPException(status_code=400, detail="Discount not yet valid")
+    
+    if discount.get('valid_until'):
+        valid_until = datetime.fromisoformat(discount['valid_until']).date() if isinstance(discount['valid_until'], str) else discount['valid_until']
+        if current_date > valid_until:
+            raise HTTPException(status_code=400, detail="Discount has expired")
+    
     if total < discount['min_purchase']:
         raise HTTPException(status_code=400, detail=f"Minimum purchase of Rp {discount['min_purchase']:,.0f} required")
     
