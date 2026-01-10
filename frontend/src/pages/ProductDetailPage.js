@@ -134,19 +134,33 @@ const ProductDetailPage = () => {
     }
   };
 
+  // Products excluded from Kaastengel additional fee
+  const kaastengelExcludedProducts = [
+    'Hampers Double Cookies',
+    'Hampers Babka & Cookies',
+    'Hampers 4 Cookies'
+  ];
+
+  const isKaastengelFeeApplicable = () => {
+    return product && !kaastengelExcludedProducts.includes(product.name);
+  };
+
   const calculatePrice = () => {
     let price = product.price;
     
-    // Check new format with variant_types
-    if (product.customization_options?.variant_types) {
-      // Count Kaastengel from cookies type
-      const cookiesSelected = selectedVariantsByType['cookies'] || [];
-      const kaastengelCount = cookiesSelected.filter((v) => v.includes('Kaastengel')).length;
-      price += kaastengelCount * 10000;
-    } else if (selectedVariants.length > 0) {
-      // Old format
-      const kaastengelCount = selectedVariants.filter((v) => v.includes('Kaastengel')).length;
-      price += kaastengelCount * 10000;
+    // Only add Kaastengel fee if product is not in excluded list
+    if (isKaastengelFeeApplicable()) {
+      // Check new format with variant_types
+      if (product.customization_options?.variant_types) {
+        // Count Kaastengel from cookies type
+        const cookiesSelected = selectedVariantsByType['cookies'] || [];
+        const kaastengelCount = cookiesSelected.filter((v) => v.includes('Kaastengel')).length;
+        price += kaastengelCount * 10000;
+      } else if (selectedVariants.length > 0) {
+        // Old format
+        const kaastengelCount = selectedVariants.filter((v) => v.includes('Kaastengel')).length;
+        price += kaastengelCount * 10000;
+      }
     }
     
     return price * quantity;
@@ -198,7 +212,7 @@ const ProductDetailPage = () => {
               <span className="text-3xl font-bold text-primary">
                 Rp {calculatePrice().toLocaleString('id-ID')}
               </span>
-              {(selectedVariants.some((v) => v.includes('Kaastengel')) || 
+              {isKaastengelFeeApplicable() && (selectedVariants.some((v) => v.includes('Kaastengel')) || 
                 (selectedVariantsByType['cookies'] || []).some((v) => v.includes('Kaastengel'))) && (
                 <p className="text-sm text-muted-foreground mt-2">
                   *Includes Kaastengel additional fee (Rp 10,000)
