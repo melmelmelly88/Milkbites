@@ -18,6 +18,7 @@ const AdminDashboard = () => {
   const [showProductModal, setShowProductModal] = useState(false);
   const [showDiscountModal, setShowDiscountModal] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
+  const [editingDiscount, setEditingDiscount] = useState(null);
   const [showPaymentProof, setShowPaymentProof] = useState(null);
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
