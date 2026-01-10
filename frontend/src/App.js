@@ -14,6 +14,7 @@ import CustomerDashboard from './pages/CustomerDashboard';
 import OrderDetailPage from './pages/OrderDetailPage';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
+import ThemeCustomizer from './components/ThemeCustomizer';
 
 const PrivateRoute = ({ children }) => {
   const token = localStorage.getItem('token');
