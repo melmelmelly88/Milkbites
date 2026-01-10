@@ -194,6 +194,8 @@ products_data = [
 ]
 
 async def init_products():
+    from datetime import datetime, timezone
+    
     print("Initializing products...")
     
     # Clear existing products
@@ -201,6 +203,7 @@ async def init_products():
     
     # Insert products
     for product in products_data:
+        product['created_at'] = datetime.now(timezone.utc).isoformat()
         await db.products.insert_one(product)
         print(f"Added: {product['name']}")
     
