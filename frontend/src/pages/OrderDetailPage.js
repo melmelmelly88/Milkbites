@@ -167,7 +167,7 @@ const OrderDetailPage = () => {
                       {item.customization && (
                         <div className="text-sm text-muted-foreground mt-1">
                           {item.customization.variants && (
-                            <p>Varian: {Array.isArray(item.customization.variants) ? item.customization.variants.join(', ') : item.customization.variants}</p>
+                            <p>Variants: {Array.isArray(item.customization.variants) ? item.customization.variants.join(', ') : item.customization.variants}</p>
                           )}
                           {item.customization.variant_types && (
                             <div>
