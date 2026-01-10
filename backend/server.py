@@ -832,6 +832,23 @@ async def delete_address(address_id: str, current_user = Depends(get_current_use
         raise HTTPException(status_code=404, detail="Address not found")
     return {"message": "Address deleted"}
 
+@api_router.put("/addresses/{address_id}")
+async def update_address(address_id: str, address_data: AddressCreate, current_user = Depends(get_current_user)):
+    # If this is default, unset other defaults
+    if address_data.is_default:
+        await db.addresses.update_many(
+            {"user_id": current_user['user_id']},
+            {"$set": {"is_default": False}}
+        )
+    
+    result = await db.addresses.update_one(
+        {"id": address_id, "user_id": current_user['user_id']},
+        {"$set": address_data.model_dump()}
+    )
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Address not found")
+    return {"message": "Address updated"}
+
 # Site Settings endpoints
 @api_router.get("/site-settings")
 async def get_site_settings():
