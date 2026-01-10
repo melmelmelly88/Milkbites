@@ -231,8 +231,14 @@ const OrderDetailPage = () => {
           {/* Payment Proof */}
           {order.payment_proof && (
             <div className="mt-6 border-t border-border pt-6">
-              <h3 className="text-lg font-semibold text-accent mb-2">Bukti Pembayaran</h3>
-              <p className="text-sm text-green-600 mb-2">✓ Sudah diupload</p>
+              <h3 className="text-lg font-semibold text-accent mb-4">Payment Proof</h3>
+              <div className="bg-secondary/10 rounded-lg p-4 border border-border">
+                <img
+                  src={order.payment_proof}
+                  alt="Payment Proof"
+                  className="w-full max-w-md mx-auto rounded-lg shadow-md"
+                />
+              </div>
             </div>
           )}
         </div>
