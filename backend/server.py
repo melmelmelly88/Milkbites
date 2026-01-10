@@ -619,6 +619,20 @@ async def get_discounts(admin = Depends(get_admin_user)):
             discount['created_at'] = datetime.fromisoformat(discount['created_at'])
     return discounts
 
+@api_router.put("/admin/discounts/{discount_id}", response_model=Discount)
+async def update_discount(discount_id: str, discount_data: DiscountCreate, admin = Depends(get_admin_user)):
+    existing = await db.discounts.find_one({"id": discount_id}, {"_id": 0})
+    if not existing:
+        raise HTTPException(status_code=404, detail="Discount not found")
+    
+    update_data = discount_data.model_dump()
+    await db.discounts.update_one({"id": discount_id}, {"$set": update_data})
+    
+    updated = await db.discounts.find_one({"id": discount_id}, {"_id": 0})
+    if isinstance(updated['created_at'], str):
+        updated['created_at'] = datetime.fromisoformat(updated['created_at'])
+    return Discount(**updated)
+
 @api_router.post("/discounts/validate")
 async def validate_discount(code: str, total: float):
     discount = await db.discounts.find_one({"code": code, "active": True}, {"_id": 0})
