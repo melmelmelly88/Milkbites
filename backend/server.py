@@ -665,8 +665,6 @@ async def update_order_status(order_id: str, status_data: OrderStatusUpdate, adm
         "final_amount": order.get('final_amount'),
         "new_status": status_data.status
     }
-    
-    return {"message": "Order status updated"}
 
 @api_router.get("/admin/orders/export/csv")
 async def export_orders_csv(admin = Depends(get_admin_user)):
