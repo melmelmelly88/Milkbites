@@ -136,11 +136,21 @@ const ProductDetailPage = () => {
 
   const calculatePrice = () => {
     let price = product.price;
-    if (selectedVariants.length > 0) {
+    
+    // Check new format with variant_types
+    if (product.customization_options?.variant_types) {
+      // Count Kaastengel from cookies type
+      const cookiesSelected = selectedVariantsByType['cookies'] || [];
+      const kaastengelCount = cookiesSelected.filter((v) => v.includes('Kaastengel')).length;
+      price += kaastengelCount * 10000;
+    } else if (selectedVariants.length > 0) {
+      // Old format
       const kaastengelCount = selectedVariants.filter((v) => v.includes('Kaastengel')).length;
       price += kaastengelCount * 10000;
     }
+    
     return price * quantity;
+  };
   };
 
   if (loading) {
