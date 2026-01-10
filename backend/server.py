@@ -377,8 +377,14 @@ async def add_to_cart(item: CartItemAdd, current_user = Depends(get_current_user
     # Calculate price with customization
     price = product['price']
     if item.customization and product.get('requires_customization'):
-        # Add Kaastengel fee if applicable
-        if item.customization.get('variants'):
+        # Handle new format with variant_types
+        if item.customization.get('variant_types'):
+            # Count Kaastengel from cookies type
+            cookies_variants = item.customization['variant_types'].get('cookies', [])
+            kaastengel_count = sum(1 for v in cookies_variants if 'Kaastengel' in v)
+            price += kaastengel_count * 10000
+        # Handle old format with single variants list
+        elif item.customization.get('variants'):
             variants = item.customization['variants'] if isinstance(item.customization['variants'], list) else [item.customization['variants']]
             kaastengel_count = sum(1 for v in variants if 'Kaastengel' in v)
             price += kaastengel_count * 10000
