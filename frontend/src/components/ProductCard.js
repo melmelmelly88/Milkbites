@@ -16,7 +16,7 @@ const ProductCard = ({ product }) => {
         />
       </div>
       <div className="p-4 bg-gradient-to-b from-white to-[#f2d9a2]/10">
-        <h3 className="text-base md:text-lg font-semibold text-[#d28b5e] mb-2">{product.name}</h3>
+        <h3 className="text-base md:text-lg font-semibold text-[#5fc1d7] mb-2">{product.name}</h3>
         <p className="text-xs md:text-sm text-[#6d8fa9] line-clamp-2 mb-3">{product.description}</p>
         <div className="flex items-center justify-between">
           <span className="text-lg md:text-xl font-bold text-[#7cd1b4]">
