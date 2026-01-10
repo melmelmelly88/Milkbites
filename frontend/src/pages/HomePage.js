@@ -53,7 +53,7 @@ const HomePage = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/30 flex items-center justify-center">
           <div className="text-center text-white px-4">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">Milkbites</h1>
-            <p className="text-lg md:text-xl\">Premium Baked Goods untuk Perayaan Anda</p>
+            <p className="text-lg md:text-xl">Premium Baked Goods for Your Celebration</p>
           </div>
         </div>
       </div>
