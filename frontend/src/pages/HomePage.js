@@ -27,22 +27,26 @@ const HomePage = () => {
 
   useEffect(() => {
     fetchProducts();
+    fetchFeaturedProducts();
   }, [activeCategory]);
+
+  const fetchFeaturedProducts = async () => {
+    try {
+      const response = await axios.get(`${API}/products/featured`);
+      setFeaturedProducts(response.data);
+    } catch (error) {
+      console.error('Error fetching featured products:', error);
+    }
+  };
 
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      const url = (activeCategory === 'Featured' || !activeCategory) ? `${API}/products` : `${API}/products?category=${activeCategory}`;
+      const url = (activeCategory === 'Featured' || !activeCategory) 
+        ? `${API}/products` 
+        : `${API}/products?category=${activeCategory}`;
       const response = await axios.get(url);
       setProducts(response.data);
-      
-      // Select 6 random products for featured section
-      if (activeCategory === 'Featured' || !activeCategory) {
-        const shuffled = [...response.data].sort(() => 0.5 - Math.random());
-        setFeaturedProducts(shuffled.slice(0, 6));
-      } else {
-        setFeaturedProducts([]);
-      }
     } catch (error) {
       console.error('Error fetching products:', error);
     } finally {
