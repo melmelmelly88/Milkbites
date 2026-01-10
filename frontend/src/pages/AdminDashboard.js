@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import { Package, ShoppingBag, Settings, Download, LogOut, Plus, Edit, Trash2 } from 'lucide-react';
+import { Package, ShoppingBag, Settings, Download, LogOut, Plus, Edit, Trash2, Eye } from 'lucide-react';
+import ProductModal from '../components/ProductModal';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
