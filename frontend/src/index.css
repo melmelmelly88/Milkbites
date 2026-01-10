@@ -6,25 +6,25 @@
 
 @layer base {
   :root {
-    --background: 45 35% 98%;
-    --foreground: 0 0% 10%;
+    --background: 45 40% 97%;
+    --foreground: 25 30% 25%;
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 10%;
+    --card-foreground: 25 30% 25%;
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 10%;
-    --primary: 142 76% 36%;
+    --popover-foreground: 25 30% 25%;
+    --primary: 170 48% 65%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 35 75% 92%;
-    --secondary-foreground: 25 65% 30%;
-    --muted: 0 0% 91%;
-    --muted-foreground: 0 0% 40%;
-    --accent: 25 85% 45%;
+    --secondary: 42 67% 80%;
+    --secondary-foreground: 25 45% 30%;
+    --muted: 210 20% 75%;
+    --muted-foreground: 210 15% 45%;
+    --accent: 19 50% 60%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 35 40% 85%;
-    --input: 35 40% 85%;
-    --ring: 142 76% 36%;
+    --border: 42 35% 85%;
+    --input: 42 35% 85%;
+    --ring: 170 48% 65%;
     --radius: 0.5rem;
   }
 }
@@ -37,8 +37,8 @@
     @apply bg-background text-foreground;
     font-family: 'Lato', sans-serif;
     background-image: 
-      radial-gradient(circle at 20% 50%, rgba(255, 237, 213, 0.3) 0%, transparent 50%),
-      radial-gradient(circle at 80% 80%, rgba(144, 238, 144, 0.2) 0%, transparent 50%);
+      radial-gradient(circle at 20% 50%, rgba(124, 209, 180, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(242, 217, 162, 0.1) 0%, transparent 50%);
     background-attachment: fixed;
   }
   h1, h2, h3, h4, h5, h6 {
@@ -51,15 +51,15 @@
     @apply backdrop-blur-md bg-white/80 border border-white/40 shadow-lg;
   }
   .shadow-soft {
-    box-shadow: 0 4px 20px -2px rgba(142, 76, 36, 0.1);
+    box-shadow: 0 4px 20px -2px rgba(124, 209, 180, 0.15);
   }
   .shadow-hover {
-    box-shadow: 0 10px 30px -5px rgba(142, 76, 36, 0.15);
+    box-shadow: 0 10px 30px -5px rgba(124, 209, 180, 0.25);
   }
-  .festive-gradient {
-    background: linear-gradient(135deg, #22c55e 0%, #fbbf24 100%);
+  .beach-gradient {
+    background: linear-gradient(135deg, #7cd1b4 0%, #5fc1d7 100%);
   }
-  .festive-border {
-    border-image: linear-gradient(to right, #22c55e, #fbbf24) 1;
+  .warm-gradient {
+    background: linear-gradient(135deg, #d28b5e 0%, #f2d9a2 100%);
   }
 }
