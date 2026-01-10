@@ -179,7 +179,7 @@ const OrderDetailPage = () => {
                         </div>
                       )}
                       <p className="text-sm text-muted-foreground mt-1">
-                        Jumlah: {item.quantity} × Rp {item.price.toLocaleString('id-ID')}
+                        Quantity: {item.quantity} × Rp {item.price.toLocaleString('id-ID')}
                       </p>
                     </div>
                     <div className="text-right">
