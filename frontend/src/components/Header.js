@@ -24,40 +24,40 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-border shadow-soft">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-14 md:h-16">
           {/* Burger Menu */}
           <button
             data-testid="burger-menu-button"
             onClick={() => setMenuOpen(!menuOpen)}
             className="p-2 rounded-lg hover:bg-secondary/50 transition-colors"
           >
-            {menuOpen ? <X size={24} className="text-accent" /> : <Menu size={24} className="text-accent" />}
+            {menuOpen ? <X size={20} className="text-accent md:w-6 md:h-6" /> : <Menu size={20} className="text-accent md:w-6 md:h-6" />}
           </button>
 
           {/* Logo */}
           <Link to="/" className="flex items-center">
-            <h1 className="text-2xl font-bold text-accent">Milkbites</h1>
+            <h1 className="text-xl md:text-2xl font-bold text-accent">Milkbites</h1>
           </Link>
 
           {/* Right Icons */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 md:gap-4">
             {token ? (
               <>
                 <Link to="/cart" data-testid="cart-link">
-                  <ShoppingCart className="text-accent hover:text-primary transition-colors" size={24} />
+                  <ShoppingCart className="text-accent hover:text-primary transition-colors" size={20} />
                 </Link>
                 <Link to="/dashboard" data-testid="dashboard-link">
-                  <User className="text-accent hover:text-primary transition-colors" size={24} />
+                  <User className="text-accent hover:text-primary transition-colors" size={20} />
                 </Link>
-                <button onClick={handleLogout} data-testid="logout-button">
-                  <LogOut className="text-accent hover:text-primary transition-colors" size={24} />
+                <button onClick={handleLogout} data-testid="logout-button" className="hidden md:block">
+                  <LogOut className="text-accent hover:text-primary transition-colors" size={20} />
                 </button>
               </>
             ) : (
               <Link
                 to="/login"
                 data-testid="login-link"
-                className="bg-primary text-white px-6 py-2 rounded-full hover:bg-primary/90 transition-all"
+                className="bg-primary text-white px-4 md:px-6 py-1.5 md:py-2 rounded-full hover:bg-primary/90 transition-all text-sm md:text-base"
               >
                 Login
               </Link>
