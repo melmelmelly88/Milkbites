@@ -721,8 +721,10 @@ async def create_discount(discount_data: DiscountCreate, admin = Depends(get_adm
 async def get_discounts(admin = Depends(get_admin_user)):
     discounts = await db.discounts.find({}, {"_id": 0}).to_list(1000)
     for discount in discounts:
-        if isinstance(discount['created_at'], str):
+        if 'created_at' in discount and isinstance(discount['created_at'], str):
             discount['created_at'] = datetime.fromisoformat(discount['created_at'])
+        elif 'created_at' not in discount:
+            discount['created_at'] = datetime.now(timezone.utc)
     return discounts
 
 @api_router.put("/admin/discounts/{discount_id}", response_model=Discount)
