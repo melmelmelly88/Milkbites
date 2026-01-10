@@ -49,7 +49,7 @@ const ProductModal = ({ show, onClose, product, onSave }) => {
     e.preventDefault();
     
     if (!formData.name || !formData.price || !formData.image_url) {
-      toast.error('Nama, harga, dan URL gambar wajib diisi');
+      toast.error('Name, price, and image URL are required');
       return;
     }
 
@@ -63,7 +63,7 @@ const ProductModal = ({ show, onClose, product, onSave }) => {
       <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         <div className="sticky top-0 bg-white border-b border-border p-6 flex justify-between items-center">
           <h2 className="text-2xl font-bold text-accent">
-            {product ? 'Edit Produk' : 'Tambah Produk'}
+            {product ? 'Edit Product' : 'Add Product'}
           </h2>
           <button
             data-testid="close-product-modal"
@@ -77,7 +77,7 @@ const ProductModal = ({ show, onClose, product, onSave }) => {
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           <div>
             <label className="block text-sm font-medium text-accent mb-2">
-              Nama Produk *
+              Product Name *
             </label>
             <input
               data-testid="product-name-input"
@@ -86,14 +86,14 @@ const ProductModal = ({ show, onClose, product, onSave }) => {
               value={formData.name}
               onChange={handleChange}
               className="w-full px-4 py-3 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-              placeholder="Contoh: Dutch Kaastengel"
+              placeholder="e.g., Dutch Kaastengel"
               required
             />
           </div>
 
           <div>
             <label className="block text-sm font-medium text-accent mb-2">
-              Deskripsi *
+              Description *
             </label>
             <textarea
               data-testid="product-description-input"
@@ -102,7 +102,7 @@ const ProductModal = ({ show, onClose, product, onSave }) => {
               onChange={handleChange}
               rows="4"
               className="w-full px-4 py-3 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-              placeholder="Deskripsi produk..."
+              placeholder="Product description..."
               required
             />
           </div>
@@ -110,7 +110,7 @@ const ProductModal = ({ show, onClose, product, onSave }) => {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-accent mb-2">
-                Harga (Rp) *
+                Price (Rp) *
               </label>
               <input
                 data-testid="product-price-input"
@@ -126,7 +126,7 @@ const ProductModal = ({ show, onClose, product, onSave }) => {
 
             <div>
               <label className="block text-sm font-medium text-accent mb-2">
-                Kategori *
+                Category *
               </label>
               <select
                 data-testid="product-category-select"
@@ -145,7 +145,7 @@ const ProductModal = ({ show, onClose, product, onSave }) => {
 
           <div>
             <label className="block text-sm font-medium text-accent mb-2">
-              URL Gambar *
+              Image URL *
             </label>
             <input
               data-testid="product-image-input"
@@ -165,7 +165,7 @@ const ProductModal = ({ show, onClose, product, onSave }) => {
                   className="w-32 h-32 object-cover rounded-lg border border-border"
                   onError={(e) => {
                     e.target.style.display = 'none';
-                    toast.error('URL gambar tidak valid');
+                    toast.error('Invalid image URL');
                   }}
                 />
               </div>
@@ -175,7 +175,7 @@ const ProductModal = ({ show, onClose, product, onSave }) => {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-accent mb-2">
-                Stok
+                Stock
               </label>
               <input
                 data-testid="product-stock-input"
@@ -198,7 +198,7 @@ const ProductModal = ({ show, onClose, product, onSave }) => {
                   onChange={handleChange}
                   className="w-5 h-5 text-primary border-input rounded focus:ring-2 focus:ring-primary"
                 />
-                <span className="ml-2 text-sm font-medium text-accent">Produk Aktif</span>
+                <span className="ml-2 text-sm font-medium text-accent">Product Active</span>
               </label>
             </div>
           </div>
@@ -209,14 +209,14 @@ const ProductModal = ({ show, onClose, product, onSave }) => {
               onClick={onClose}
               className="flex-1 px-6 py-3 border border-border rounded-full hover:bg-secondary/50 transition-colors font-medium"
             >
-              Batal
+              Cancel
             </button>
             <button
               data-testid="save-product-button"
               type="submit"
               className="flex-1 bg-primary text-white px-6 py-3 rounded-full hover:bg-primary/90 transition-all font-medium"
             >
-              {product ? 'Simpan Perubahan' : 'Tambah Produk'}
+              {product ? 'Save Changes' : 'Add Product'}
             </button>
           </div>
         </form>
