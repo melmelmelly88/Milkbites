@@ -151,7 +151,7 @@ const CheckoutPage = () => {
                   }`}
                 >
                   <div className="font-semibold">Pick Up</div>
-                  <div className="text-sm mt-1">GRATIS</div>
+                  <div className="text-sm mt-1">FREE</div>
                 </button>
               </div>
             </div>
