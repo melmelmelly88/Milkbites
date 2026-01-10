@@ -6,25 +6,25 @@
 
 @layer base {
   :root {
-    --background: 45 40% 97%;
-    --foreground: 200 30% 35%;
+    --background: 0 0% 100%;
+    --foreground: 0 0% 10%;
     --card: 0 0% 100%;
-    --card-foreground: 200 30% 35%;
+    --card-foreground: 0 0% 10%;
     --popover: 0 0% 100%;
-    --popover-foreground: 200 30% 35%;
-    --primary: 170 48% 65%;
+    --popover-foreground: 0 0% 10%;
+    --primary: 199 89% 48%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 42 67% 80%;
-    --secondary-foreground: 195 40% 40%;
-    --muted: 210 20% 75%;
-    --muted-foreground: 210 25% 50%;
-    --accent: 195 40% 45%;
+    --secondary: 204 100% 85%;
+    --secondary-foreground: 0 0% 10%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 210 100% 40%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 42 35% 85%;
-    --input: 42 35% 85%;
-    --ring: 170 48% 65%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 199 89% 48%;
     --radius: 0.5rem;
   }
 }
@@ -36,9 +36,7 @@
   body {
     @apply bg-background text-foreground;
     font-family: 'Lato', sans-serif;
-    background-image: 
-      radial-gradient(circle at 20% 50%, rgba(124, 209, 180, 0.08) 0%, transparent 50%),
-      radial-gradient(circle at 80% 80%, rgba(242, 217, 162, 0.1) 0%, transparent 50%);
+    background: linear-gradient(to bottom right, #ffffff 0%, #e3f2fd 100%);
     background-attachment: fixed;
   }
   h1, h2, h3, h4, h5, h6 {
@@ -48,18 +46,18 @@
 
 @layer utilities {
   .glass-card {
-    @apply backdrop-blur-md bg-white/80 border border-white/40 shadow-lg;
+    @apply backdrop-blur-md bg-white/90 border border-gray-200 shadow-lg;
   }
   .shadow-soft {
-    box-shadow: 0 4px 20px -2px rgba(124, 209, 180, 0.15);
+    box-shadow: 0 4px 20px -2px rgba(14, 165, 233, 0.15);
   }
   .shadow-hover {
-    box-shadow: 0 10px 30px -5px rgba(124, 209, 180, 0.25);
+    box-shadow: 0 10px 30px -5px rgba(14, 165, 233, 0.25);
   }
-  .beach-gradient {
-    background: linear-gradient(135deg, #7cd1b4 0%, #5fc1d7 100%);
+  .sky-gradient {
+    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
   }
-  .warm-gradient {
-    background: linear-gradient(135deg, #d28b5e 0%, #f2d9a2 100%);
+  .sky-text {
+    @apply bg-gradient-to-r from-sky-500 to-blue-600 bg-clip-text text-transparent;
   }
 }
