@@ -17,12 +17,31 @@ const CheckoutPage = () => {
   const [discountAmount, setDiscountAmount] = useState(0);
   const [notes, setNotes] = useState('');
   const [loading, setLoading] = useState(false);
+  const [savedAddresses, setSavedAddresses] = useState([]);
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
 
   useEffect(() => {
     fetchCart();
+    fetchAddresses();
   }, []);
+
+  const fetchAddresses = async () => {
+    try {
+      const response = await axios.get(`${API}/addresses`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setSavedAddresses(response.data);
+      
+      // Auto-fill default address
+      const defaultAddress = response.data.find(addr => addr.is_default);
+      if (defaultAddress && !deliveryAddress) {
+        setDeliveryAddress(`${defaultAddress.full_address}, ${defaultAddress.city} ${defaultAddress.postal_code}`);
+      }
+    } catch (error) {
+      console.error('Failed to fetch addresses');
+    }
+  };
 
   const fetchCart = async () => {
     try {
