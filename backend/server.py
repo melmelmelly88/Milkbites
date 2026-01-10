@@ -640,6 +640,14 @@ async def get_all_orders(admin = Depends(get_admin_user)):
 
 @api_router.put("/admin/orders/{order_id}/status")
 async def update_order_status(order_id: str, status_data: OrderStatusUpdate, admin = Depends(get_admin_user)):
+    # Get order and customer info first
+    order = await db.orders.find_one({"id": order_id}, {"_id": 0})
+    if not order:
+        raise HTTPException(status_code=404, detail="Order not found")
+    
+    # Get customer info
+    user = await db.users.find_one({"id": order['user_id']}, {"_id": 0})
+    
     result = await db.orders.update_one(
         {"id": order_id},
         {"$set": {"status": status_data.status, "updated_at": datetime.now(timezone.utc).isoformat()}}
@@ -647,6 +655,16 @@ async def update_order_status(order_id: str, status_data: OrderStatusUpdate, adm
     
     if result.modified_count == 0:
         raise HTTPException(status_code=404, detail="Order not found")
+    
+    # Return order details for WhatsApp notification
+    return {
+        "message": "Order status updated",
+        "order_number": order.get('order_number'),
+        "customer_name": user.get('full_name', 'Customer') if user else 'Customer',
+        "customer_whatsapp": user.get('whatsapp', '') if user else '',
+        "final_amount": order.get('final_amount'),
+        "new_status": status_data.status
+    }
     
     return {"message": "Order status updated"}
 
