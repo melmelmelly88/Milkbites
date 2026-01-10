@@ -61,7 +61,7 @@ const HomePage = () => {
           alt="Milkbites Bakery"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#6d8fa9]/80 to-[#5fc1d7]/60 flex items-center justify-center">
+        <div className="absolute inset-0 bg-gradient-to-b from-sky-600/80 to-blue-700/70 flex items-center justify-center">
           <div className="text-center text-white px-4">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 md:mb-3 drop-shadow-lg">
               Milkbites
@@ -72,13 +72,13 @@ const HomePage = () => {
           </div>
         </div>
         {/* Decorative Elements */}
-        <div className="absolute top-10 left-10 w-20 h-20 bg-[#7cd1b4]/30 rounded-full blur-xl animate-pulse"></div>
-        <div className="absolute bottom-10 right-10 w-32 h-32 bg-[#f2d9a2]/30 rounded-full blur-xl animate-pulse" style={{animationDelay: '1s'}}></div>
+        <div className="absolute top-10 left-10 w-20 h-20 bg-sky-300/30 rounded-full blur-xl animate-pulse"></div>
+        <div className="absolute bottom-10 right-10 w-32 h-32 bg-blue-400/30 rounded-full blur-xl animate-pulse" style={{animationDelay: '1s'}}></div>
       </div>
 
       {/* Category Tabs */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
-        <div className="bg-gradient-to-r from-[#f2d9a2]/40 to-[#7cd1b4]/40 rounded-2xl shadow-lg p-2 md:p-3 flex gap-2 overflow-x-auto border border-[#7cd1b4]/30">
+        <div className="bg-white rounded-2xl shadow-lg p-2 md:p-3 flex gap-2 overflow-x-auto border border-sky-100">
           {categories.map((category) => (
             <button
               key={category}
@@ -86,8 +86,8 @@ const HomePage = () => {
               onClick={() => setActiveCategory(category)}
               className={`px-4 md:px-6 py-2 md:py-3 rounded-xl font-semibold whitespace-nowrap transition-all text-sm md:text-base ${
                 activeCategory === category
-                  ? 'bg-gradient-to-r from-[#7cd1b4] to-[#5fc1d7] text-white shadow-md'
-                  : 'text-[#5fc1d7] hover:bg-white/60 hover:shadow-sm'
+                  ? 'bg-gradient-to-r from-sky-500 to-blue-600 text-white shadow-md'
+                  : 'text-gray-700 hover:bg-sky-50 hover:shadow-sm'
               }`}
             >
               {category}
@@ -109,10 +109,10 @@ const HomePage = () => {
               <>
                 <div className="flex justify-between items-center mb-6 md:mb-8">
                   <div>
-                    <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#5fc1d7] mb-2">
+                    <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-2">
                       Featured Products
                     </h2>
-                    <p className="text-sm md:text-base text-[#6d8fa9]">Handpicked for you</p>
+                    <p className="text-sm md:text-base text-gray-600">Handpicked for you</p>
                   </div>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
@@ -125,7 +125,7 @@ const HomePage = () => {
                     <Link
                       to="/products"
                       data-testid="view-all-products-link"
-                      className="inline-block bg-gradient-to-r from-[#7cd1b4] to-[#5fc1d7] text-white px-6 md:px-8 py-3 md:py-4 rounded-full hover:shadow-lg transition-all font-semibold text-sm md:text-base shadow-md"
+                      className="inline-block bg-gradient-to-r from-sky-500 to-blue-600 text-white px-6 md:px-8 py-3 md:py-4 rounded-full hover:shadow-lg transition-all font-semibold text-sm md:text-base shadow-md"
                     >
                       View All Products
                     </Link>
@@ -135,7 +135,7 @@ const HomePage = () => {
             ) : (
               // Category Products Section
               <>
-                <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#5fc1d7] mb-6 md:mb-8">
+                <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-6 md:mb-8">
                   {activeCategory}
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
@@ -155,10 +155,10 @@ const HomePage = () => {
       </div>
 
       {/* Footer */}
-      <footer className="bg-gradient-to-r from-[#6d8fa9] to-[#5fc1d7] text-white py-12 mt-20 relative overflow-hidden">
+      <footer className="bg-gradient-to-r from-gray-900 to-blue-900 text-white py-12 mt-20 relative overflow-hidden">
         {/* Decorative elements */}
-        <div className="absolute top-0 left-0 w-64 h-64 bg-[#7cd1b4]/20 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
-        <div className="absolute bottom-0 right-0 w-64 h-64 bg-[#f2d9a2]/20 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
+        <div className="absolute top-0 left-0 w-64 h-64 bg-sky-500/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+        <div className="absolute bottom-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -166,15 +166,15 @@ const HomePage = () => {
               <h3 className="text-2xl font-bold mb-2">Milkbites</h3>
               <p className="text-sm text-white/80 mb-3">by Keka Cakery</p>
               <p className="text-white/90">Premium baked goods crafted with love</p>
-              <p className="text-[#f2d9a2] mt-2 text-sm">Eid Special Collection</p>
+              <p className="text-sky-300 mt-2 text-sm">Eid Special Collection</p>
             </div>
             <div>
-              <h4 className="text-lg font-semibold mb-4 text-[#f2d9a2]">Contact</h4>
+              <h4 className="text-lg font-semibold mb-4 text-sky-300">Contact</h4>
               <p className="text-white/90">Melly: 081294607788</p>
               <p className="text-white/90">Fari: 081386163292</p>
             </div>
             <div>
-              <h4 className="text-lg font-semibold mb-4 text-[#f2d9a2]">Pickup Location</h4>
+              <h4 className="text-lg font-semibold mb-4 text-sky-300">Pickup Location</h4>
               <p className="text-white/90">Cilandak & Menara Mandiri</p>
             </div>
           </div>
