@@ -556,15 +556,32 @@ async def get_order(order_id: str, current_user = Depends(get_current_user)):
     return order
 
 # Admin endpoints
-@api_router.get("/admin/orders", response_model=List[Order])
+@api_router.get("/admin/orders")
 async def get_all_orders(admin = Depends(get_admin_user)):
     orders = await db.orders.find({}, {"_id": 0}).sort("created_at", -1).to_list(1000)
+    
+    # Enrich orders with customer info
+    enriched_orders = []
     for order in orders:
         if isinstance(order['created_at'], str):
             order['created_at'] = datetime.fromisoformat(order['created_at'])
         if isinstance(order['updated_at'], str):
             order['updated_at'] = datetime.fromisoformat(order['updated_at'])
-    return orders
+        
+        # Get customer info
+        user = await db.users.find_one({"id": order['user_id']}, {"_id": 0})
+        if user:
+            order['customer_name'] = user.get('full_name', 'Unknown')
+            order['customer_whatsapp'] = user.get('whatsapp', 'N/A')
+            order['customer_email'] = user.get('email', 'N/A')
+        else:
+            order['customer_name'] = 'Unknown'
+            order['customer_whatsapp'] = 'N/A'
+            order['customer_email'] = 'N/A'
+        
+        enriched_orders.append(order)
+    
+    return enriched_orders
 
 @api_router.put("/admin/orders/{order_id}/status")
 async def update_order_status(order_id: str, status_data: OrderStatusUpdate, admin = Depends(get_admin_user)):
