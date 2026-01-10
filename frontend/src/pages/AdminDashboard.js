@@ -461,6 +461,17 @@ const AdminDashboard = () => {
         onSave={handleSaveProduct}
       />
 
+      {/* Discount Modal */}
+      <DiscountModal
+        show={showDiscountModal}
+        discount={editingDiscount}
+        onClose={() => {
+          setShowDiscountModal(false);
+          setEditingDiscount(null);
+        }}
+        onSave={handleSaveDiscount}
+      />
+
       {/* Payment Proof Modal */}
       {showPaymentProof && (
         <div
