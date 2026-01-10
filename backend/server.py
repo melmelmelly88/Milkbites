@@ -208,6 +208,8 @@ class Discount(BaseModel):
     discount_type: str  # percentage or fixed
     discount_value: float
     min_purchase: float
+    valid_from: Optional[str] = None
+    valid_until: Optional[str] = None
     active: bool = True
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
@@ -216,6 +218,8 @@ class DiscountCreate(BaseModel):
     discount_type: str
     discount_value: float
     min_purchase: float
+    valid_from: Optional[str] = None
+    valid_until: Optional[str] = None
     active: bool = True
 
 class ShippingSettings(BaseModel):
