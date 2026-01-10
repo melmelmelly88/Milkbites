@@ -38,6 +38,7 @@ function App() {
           <Route path="/checkout" element={<PrivateRoute><CheckoutPage /></PrivateRoute>} />
           <Route path="/payment/:orderId" element={<PrivateRoute><PaymentPage /></PrivateRoute>} />
           <Route path="/dashboard" element={<PrivateRoute><CustomerDashboard /></PrivateRoute>} />
+          <Route path="/order/:orderId" element={<PrivateRoute><OrderDetailPage /></PrivateRoute>} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
         </Routes>
