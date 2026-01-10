@@ -139,15 +139,15 @@ const CartPage = () => {
             {/* Order Summary */}
             <div className="lg:col-span-1">
               <div className="bg-white rounded-xl p-6 shadow-lg border border-border/50 sticky top-24">
-                <h2 className="text-2xl font-bold text-accent mb-6">Ringkasan Pesanan</h2>
+                <h2 className="text-xl md:text-2xl font-bold text-accent mb-6">Order Summary</h2>
                 
                 <div className="space-y-3 mb-6">
-                  <div className="flex justify-between text-muted-foreground">
+                  <div className="flex justify-between text-muted-foreground text-sm md:text-base">
                     <span>Subtotal</span>
                     <span>Rp {calculateTotal().toLocaleString('id-ID')}</span>
                   </div>
                   <div className="border-t border-border pt-3">
-                    <div className="flex justify-between font-bold text-accent text-lg">
+                    <div className="flex justify-between font-bold text-accent text-lg md:text-xl">
                       <span>Total</span>
                       <span data-testid="cart-total">Rp {calculateTotal().toLocaleString('id-ID')}</span>
                     </div>
@@ -157,9 +157,9 @@ const CartPage = () => {
                 <button
                   data-testid="checkout-button"
                   onClick={() => navigate('/checkout')}
-                  className="w-full bg-primary text-white py-3 rounded-full hover:bg-primary/90 transition-all font-semibold"
+                  className="w-full bg-primary text-white py-3 rounded-full hover:bg-primary/90 transition-all font-semibold text-sm md:text-base"
                 >
-                  Lanjut ke Checkout
+                  Proceed to Checkout
                 </button>
               </div>
             </div>
