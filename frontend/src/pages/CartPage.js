@@ -75,16 +75,16 @@ const CartPage = () => {
       <Header />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <h1 className="text-4xl font-bold text-accent mb-8">Keranjang Belanja</h1>
+        <h1 className="text-3xl md:text-4xl font-bold text-accent mb-6 md:mb-8">Shopping Cart</h1>
 
         {!cart || cart.items.length === 0 ? (
-          <div className="text-center py-16">
-            <p className="text-xl text-muted-foreground mb-6">Keranjang Anda kosong</p>
+          <div className="text-center py-12 md:py-16">
+            <p className="text-lg md:text-xl text-muted-foreground mb-6">Your cart is empty</p>
             <Link
               to="/"
-              className="inline-block bg-primary text-white px-8 py-3 rounded-full hover:bg-primary/90 transition-all"
+              className="inline-block bg-primary text-white px-6 md:px-8 py-3 rounded-full hover:bg-primary/90 transition-all text-sm md:text-base"
             >
-              Mulai Belanja
+              Start Shopping
             </Link>
           </div>
         ) : (
