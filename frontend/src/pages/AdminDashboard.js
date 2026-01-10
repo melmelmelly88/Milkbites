@@ -146,6 +146,23 @@ const AdminDashboard = () => {
     window.open(whatsappUrl, '_blank');
   };
 
+  const handleViewOrderDetails = async (order) => {
+    setSelectedOrder(order);
+    
+    // Fetch product details for order items
+    const productIds = [...new Set(order.items.map(item => item.product_id))];
+    const details = {};
+    for (const id of productIds) {
+      try {
+        const prod = await axios.get(`${API}/products/${id}`);
+        details[id] = prod.data;
+      } catch (err) {
+        console.error(`Failed to fetch product ${id}`);
+      }
+    }
+    setProductDetails(details);
+  };
+
   const handleDownloadCSV = async () => {
     try {
       const response = await axios.get(`${API}/admin/orders/export/csv`, {
