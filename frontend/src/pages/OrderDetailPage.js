@@ -40,7 +40,7 @@ const OrderDetailPage = () => {
       }
       setProducts(productDetails);
     } catch (error) {
-      toast.error('Gagal memuat detail pesanan');
+      toast.error('Failed to load order details');
       navigate('/dashboard');
     } finally {
       setLoading(false);
@@ -60,11 +60,11 @@ const OrderDetailPage = () => {
 
   const getStatusText = (status) => {
     const texts = {
-      pending: 'Menunggu Konfirmasi',
-      confirmed: 'Dikonfirmasi',
-      processing: 'Diproses',
-      completed: 'Selesai',
-      cancelled: 'Dibatalkan'
+      pending: 'Awaiting Confirmation',
+      confirmed: 'Confirmed',
+      processing: 'Processing',
+      completed: 'Completed',
+      cancelled: 'Cancelled'
     };
     return texts[status] || status;
   };
