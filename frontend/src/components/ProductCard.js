@@ -24,7 +24,7 @@ const ProductCard = ({ product }) => {
             data-testid={`view-product-${product.id}`}
             className="text-sm text-accent hover:text-primary transition-colors"
           >
-            Lihat Detail →
+            View Details →
           </button>
         </div>
       </div>
