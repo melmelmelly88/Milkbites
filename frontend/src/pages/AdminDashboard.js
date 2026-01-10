@@ -742,28 +742,6 @@ const AdminDashboard = () => {
         onSave={handleSaveDiscount}
       />
 
-      {/* Payment Proof Modal */}
-      {showPaymentProof && (
-        <div
-          className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-          onClick={() => setShowPaymentProof(null)}
-        >
-          <div className="relative max-w-4xl w-full" onClick={(e) => e.stopPropagation()}>
-            <button
-              onClick={() => setShowPaymentProof(null)}
-              className="absolute -top-12 right-0 text-white hover:text-gray-300 text-lg font-bold"
-            >
-              Close ✕
-            </button>
-            <img
-              src={showPaymentProof}
-              alt="Payment Proof"
-              className="w-full h-auto rounded-lg shadow-2xl"
-            />
-          </div>
-        </div>
-      )}
-
       {/* Order Details Modal */}
       {selectedOrder && (
         <div
