@@ -117,6 +117,33 @@ const AdminDashboard = () => {
     }
   };
 
+  const handleSaveProduct = async (productData) => {
+    try {
+      if (editingProduct) {
+        // Update existing product
+        await axios.put(
+          `${API}/products/${editingProduct.id}`,
+          productData,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        toast.success('Produk berhasil diupdate');
+      } else {
+        // Create new product
+        await axios.post(
+          `${API}/products`,
+          productData,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        toast.success('Produk berhasil ditambahkan');
+      }
+      setShowProductModal(false);
+      setEditingProduct(null);
+      fetchData();
+    } catch (error) {
+      toast.error('Gagal menyimpan produk');
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
