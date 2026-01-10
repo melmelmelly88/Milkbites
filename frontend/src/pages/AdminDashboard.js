@@ -47,7 +47,7 @@ const AdminDashboard = () => {
         setDiscounts(res.data);
       }
     } catch (error) {
-      toast.error('Gagal memuat data');
+      toast.error('Failed to load data');
     } finally {
       setLoading(false);
     }
@@ -60,10 +60,10 @@ const AdminDashboard = () => {
         { status: newStatus },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      toast.success('Status pesanan diupdate');
+      toast.success('Order status updated');
       fetchData();
     } catch (error) {
-      toast.error('Gagal mengupdate status');
+      toast.error('Failed to update status');
     }
   };
 
@@ -82,9 +82,9 @@ const AdminDashboard = () => {
       link.click();
       link.remove();
       
-      toast.success('CSV berhasil didownload');
+      toast.success('CSV downloaded successfully');
     } catch (error) {
-      toast.error('Gagal mendownload CSV');
+      toast.error('Failed to download CSV');
     }
   };
 
@@ -106,16 +106,16 @@ const AdminDashboard = () => {
   };
 
   const handleDeleteProduct = async (productId) => {
-    if (!window.confirm('Yakin ingin menghapus produk ini?')) return;
+    if (!window.confirm('Are you sure you want to delete this product?')) return;
     
     try {
       await axios.delete(`${API}/products/${productId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      toast.success('Produk berhasil dihapus');
+      toast.success('Product deleted successfully');
       fetchData();
     } catch (error) {
-      toast.error('Gagal menghapus produk');
+      toast.error('Failed to delete product');
     }
   };
 
@@ -203,7 +203,7 @@ const AdminDashboard = () => {
             }`}
           >
             <Package className="inline-block w-5 h-5 mr-2" />
-            Pesanan
+            Orders
           </button>
           <button
             data-testid="admin-products-tab"
@@ -213,7 +213,7 @@ const AdminDashboard = () => {
             }`}
           >
             <ShoppingBag className="inline-block w-5 h-5 mr-2" />
-            Produk
+            Products
           </button>
           <button
             data-testid="admin-discounts-tab"
@@ -223,7 +223,7 @@ const AdminDashboard = () => {
             }`}
           >
             <Settings className="inline-block w-5 h-5 mr-2" />
-            Diskon & Promo
+            Discounts & Promos
           </button>
         </div>
 
@@ -237,7 +237,7 @@ const AdminDashboard = () => {
             {activeTab === 'orders' && (
               <div>
                 <div className="flex justify-between items-center mb-6">
-                  <h2 className="text-2xl font-bold text-accent">Daftar Pesanan</h2>
+                  <h2 className="text-2xl font-bold text-accent">Order List</h2>
                   <button
                     data-testid="download-csv-button"
                     onClick={handleDownloadCSV}
@@ -288,7 +288,7 @@ const AdminDashboard = () => {
                           </span>
                         </div>
                         <div>
-                          <span className="text-muted-foreground">Tipe:</span>
+                          <span className="text-muted-foreground">Type:</span>
                           <span className="font-medium ml-2 capitalize">{order.delivery_type}</span>
                         </div>
                       </div>
@@ -301,7 +301,7 @@ const AdminDashboard = () => {
                             className="flex items-center gap-2 text-primary hover:text-primary/80 text-sm font-medium transition-colors"
                           >
                             <Eye size={16} />
-                            Lihat Bukti Pembayaran
+                            View Payment Proof
                           </button>
                         </div>
                       )}
@@ -314,7 +314,7 @@ const AdminDashboard = () => {
             {activeTab === 'products' && (
               <div>
                 <div className="flex justify-between items-center mb-6">
-                  <h2 className="text-2xl font-bold text-accent">Manajemen Produk</h2>
+                  <h2 className="text-2xl font-bold text-accent">Product Management</h2>
                   <button
                     data-testid="add-product-button"
                     onClick={() => {
@@ -324,7 +324,7 @@ const AdminDashboard = () => {
                     className="flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-full hover:bg-primary/90 transition-all"
                   >
                     <Plus size={20} />
-                    Tambah Produk
+                    Add Product
                   </button>
                 </div>
 
@@ -378,7 +378,7 @@ const AdminDashboard = () => {
             {activeTab === 'discounts' && (
               <div>
                 <div className="flex justify-between items-center mb-6">
-                  <h2 className="text-2xl font-bold text-accent">Diskon & Promo</h2>
+                  <h2 className="text-2xl font-bold text-accent">Discounts & Promos</h2>
                   <button
                     data-testid="add-discount-button"
                     onClick={() => {
@@ -483,11 +483,11 @@ const AdminDashboard = () => {
               onClick={() => setShowPaymentProof(null)}
               className="absolute -top-12 right-0 text-white hover:text-gray-300 text-lg font-bold"
             >
-              Tutup ✕
+              Close ✕
             </button>
             <img
               src={showPaymentProof}
-              alt="Bukti Pembayaran"
+              alt="Payment Proof"
               className="w-full h-auto rounded-lg shadow-2xl"
             />
           </div>
