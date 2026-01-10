@@ -109,17 +109,13 @@ const HomePage = () => {
                 </div>
                 {featuredProducts.length > 0 && (
                   <div className="text-center mt-12">
-                    <button
-                      onClick={() => {
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                        // Trigger a full product load by changing to a category and back
-                        setActiveCategory('Cookies');
-                        setTimeout(() => setActiveCategory('All'), 10);
-                      }}
+                    <Link
+                      to="/products"
+                      data-testid="view-all-products-link"
                       className="inline-block bg-primary text-white px-8 py-3 rounded-full hover:bg-primary/90 transition-all font-semibold"
                     >
                       View All Products
-                    </button>
+                    </Link>
                   </div>
                 )}
               </>
