@@ -159,16 +159,23 @@ const CheckoutPage = () => {
             {/* Delivery Address or Pickup Location */}
             {deliveryType === 'delivery' ? (
               <div className="bg-white rounded-xl p-6 shadow-sm border border-border/50">
-                <h2 className="text-xl font-semibold text-accent mb-4">Delivery Address</h2>
+                <h2 className="text-xl font-semibold text-accent mb-4">
+                  Delivery Address <span className="text-red-500">*</span>
+                </h2>
                 <textarea
                   data-testid="delivery-address-input"
                   value={deliveryAddress}
                   onChange={(e) => setDeliveryAddress(e.target.value)}
-                  className="w-full px-4 py-3 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                  className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary ${
+                    !deliveryAddress ? 'border-red-300 bg-red-50/50' : 'border-input'
+                  }`}
                   rows="4"
-                  placeholder="Enter full address (JABODETABEK only)"
+                  placeholder="Enter full address (JABODETABEK only) - Required"
                   required
                 />
+                {!deliveryAddress && (
+                  <p className="text-red-500 text-sm mt-2">* Delivery address is required</p>
+                )}
               </div>
             ) : (
               <div className="bg-white rounded-xl p-6 shadow-sm border border-border/50">
