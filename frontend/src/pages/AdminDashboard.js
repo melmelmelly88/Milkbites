@@ -395,16 +395,6 @@ const AdminDashboard = () => {
                       </div>
 
                       <div className="mt-4 flex items-center gap-3 flex-wrap">
-                        {order.payment_proof && (
-                          <button
-                            onClick={() => setShowPaymentProof(order.payment_proof)}
-                            data-testid={`view-payment-proof-${order.id}`}
-                            className="flex items-center gap-2 text-primary hover:text-primary/80 text-sm font-medium transition-colors"
-                          >
-                            <Eye size={16} />
-                            View Payment Proof
-                          </button>
-                        )}
                         {order.customer_whatsapp && (
                           <button
                             onClick={() => handleWhatsAppNotify(order)}
@@ -419,7 +409,7 @@ const AdminDashboard = () => {
                       
                       <div className="mt-4 pt-4 border-t border-border/50">
                         <button
-                          onClick={() => setSelectedOrder(order)}
+                          onClick={() => handleViewOrderDetails(order)}
                           data-testid={`view-order-details-${order.id}`}
                           className="flex items-center gap-2 bg-sky-100 text-sky-700 px-4 py-2 rounded-lg hover:bg-sky-200 text-sm font-medium transition-colors"
                         >
