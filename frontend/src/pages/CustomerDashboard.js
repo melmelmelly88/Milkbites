@@ -52,11 +52,11 @@ const CustomerDashboard = () => {
 
   const getStatusText = (status) => {
     const texts = {
-      pending: 'Menunggu Konfirmasi',
-      confirmed: 'Dikonfirmasi',
-      processing: 'Diproses',
-      completed: 'Selesai',
-      cancelled: 'Dibatalkan'
+      pending: 'Awaiting Confirmation',
+      confirmed: 'Confirmed',
+      processing: 'Processing',
+      completed: 'Completed',
+      cancelled: 'Cancelled'
     };
     return texts[status] || status;
   };
