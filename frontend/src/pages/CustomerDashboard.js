@@ -135,7 +135,7 @@ const CustomerDashboard = () => {
       <Header />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-16">
-        <h1 className="text-3xl md:text-4xl font-bold text-accent mb-6 md:mb-8">My Dashboard</h1>
+        <h1 className="text-3xl md:text-4xl font-bold text-accent mb-6 md:mb-8">My Account</h1>
 
         {/* Tabs */}
         <div className="bg-white rounded-xl shadow-sm p-2 mb-6 md:mb-8 flex gap-2 overflow-x-auto">
