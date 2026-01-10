@@ -135,7 +135,7 @@ const HomePage = () => {
             ) : (
               // Category Products Section
               <>
-                <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-accent mb-6 md:mb-8">
+                <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#5fc1d7] mb-6 md:mb-8">
                   {activeCategory}
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
