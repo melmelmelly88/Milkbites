@@ -247,7 +247,7 @@ const ProductDetailPage = () => {
                                 }`}
                               >
                                 {variant}
-                                {variant.includes('Kaastengel') && (
+                                {isKaastengelFeeApplicable() && variant.includes('Kaastengel') && (
                                   <span className="text-xs block mt-1">+Rp 10.000</span>
                                 )}
                               </button>
@@ -276,7 +276,7 @@ const ProductDetailPage = () => {
                           }`}
                         >
                           {variant}
-                          {variant.includes('Kaastengel') && (
+                          {isKaastengelFeeApplicable() && variant.includes('Kaastengel') && (
                             <span className="text-xs block mt-1">+Rp 10.000</span>
                           )}
                         </button>
