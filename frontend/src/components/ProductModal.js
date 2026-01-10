@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { X } from 'lucide-react';
+import { X, Upload, Link as LinkIcon } from 'lucide-react';
 import toast from 'react-hot-toast';
+import axios from 'axios';
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const API = `${BACKEND_URL}/api`;
 
 const ProductModal = ({ show, onClose, product, onSave }) => {
   const [formData, setFormData] = useState({
@@ -12,6 +16,8 @@ const ProductModal = ({ show, onClose, product, onSave }) => {
     stock: 100,
     active: true
   });
+  const [imageMode, setImageMode] = useState('url'); // 'url' or 'upload'
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
     if (product) {
@@ -35,6 +41,7 @@ const ProductModal = ({ show, onClose, product, onSave }) => {
         active: true
       });
     }
+    setImageMode('url');
   }, [product, show]);
 
   const handleChange = (e) => {
@@ -45,11 +52,51 @@ const ProductModal = ({ show, onClose, product, onSave }) => {
     });
   };
 
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    // Validate file type
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+    if (!allowedTypes.includes(file.type)) {
+      toast.error('Please upload a valid image (JPG, PNG, WEBP, or GIF)');
+      return;
+    }
+
+    // Validate file size (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error('Image size must be less than 5MB');
+      return;
+    }
+
+    setUploading(true);
+    try {
+      // Convert to base64
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData(prev => ({
+          ...prev,
+          image_url: reader.result
+        }));
+        setUploading(false);
+        toast.success('Image uploaded successfully');
+      };
+      reader.onerror = () => {
+        toast.error('Failed to read image');
+        setUploading(false);
+      };
+      reader.readAsDataURL(file);
+    } catch (error) {
+      toast.error('Failed to upload image');
+      setUploading(false);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     
     if (!formData.name || !formData.price || !formData.image_url) {
-      toast.error('Name, price, and image URL are required');
+      toast.error('Name, price, and image are required');
       return;
     }
 
