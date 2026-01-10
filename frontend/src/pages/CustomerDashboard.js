@@ -145,11 +145,11 @@ const CustomerDashboard = () => {
 
                   <div className="space-y-2 mb-4">
                     <div className="flex justify-between text-sm">
-                      <span className="text-muted-foreground">Tipe Pengiriman</span>
+                      <span className="text-muted-foreground">Delivery Type</span>
                       <span className="font-medium capitalize">{order.delivery_type}</span>
                     </div>
                     <div className="flex justify-between text-sm">
-                      <span className="text-muted-foreground">Total Pembayaran</span>
+                      <span className="text-muted-foreground">Total Payment</span>
                       <span className="font-bold text-primary">
                         Rp {order.final_amount.toLocaleString('id-ID')}
                       </span>
