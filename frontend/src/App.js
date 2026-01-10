@@ -10,6 +10,7 @@ import CartPage from './pages/CartPage';
 import CheckoutPage from './pages/CheckoutPage';
 import PaymentPage from './pages/PaymentPage';
 import CustomerDashboard from './pages/CustomerDashboard';
+import OrderDetailPage from './pages/OrderDetailPage';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 
