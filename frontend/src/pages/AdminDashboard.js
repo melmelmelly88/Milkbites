@@ -107,6 +107,40 @@ const AdminDashboard = () => {
     reader.readAsDataURL(file);
   };
 
+  const handleAddHeroImage = () => {
+    if (!newHeroImage) return;
+    setSiteSettings(prev => ({
+      ...prev,
+      hero_images: [...(prev.hero_images || []), newHeroImage]
+    }));
+    setNewHeroImage('');
+    toast.success('Image added to slider');
+  };
+
+  const handleRemoveHeroImage = (index) => {
+    setSiteSettings(prev => ({
+      ...prev,
+      hero_images: prev.hero_images.filter((_, i) => i !== index)
+    }));
+  };
+
+  const handleAddBlockedDate = () => {
+    if (!newBlockedDate) return;
+    setSiteSettings(prev => ({
+      ...prev,
+      blocked_dates: [...(prev.blocked_dates || []), newBlockedDate]
+    }));
+    setNewBlockedDate('');
+    toast.success('Date blocked');
+  };
+
+  const handleRemoveBlockedDate = (date) => {
+    setSiteSettings(prev => ({
+      ...prev,
+      blocked_dates: prev.blocked_dates.filter(d => d !== date)
+    }));
+  };
+
   const handleStatusChange = async (orderId, newStatus) => {
     try {
       const response = await axios.put(
