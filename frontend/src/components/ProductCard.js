@@ -22,32 +22,54 @@ const ProductCard = ({ product }) => {
       return;
     }
 
-    // Check if user is logged in
-    if (!token) {
-      toast.error('Please login first');
-      navigate('/login');
-      return;
-    }
-
     setAdding(true);
-    try {
-      await axios.post(
-        `${API}/cart/add`,
-        {
-          product_id: product.id,
-          quantity: 1,
-          customization: null
-        },
-        {
-          headers: { Authorization: `Bearer ${token}` }
+    
+    if (token) {
+      // User is logged in - add to server cart
+      try {
+        await axios.post(
+          `${API}/cart/add`,
+          {
+            product_id: product.id,
+            quantity: 1,
+            customization: null
+          },
+          {
+            headers: { Authorization: `Bearer ${token}` }
+          }
+        );
+        toast.success('Added to cart!');
+      } catch (error) {
+        toast.error(error.response?.data?.detail || 'Failed to add to cart');
+      }
+    } else {
+      // Guest user - add to localStorage cart
+      try {
+        const guestCart = JSON.parse(localStorage.getItem('guestCart') || '{"items":[]}');
+        const existingItem = guestCart.items.find(item => item.product_id === product.id);
+        
+        if (existingItem) {
+          existingItem.quantity += 1;
+        } else {
+          guestCart.items.push({
+            product_id: product.id,
+            quantity: 1,
+            price: product.price,
+            customization: null
+          });
         }
-      );
-      toast.success('Added to cart!');
-    } catch (error) {
-      toast.error(error.response?.data?.detail || 'Failed to add to cart');
-    } finally {
-      setAdding(false);
+        
+        localStorage.setItem('guestCart', JSON.stringify(guestCart));
+        toast.success('Added to cart!');
+        
+        // Dispatch event for header cart count update
+        window.dispatchEvent(new Event('cartUpdated'));
+      } catch (error) {
+        toast.error('Failed to add to cart');
+      }
     }
+    
+    setAdding(false);
   };
 
   return (
