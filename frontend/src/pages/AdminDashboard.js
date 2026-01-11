@@ -635,34 +635,47 @@ const AdminDashboard = () => {
                   <div className="bg-white rounded-xl p-6 shadow-sm border border-border/50">
                     <h3 className="text-lg font-semibold text-accent mb-4 flex items-center gap-2">
                       <Image size={20} />
-                      Hero Section
+                      Hero Slider Images
                     </h3>
                     
                     <div className="space-y-4">
+                      {/* Hero Images List */}
                       <div>
-                        <label className="block text-sm font-medium text-accent mb-2">Hero Image</label>
-                        <div className="flex gap-2">
+                        <label className="block text-sm font-medium text-accent mb-2">
+                          Slider Images ({siteSettings.hero_images?.length || 0})
+                        </label>
+                        <div className="space-y-2 max-h-48 overflow-y-auto">
+                          {(siteSettings.hero_images || []).map((img, index) => (
+                            <div key={index} className="flex items-center gap-2 bg-gray-50 p-2 rounded-lg">
+                              <img src={img} alt={`Slide ${index + 1}`} className="w-16 h-10 object-cover rounded" />
+                              <span className="flex-1 text-xs truncate">{img.substring(0, 30)}...</span>
+                              <button
+                                onClick={() => handleRemoveHeroImage(index)}
+                                className="text-red-500 hover:bg-red-50 p-1 rounded"
+                              >
+                                <Trash2 size={16} />
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                        
+                        {/* Add New Image */}
+                        <div className="flex gap-2 mt-3">
                           <input
                             type="text"
-                            value={siteSettings.hero_image?.startsWith('data:') ? 'Uploaded Image' : siteSettings.hero_image}
-                            onChange={(e) => setSiteSettings(prev => ({ ...prev, hero_image: e.target.value }))}
-                            className="flex-1 px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-sm"
-                            placeholder="Image URL"
-                            disabled={siteSettings.hero_image?.startsWith('data:')}
+                            value={newHeroImage}
+                            onChange={(e) => setNewHeroImage(e.target.value)}
+                            className="flex-1 px-3 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-sm"
+                            placeholder="Enter image URL"
                           />
-                          <label className="cursor-pointer bg-sky-100 text-sky-700 px-4 py-2 rounded-lg hover:bg-sky-200 transition-colors">
-                            <Upload size={18} />
-                            <input
-                              type="file"
-                              accept="image/*"
-                              onChange={handleHeroImageUpload}
-                              className="hidden"
-                            />
-                          </label>
+                          <button
+                            onClick={handleAddHeroImage}
+                            className="bg-sky-500 text-white px-4 py-2 rounded-lg hover:bg-sky-600"
+                          >
+                            <Plus size={18} />
+                          </button>
                         </div>
-                        {siteSettings.hero_image && (
-                          <img src={siteSettings.hero_image} alt="Hero Preview" className="mt-2 w-full h-32 object-cover rounded-lg" />
-                        )}
+                        <p className="text-xs text-muted-foreground mt-1">Add multiple images for slider effect</p>
                       </div>
                       
                       <div>
@@ -707,11 +720,62 @@ const AdminDashboard = () => {
                     </div>
                   </div>
 
+                  {/* Payment & Dates Settings */}
+                  <div className="space-y-6">
+                    {/* Payment Instruction */}
+                    <div className="bg-white rounded-xl p-6 shadow-sm border border-border/50">
+                      <h3 className="text-lg font-semibold text-accent mb-4">Payment Instruction</h3>
+                      <textarea
+                        value={siteSettings.payment_instruction}
+                        onChange={(e) => setSiteSettings(prev => ({ ...prev, payment_instruction: e.target.value }))}
+                        className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary font-mono text-sm"
+                        rows="6"
+                        placeholder="Enter payment instructions..."
+                      />
+                      <p className="text-xs text-muted-foreground mt-1">This will be shown on the payment page</p>
+                    </div>
+
+                    {/* Blocked Dates */}
+                    <div className="bg-white rounded-xl p-6 shadow-sm border border-border/50">
+                      <h3 className="text-lg font-semibold text-accent mb-4">Blocked Dates</h3>
+                      <p className="text-sm text-muted-foreground mb-3">Dates that are not available for delivery/pickup</p>
+                      
+                      <div className="space-y-2 max-h-32 overflow-y-auto mb-3">
+                        {(siteSettings.blocked_dates || []).map((date, index) => (
+                          <div key={index} className="flex items-center justify-between bg-red-50 px-3 py-2 rounded-lg">
+                            <span className="text-sm">{date}</span>
+                            <button
+                              onClick={() => handleRemoveBlockedDate(date)}
+                              className="text-red-500 hover:bg-red-100 p-1 rounded"
+                            >
+                              <Trash2 size={14} />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                      
+                      <div className="flex gap-2">
+                        <input
+                          type="date"
+                          value={newBlockedDate}
+                          onChange={(e) => setNewBlockedDate(e.target.value)}
+                          className="flex-1 px-3 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                        />
+                        <button
+                          onClick={handleAddBlockedDate}
+                          className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
+                        >
+                          Block Date
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
                   {/* Footer Settings */}
-                  <div className="bg-white rounded-xl p-6 shadow-sm border border-border/50">
+                  <div className="bg-white rounded-xl p-6 shadow-sm border border-border/50 lg:col-span-2">
                     <h3 className="text-lg font-semibold text-accent mb-4">Footer Information</h3>
                     
-                    <div className="space-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
                         <label className="block text-sm font-medium text-accent mb-2">Description</label>
                         <textarea
@@ -719,6 +783,16 @@ const AdminDashboard = () => {
                           onChange={(e) => setSiteSettings(prev => ({ ...prev, footer_description: e.target.value }))}
                           className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                           rows="2"
+                        />
+                      </div>
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-accent mb-2">Pickup Location</label>
+                        <input
+                          type="text"
+                          value={siteSettings.footer_pickup_location}
+                          onChange={(e) => setSiteSettings(prev => ({ ...prev, footer_pickup_location: e.target.value }))}
+                          className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                         />
                       </div>
                       
@@ -738,16 +812,6 @@ const AdminDashboard = () => {
                           type="text"
                           value={siteSettings.footer_contact_2}
                           onChange={(e) => setSiteSettings(prev => ({ ...prev, footer_contact_2: e.target.value }))}
-                          className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                        />
-                      </div>
-                      
-                      <div>
-                        <label className="block text-sm font-medium text-accent mb-2">Pickup Location</label>
-                        <input
-                          type="text"
-                          value={siteSettings.footer_pickup_location}
-                          onChange={(e) => setSiteSettings(prev => ({ ...prev, footer_pickup_location: e.target.value }))}
                           className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                         />
                       </div>
