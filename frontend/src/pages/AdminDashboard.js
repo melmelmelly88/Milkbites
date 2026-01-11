@@ -24,6 +24,7 @@ const AdminDashboard = () => {
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [siteSettings, setSiteSettings] = useState({
     hero_image: '',
+    hero_images: [],
     hero_title: 'Milkbites',
     hero_subtitle: 'by Keka Cakery',
     hero_tagline: 'Premium Baked Goods for Your Celebration',
@@ -31,9 +32,14 @@ const AdminDashboard = () => {
     footer_description: 'Premium baked goods crafted with love',
     footer_contact_1: 'Melly: 081294607788',
     footer_contact_2: 'Fari: 081386163292',
-    footer_pickup_location: 'Cilandak & Menara Mandiri'
+    footer_pickup_location: 'Cilandak & Menara Mandiri',
+    payment_instruction: 'Please transfer to:\nBank BCA\nAccount: 1234567890\nName: Keka Cakery\n\nAfter payment, please upload your payment proof.',
+    available_dates: [],
+    blocked_dates: []
   });
   const [savingSettings, setSavingSettings] = useState(false);
+  const [newHeroImage, setNewHeroImage] = useState('');
+  const [newBlockedDate, setNewBlockedDate] = useState('');
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
 
