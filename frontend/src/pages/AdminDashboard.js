@@ -689,22 +689,48 @@ const AdminDashboard = () => {
                         </div>
                         
                         {/* Add New Image */}
-                        <div className="flex gap-2 mt-3">
-                          <input
-                            type="text"
-                            value={newHeroImage}
-                            onChange={(e) => setNewHeroImage(e.target.value)}
-                            className="flex-1 px-3 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-sm"
-                            placeholder="Enter image URL"
-                          />
-                          <button
-                            onClick={handleAddHeroImage}
-                            className="bg-sky-500 text-white px-4 py-2 rounded-lg hover:bg-sky-600"
-                          >
-                            <Plus size={18} />
-                          </button>
+                        <div className="mt-3 space-y-3">
+                          {/* File Upload Option */}
+                          <div>
+                            <label className="block text-xs font-medium text-gray-600 mb-1">Upload Image File</label>
+                            <div className="flex gap-2">
+                              <label className="flex-1 flex items-center justify-center gap-2 px-4 py-2 border-2 border-dashed border-sky-300 rounded-lg cursor-pointer hover:bg-sky-50 transition-colors">
+                                <Upload size={18} className="text-sky-500" />
+                                <span className="text-sm text-sky-600">
+                                  {uploadingHeroImage ? 'Uploading...' : 'Choose Image'}
+                                </span>
+                                <input
+                                  type="file"
+                                  accept="image/*"
+                                  onChange={handleHeroImageFileUpload}
+                                  className="hidden"
+                                  disabled={uploadingHeroImage}
+                                />
+                              </label>
+                            </div>
+                          </div>
+                          
+                          {/* URL Option */}
+                          <div>
+                            <label className="block text-xs font-medium text-gray-600 mb-1">Or Add by URL</label>
+                            <div className="flex gap-2">
+                              <input
+                                type="text"
+                                value={newHeroImage}
+                                onChange={(e) => setNewHeroImage(e.target.value)}
+                                className="flex-1 px-3 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-sm"
+                                placeholder="Enter image URL"
+                              />
+                              <button
+                                onClick={handleAddHeroImage}
+                                className="bg-sky-500 text-white px-4 py-2 rounded-lg hover:bg-sky-600"
+                              >
+                                <Plus size={18} />
+                              </button>
+                            </div>
+                          </div>
                         </div>
-                        <p className="text-xs text-muted-foreground mt-1">Add multiple images for slider effect</p>
+                        <p className="text-xs text-muted-foreground mt-2">Add multiple images for slider effect (max 5MB per image)</p>
                       </div>
                       
                       <div>
