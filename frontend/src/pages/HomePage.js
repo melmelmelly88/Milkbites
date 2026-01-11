@@ -257,10 +257,12 @@ const HomePage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
-              <h3 className="text-2xl font-bold mb-2">{siteSettings.hero_title}</h3>
-              <p className="text-sm text-white/80 mb-3">{siteSettings.hero_subtitle}</p>
+              <img 
+                src="https://customer-assets.emergentagent.com/job_cake-commerce-4/artifacts/qna9h32i_IMG-4835.PNG" 
+                alt="Milkbites by Keka Cakery" 
+                className="h-14 w-auto object-contain mb-4 brightness-0 invert"
+              />
               <p className="text-white/90">{siteSettings.footer_description}</p>
-              <p className="text-sky-300 mt-2 text-sm">{siteSettings.hero_badge}</p>
             </div>
             <div>
               <h4 className="text-lg font-semibold mb-4 text-sky-300">Contact</h4>
@@ -273,7 +275,7 @@ const HomePage = () => {
             </div>
           </div>
           <div className="border-t border-white/20 mt-8 pt-8 text-center text-white/80">
-            <p>&copy; 2025 {siteSettings.hero_title}. All rights reserved.</p>
+            <p>&copy; 2025 Milkbites by Keka Cakery. All rights reserved.</p>
           </div>
         </div>
       </footer>
