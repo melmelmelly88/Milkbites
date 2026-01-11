@@ -3,6 +3,7 @@ import axios from 'axios';
 import Header from '../components/Header';
 import ProductCard from '../components/ProductCard';
 import { useSearchParams, Link } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
@@ -13,7 +14,9 @@ const HomePage = () => {
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchParams] = useSearchParams();
+  const [currentSlide, setCurrentSlide] = useState(0);
   const [siteSettings, setSiteSettings] = useState({
+    hero_images: [],
     hero_image: 'https://images.unsplash.com/photo-1760448199008-6078bc23bfaa?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Njl8MHwxfHNlYXJjaHwxfHxnb3VybWV0JTIwY29va2llcyUyMGFlc3RoZXRpY3xlbnwwfHx8fDE3NjgwMjkxMDB8MA&ixlib=rb-4.1.0&q=85',
     hero_title: 'Milkbites',
     hero_subtitle: 'by Keka Cakery',
@@ -26,6 +29,29 @@ const HomePage = () => {
   });
 
   const categories = ['Cookies', 'Babka', 'Cake', 'Hampers'];
+
+  // Get hero images array (fallback to single image if no array)
+  const heroImages = siteSettings.hero_images?.length > 0 
+    ? siteSettings.hero_images 
+    : [siteSettings.hero_image];
+
+  // Auto-advance slider
+  useEffect(() => {
+    if (heroImages.length > 1) {
+      const timer = setInterval(() => {
+        setCurrentSlide((prev) => (prev + 1) % heroImages.length);
+      }, 5000);
+      return () => clearInterval(timer);
+    }
+  }, [heroImages.length]);
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % heroImages.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + heroImages.length) % heroImages.length);
+  };
 
   useEffect(() => {
     fetchSiteSettings();
@@ -82,14 +108,26 @@ const HomePage = () => {
     <div className="min-h-screen bg-background">
       <Header />
 
-      {/* Hero Section */}
+      {/* Hero Section with Slider */}
       <div className="relative h-[40vh] md:h-[50vh] overflow-hidden">
-        <img
-          src={siteSettings.hero_image}
-          alt="Milkbites Bakery"
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-sky-600/80 to-blue-700/70 flex items-center justify-center">
+        {/* Slider Images */}
+        {heroImages.map((image, index) => (
+          <div
+            key={index}
+            className={`absolute inset-0 transition-opacity duration-700 ${
+              index === currentSlide ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
+            <img
+              src={image}
+              alt={`Hero ${index + 1}`}
+              className="w-full h-full object-cover"
+            />
+          </div>
+        ))}
+        
+        {/* Clear overlay with text */}
+        <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
           <div className="text-center text-white px-4">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 md:mb-3 drop-shadow-lg">
               {siteSettings.hero_title}
@@ -99,9 +137,37 @@ const HomePage = () => {
             <p className="text-xs md:text-sm text-white/90 mt-2">{siteSettings.hero_badge}</p>
           </div>
         </div>
-        {/* Decorative Elements */}
-        <div className="absolute top-10 left-10 w-20 h-20 bg-sky-300/30 rounded-full blur-xl animate-pulse"></div>
-        <div className="absolute bottom-10 right-10 w-32 h-32 bg-blue-400/30 rounded-full blur-xl animate-pulse" style={{animationDelay: '1s'}}></div>
+
+        {/* Slider Navigation */}
+        {heroImages.length > 1 && (
+          <>
+            <button
+              onClick={prevSlide}
+              className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg transition-all"
+            >
+              <ChevronLeft size={24} className="text-gray-800" />
+            </button>
+            <button
+              onClick={nextSlide}
+              className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg transition-all"
+            >
+              <ChevronRight size={24} className="text-gray-800" />
+            </button>
+            
+            {/* Dots indicator */}
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+              {heroImages.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentSlide(index)}
+                  className={`w-3 h-3 rounded-full transition-all ${
+                    index === currentSlide ? 'bg-white' : 'bg-white/50'
+                  }`}
+                />
+              ))}
+            </div>
+          </>
+        )}
       </div>
 
       {/* Category Tabs */}
