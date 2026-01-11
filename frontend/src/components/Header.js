@@ -1,17 +1,50 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Menu, X, ShoppingCart, User, LogOut } from 'lucide-react';
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [guestCartCount, setGuestCartCount] = useState(0);
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
   const user = JSON.parse(localStorage.getItem('user') || '{}');
+
+  // Calculate guest cart count
+  useEffect(() => {
+    const updateGuestCartCount = () => {
+      if (!token) {
+        const guestCart = JSON.parse(localStorage.getItem('guestCart') || '{"items":[]}');
+        const count = guestCart.items.reduce((sum, item) => sum + item.quantity, 0);
+        setGuestCartCount(count);
+      }
+    };
+
+    updateGuestCartCount();
+    
+    // Listen for cart updates
+    window.addEventListener('cartUpdated', updateGuestCartCount);
+    window.addEventListener('storage', updateGuestCartCount);
+    
+    return () => {
+      window.removeEventListener('cartUpdated', updateGuestCartCount);
+      window.removeEventListener('storage', updateGuestCartCount);
+    };
+  }, [token]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     navigate('/login');
+  };
+
+  const handleGuestCartClick = () => {
+    // Show guest cart or redirect to login
+    const guestCart = JSON.parse(localStorage.getItem('guestCart') || '{"items":[]}');
+    if (guestCart.items.length > 0) {
+      navigate('/login');
+    } else {
+      navigate('/login');
+    }
   };
 
   const categories = [
@@ -58,13 +91,28 @@ const Header = () => {
                 </button>
               </>
             ) : (
-              <Link
-                to="/login"
-                data-testid="login-link"
-                className="bg-primary text-white px-4 md:px-6 py-1.5 md:py-2 rounded-full hover:bg-primary/90 transition-all text-sm md:text-base"
-              >
-                Login
-              </Link>
+              <>
+                {/* Guest Cart Icon */}
+                <button 
+                  onClick={handleGuestCartClick} 
+                  data-testid="guest-cart-button"
+                  className="relative"
+                >
+                  <ShoppingCart className="text-accent hover:text-primary transition-colors" size={20} />
+                  {guestCartCount > 0 && (
+                    <span className="absolute -top-2 -right-2 bg-sky-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
+                      {guestCartCount > 9 ? '9+' : guestCartCount}
+                    </span>
+                  )}
+                </button>
+                <Link
+                  to="/login"
+                  data-testid="login-link"
+                  className="bg-primary text-white px-4 md:px-6 py-1.5 md:py-2 rounded-full hover:bg-primary/90 transition-all text-sm md:text-base"
+                >
+                  Login
+                </Link>
+              </>
             )}
           </div>
         </div>
