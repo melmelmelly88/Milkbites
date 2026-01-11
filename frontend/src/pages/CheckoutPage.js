@@ -120,6 +120,11 @@ const CheckoutPage = () => {
       return;
     }
 
+    if (deliveryType === 'delivery' && !deliveryDate) {
+      toast.error('Please select delivery date');
+      return;
+    }
+
     if (deliveryType === 'pickup' && !pickupDate) {
       toast.error('Please select pickup date');
       return;
@@ -132,7 +137,7 @@ const CheckoutPage = () => {
         delivery_type: deliveryType,
         delivery_address: deliveryType === 'delivery' ? deliveryAddress : null,
         pickup_location: deliveryType === 'pickup' ? pickupLocation : null,
-        pickup_date: deliveryType === 'pickup' ? pickupDate : null,
+        pickup_date: deliveryType === 'pickup' ? format(pickupDate, 'yyyy-MM-dd') : (deliveryDate ? format(deliveryDate, 'yyyy-MM-dd') : null),
         discount_code: discountCode || null,
         notes
       };
