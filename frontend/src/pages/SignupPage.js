@@ -86,7 +86,7 @@ const SignupPage = () => {
             <img 
               src="https://customer-assets.emergentagent.com/job_cake-commerce-4/artifacts/qna9h32i_IMG-4835.PNG" 
               alt="Milkbites by Keka Cakery" 
-              className="h-16 w-auto object-contain mx-auto mb-4"
+              className="h-48 w-auto object-contain mx-auto mb-4"
             />
           </Link>
           <p className="text-muted-foreground">Create a new account</p>

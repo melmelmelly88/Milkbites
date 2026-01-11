@@ -255,7 +255,7 @@ const HomePage = () => {
               <img 
                 src="https://customer-assets.emergentagent.com/job_cake-commerce-4/artifacts/qna9h32i_IMG-4835.PNG" 
                 alt="Milkbites by Keka Cakery" 
-                className="h-14 w-auto object-contain mb-4 brightness-0 invert"
+                className="h-40 w-auto object-contain mb-4 brightness-0 invert"
               />
               <p className="text-white/90">{siteSettings.footer_description}</p>
             </div>
