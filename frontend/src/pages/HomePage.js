@@ -126,15 +126,10 @@ const HomePage = () => {
           </div>
         ))}
         
-        {/* Clear overlay with text */}
-        <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
+        {/* Clear overlay with tagline only */}
+        <div className="absolute inset-0 bg-black/20 flex items-end justify-center pb-12">
           <div className="text-center text-white px-4">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 md:mb-3 drop-shadow-lg">
-              {siteSettings.hero_title}
-            </h1>
-            <p className="text-sm md:text-base text-white/90 mb-2 md:mb-3">{siteSettings.hero_subtitle}</p>
             <p className="text-base md:text-lg lg:text-xl font-medium drop-shadow-md">{siteSettings.hero_tagline}</p>
-            <p className="text-xs md:text-sm text-white/90 mt-2">{siteSettings.hero_badge}</p>
           </div>
         </div>
 
