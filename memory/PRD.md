@@ -51,7 +51,7 @@ Build an e-commerce platform for a bakery with the following functionalities:
 - **Customer:** WhatsApp: `081038982789`, Password: `testpass123`
 
 ## API Endpoints
-- Backend URL: `https://keka-ecommerce.preview.emergentagent.com/api`
+- Backend URL: `https://cake-commerce-4.preview.emergentagent.com/api`
 - Products: `GET /api/products`, `GET /api/products/featured`, `GET /api/products/{id}`
 - Site Settings: `GET /api/site-settings`, `PUT /api/admin/site-settings`
 - Auth: `POST /api/auth/login`, `POST /api/auth/signup`, `POST /api/auth/admin/login`
