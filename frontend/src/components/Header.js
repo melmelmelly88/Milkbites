@@ -35,16 +35,12 @@ const Header = () => {
           </button>
 
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2">
+          <Link to="/" className="flex items-center">
             <img 
-              src="https://customer-assets.emergentagent.com/job_treats-online-1/artifacts/t0tgh0il_IMG-4834.PNG" 
-              alt="Milkbites Logo" 
-              className="h-8 md:h-10 w-auto object-contain"
+              src="https://customer-assets.emergentagent.com/job_cake-commerce-4/artifacts/qna9h32i_IMG-4835.PNG" 
+              alt="Milkbites by Keka Cakery" 
+              className="h-10 md:h-12 w-auto object-contain"
             />
-            <div className="flex flex-col leading-tight">
-              <span className="text-base md:text-lg font-bold text-accent">Milkbites</span>
-              <span className="text-[10px] md:text-xs text-muted-foreground -mt-1">by Keka Cakery</span>
-            </div>
           </Link>
 
           {/* Right Icons */}

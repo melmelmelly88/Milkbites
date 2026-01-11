@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import Header from '../components/Header';
+import { format, addDays, isBefore, startOfDay, parseISO } from 'date-fns';
+import { DayPicker } from 'react-day-picker';
+import 'react-day-picker/dist/style.css';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
@@ -11,20 +14,44 @@ const CheckoutPage = () => {
   const [cart, setCart] = useState(null);
   const [deliveryType, setDeliveryType] = useState('delivery');
   const [deliveryAddress, setDeliveryAddress] = useState('');
+  const [deliveryDate, setDeliveryDate] = useState(null);
   const [pickupLocation, setPickupLocation] = useState('Cilandak');
-  const [pickupDate, setPickupDate] = useState('');
+  const [pickupDate, setPickupDate] = useState(null);
   const [discountCode, setDiscountCode] = useState('');
   const [discountAmount, setDiscountAmount] = useState(0);
   const [notes, setNotes] = useState('');
   const [loading, setLoading] = useState(false);
   const [savedAddresses, setSavedAddresses] = useState([]);
+  const [blockedDates, setBlockedDates] = useState([]);
+  const [showDeliveryCalendar, setShowDeliveryCalendar] = useState(false);
+  const [showPickupCalendar, setShowPickupCalendar] = useState(false);
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
 
   useEffect(() => {
     fetchCart();
     fetchAddresses();
+    fetchSiteSettings();
   }, []);
+
+  const fetchSiteSettings = async () => {
+    try {
+      const response = await axios.get(`${API}/site-settings`);
+      const blocked = response.data.blocked_dates || [];
+      setBlockedDates(blocked.map(d => parseISO(d)));
+    } catch (error) {
+      console.error('Failed to fetch site settings');
+    }
+  };
+
+  // Disable past dates, today, and blocked dates
+  const isDateDisabled = (date) => {
+    const tomorrow = startOfDay(addDays(new Date(), 1));
+    if (isBefore(date, tomorrow)) return true;
+    return blockedDates.some(blocked => 
+      format(blocked, 'yyyy-MM-dd') === format(date, 'yyyy-MM-dd')
+    );
+  };
 
   const fetchAddresses = async () => {
     try {

@@ -12,6 +12,42 @@ const LoginPage = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  // Function to merge guest cart with user's cart after login
+  const mergeGuestCart = async (token) => {
+    try {
+      const guestCartStr = localStorage.getItem('guestCart');
+      if (!guestCartStr) return;
+      
+      const guestCart = JSON.parse(guestCartStr);
+      if (!guestCart.items || guestCart.items.length === 0) return;
+      
+      // Add each guest cart item to the user's cart
+      for (const item of guestCart.items) {
+        try {
+          await axios.post(
+            `${API}/cart/add`,
+            {
+              product_id: item.product_id,
+              quantity: item.quantity,
+              customization: item.customization
+            },
+            {
+              headers: { Authorization: `Bearer ${token}` }
+            }
+          );
+        } catch (err) {
+          console.error('Failed to merge item:', item.product_id);
+        }
+      }
+      
+      // Clear guest cart after successful merge
+      localStorage.removeItem('guestCart');
+      toast.success('Your cart items have been saved!');
+    } catch (error) {
+      console.error('Failed to merge guest cart:', error);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -22,8 +58,13 @@ const LoginPage = () => {
         password
       });
 
-      localStorage.setItem('token', response.data.token);
+      const token = response.data.token;
+      localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(response.data.user));
+      
+      // Merge guest cart with user's cart
+      await mergeGuestCart(token);
+      
       toast.success('Login successful!');
       navigate('/');
     } catch (error) {
@@ -38,7 +79,11 @@ const LoginPage = () => {
       <div className="max-w-md w-full">
         <div className="text-center mb-8">
           <Link to="/" className="inline-block">
-            <h1 className="text-4xl font-bold text-accent mb-2">Milkbites</h1>
+            <img 
+              src="https://customer-assets.emergentagent.com/job_cake-commerce-4/artifacts/qna9h32i_IMG-4835.PNG" 
+              alt="Milkbites by Keka Cakery" 
+              className="h-16 w-auto object-contain mx-auto mb-4"
+            />
           </Link>
           <p className="text-muted-foreground">Sign in to your account</p>
         </div>
