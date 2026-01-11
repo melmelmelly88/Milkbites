@@ -233,6 +233,7 @@ class SiteSettings(BaseModel):
     model_config = ConfigDict(extra="ignore")
     id: str = "site_settings"
     hero_image: str = "https://images.unsplash.com/photo-1760448199008-6078bc23bfaa?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Njl8MHwxfHNlYXJjaHwxfHxnb3VybWV0JTIwY29va2llcyUyMGFlc3RoZXRpY3xlbnwwfHx8fDE3NjgwMjkxMDB8MA&ixlib=rb-4.1.0&q=85"
+    hero_images: List[str] = []
     hero_title: str = "Milkbites"
     hero_subtitle: str = "by Keka Cakery"
     hero_tagline: str = "Premium Baked Goods for Your Celebration"
@@ -241,10 +242,14 @@ class SiteSettings(BaseModel):
     footer_contact_1: str = "Melly: 081294607788"
     footer_contact_2: str = "Fari: 081386163292"
     footer_pickup_location: str = "Cilandak & Menara Mandiri"
+    payment_instruction: str = "Please transfer to:\nBank BCA\nAccount: 1234567890\nName: Keka Cakery\n\nAfter payment, please upload your payment proof."
+    available_dates: List[str] = []
+    blocked_dates: List[str] = []
     updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 class SiteSettingsUpdate(BaseModel):
     hero_image: Optional[str] = None
+    hero_images: Optional[List[str]] = None
     hero_title: Optional[str] = None
     hero_subtitle: Optional[str] = None
     hero_tagline: Optional[str] = None
@@ -253,6 +258,9 @@ class SiteSettingsUpdate(BaseModel):
     footer_contact_1: Optional[str] = None
     footer_contact_2: Optional[str] = None
     footer_pickup_location: Optional[str] = None
+    payment_instruction: Optional[str] = None
+    available_dates: Optional[List[str]] = None
+    blocked_dates: Optional[List[str]] = None
 
 # Auth endpoints
 @api_router.post("/auth/signup", response_model=AuthResponse)
