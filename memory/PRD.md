@@ -6,8 +6,8 @@ Build an e-commerce platform for a bakery with the following functionalities:
 2. **Customer Account:** Sign up using email, WhatsApp number, and password
 3. **Customer Login:** Use WhatsApp number and password (prefilled with "08")
 4. **Customer Dashboard:** Manage account, multiple addresses, track orders
-5. **Product Listing:** Products scraped from Jotform link
-6. **Delivery/Pickup:** Address input for delivery
+5. **Product Listing:** Products with customization options
+6. **Delivery/Pickup:** Address input for delivery, date selection for pickup/delivery
 7. **Shipping Fee:** Flat rate Rp 25,000 for JABODETABEK, FREE for pickup
 8. **Payment:** Manual payment instructions with proof of payment upload
 9. **Order Flow:** Orders appear after payment proof upload
@@ -15,7 +15,7 @@ Build an e-commerce platform for a bakery with the following functionalities:
 
 ## Tech Stack
 - **Backend:** FastAPI, Pydantic, PyMongo, JWT
-- **Frontend:** React, TailwindCSS, Axios, React Hot Toast
+- **Frontend:** React, TailwindCSS, Axios, React Hot Toast, react-day-picker, embla-carousel-react
 - **Database:** MongoDB
 
 ---
@@ -33,16 +33,27 @@ Build an e-commerce platform for a bakery with the following functionalities:
 - [x] Customer dashboard (orders, addresses, profile)
 - [x] Admin dashboard (orders, products, discounts, site settings)
 
-#### Session 2 Improvements - January 10, 2026
-- [x] **Admin order details with product images** - Same view as customer order details
-- [x] **Removed View Payment Proof button** - Shown in order details modal instead
-- [x] **Customer can edit addresses** - Edit button added with PUT endpoint
-- [x] **Default address auto-fills checkout** - Saved addresses dropdown + auto-fill
-- [x] **"My Dashboard" → "My Account"** - Changed customer menu label
-- [x] **CSV export includes Products column** - Shows item names and quantities
-- [x] **Quick Add button** - Add products directly from homepage
-- [x] **WhatsApp notification** - Opens wa.me with pre-filled message
-- [x] **Site Settings** - Admin can edit hero image, title, footer info
+### Session 2 - January 10, 2026
+- [x] Admin order details with product images
+- [x] Removed View Payment Proof button (shown in modal)
+- [x] Customer can edit addresses
+- [x] Default address auto-fills checkout
+- [x] "My Dashboard" → "My Account"
+- [x] CSV export includes Products column
+- [x] Quick Add button on homepage
+- [x] WhatsApp notification (wa.me links)
+- [x] Site Settings - Admin can edit hero, footer info
+
+### Session 3 - January 11, 2026 (Current)
+- [x] **Logo Image** - Replaced text with logo in header, login, signup, footer
+- [x] **Hero Image Slider** - Multiple images with navigation arrows and dot indicators
+- [x] **Guest Cart** - localStorage cart for non-logged-in users
+- [x] **Guest Cart Badge** - Shows item count on cart icon
+- [x] **Guest Cart Merge** - Items merge with user cart on login/signup
+- [x] **Delivery Date Picker** - Calendar using react-day-picker
+- [x] **Pickup Date Picker** - Same functionality for pickup
+- [x] **Blocked Dates** - Admin can block specific dates, disabled in calendar
+- [x] **Clear Hero Overlay** - Removed heavy text overlay, shows tagline only
 
 ---
 
@@ -64,11 +75,12 @@ Build an e-commerce platform for a bakery with the following functionalities:
 
 ## Testing Status
 - **Backend Tests:** 33/33 passing (100%)
-- **Frontend Tests:** All features verified via Playwright
+- **Frontend Tests:** All features verified via Playwright (100%)
 - **Test Files:** 
-  - `/app/tests/test_milkbites_api.py`
-  - `/app/tests/test_new_features.py`
+  - `/app/test_reports/iteration_1.json`
+  - `/app/test_reports/iteration_2.json`
   - `/app/test_reports/iteration_3.json`
+  - `/app/test_reports/iteration_4.json`
 
 ---
 
@@ -79,15 +91,13 @@ Build an e-commerce platform for a bakery with the following functionalities:
 
 ## Prioritized Backlog
 
-### P0 - Critical (None remaining)
+### P0 - Critical (All completed)
+- [x] All 7 features from Session 3 implemented and tested
 
-### P1 - High Priority (All completed)
-- [x] Admin order details with product images
-- [x] Customer can edit addresses
-- [x] CSV export with product list
+### P1 - High Priority
+- [ ] Admin UI for managing shipping fees (currently hardcoded Rp 25,000)
 
 ### P2 - Medium Priority
-- [ ] Admin UI for managing shipping fees (currently hardcoded Rp 25,000)
 - [ ] Order confirmation email
 
 ### P3 - Low Priority / Future Enhancements
@@ -106,7 +116,7 @@ Build an e-commerce platform for a bakery with the following functionalities:
 ├── frontend/
 │   └── src/
 │       ├── components/        # Header, ProductCard, Modals
-│       ├── pages/             # HomePage, AdminDashboard, etc.
+│       ├── pages/             # HomePage, AdminDashboard, CheckoutPage, etc.
 │       └── index.css          # Theme CSS variables
 ├── tests/
 │   ├── test_milkbites_api.py  # Core API tests
@@ -114,7 +124,12 @@ Build an e-commerce platform for a bakery with the following functionalities:
 ├── test_reports/
 │   ├── iteration_1.json
 │   ├── iteration_2.json
-│   └── iteration_3.json
+│   ├── iteration_3.json
+│   └── iteration_4.json
 └── memory/
     └── PRD.md                 # This file
 ```
+
+## Key Assets
+- **Logo URL:** https://customer-assets.emergentagent.com/job_cake-commerce-4/artifacts/qna9h32i_IMG-4835.PNG
+- **Hero Images:** Managed via Admin Dashboard > Site Settings
