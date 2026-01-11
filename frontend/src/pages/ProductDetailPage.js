@@ -36,11 +36,6 @@ const ProductDetailPage = () => {
 
   const handleAddToCart = async () => {
     const token = localStorage.getItem('token');
-    if (!token) {
-      toast.error('Please login first');
-      setTimeout(() => navigate('/login'), 1000);
-      return;
-    }
 
     // Validate customization
     if (product.requires_customization && product.customization_options) {
@@ -65,37 +60,73 @@ const ProductDetailPage = () => {
     }
 
     setAdding(true);
-    try {
-      let customization = null;
-      if (product.requires_customization) {
-        if (product.customization_options.variant_types) {
-          // New format with variant types
-          customization = { variant_types: selectedVariantsByType };
-        } else {
-          // Old format
-          customization = { variants: selectedVariants };
-        }
+    
+    // Build customization object
+    let customization = null;
+    if (product.requires_customization) {
+      if (product.customization_options.variant_types) {
+        customization = { variant_types: selectedVariantsByType };
+      } else {
+        customization = { variants: selectedVariants };
       }
-
-      await axios.post(
-        `${API}/cart/add`,
-        {
-          product_id: product.id,
-          quantity,
-          customization
-        },
-        {
-          headers: { Authorization: `Bearer ${token}` }
-        }
-      );
-
-      toast.success('Product added to cart');
-      navigate('/cart');
-    } catch (error) {
-      toast.error(error.response?.data?.detail || 'Failed to add to cart');
-    } finally {
-      setAdding(false);
     }
+
+    if (token) {
+      // User is logged in - add to server cart
+      try {
+        await axios.post(
+          `${API}/cart/add`,
+          {
+            product_id: product.id,
+            quantity,
+            customization
+          },
+          {
+            headers: { Authorization: `Bearer ${token}` }
+          }
+        );
+
+        toast.success('Product added to cart');
+        navigate('/cart');
+      } catch (error) {
+        toast.error(error.response?.data?.detail || 'Failed to add to cart');
+      }
+    } else {
+      // Guest user - add to localStorage cart
+      try {
+        const guestCart = JSON.parse(localStorage.getItem('guestCart') || '{"items":[]}');
+        
+        // Check if same product with same customization exists
+        const customizationKey = JSON.stringify(customization);
+        const existingItemIndex = guestCart.items.findIndex(item => 
+          item.product_id === product.id && 
+          JSON.stringify(item.customization) === customizationKey
+        );
+        
+        if (existingItemIndex >= 0) {
+          guestCart.items[existingItemIndex].quantity += quantity;
+        } else {
+          guestCart.items.push({
+            product_id: product.id,
+            quantity,
+            price: calculatePrice() / quantity, // Base price per unit
+            customization
+          });
+        }
+        
+        localStorage.setItem('guestCart', JSON.stringify(guestCart));
+        toast.success('Product added to cart! Login to checkout.');
+        
+        // Dispatch event for header cart count update
+        window.dispatchEvent(new Event('cartUpdated'));
+        
+        navigate('/');
+      } catch (error) {
+        toast.error('Failed to add to cart');
+      }
+    }
+    
+    setAdding(false);
   };
 
   const handleVariantToggle = (variant) => {
