@@ -259,6 +259,48 @@ const CheckoutPage = () => {
                 {!deliveryAddress && (
                   <p className="text-red-500 text-sm mt-2">* Delivery address is required</p>
                 )}
+
+                {/* Delivery Date Picker */}
+                <div className="mt-6">
+                  <label className="block text-sm font-medium text-accent mb-2">
+                    Delivery Date <span className="text-red-500">*</span>
+                  </label>
+                  <div className="relative">
+                    <button
+                      type="button"
+                      data-testid="delivery-date-button"
+                      onClick={() => setShowDeliveryCalendar(!showDeliveryCalendar)}
+                      className={`w-full px-4 py-3 border rounded-lg text-left focus:outline-none focus:ring-2 focus:ring-primary ${
+                        !deliveryDate ? 'border-red-300 bg-red-50/50' : 'border-input'
+                      }`}
+                    >
+                      {deliveryDate ? format(deliveryDate, 'EEEE, dd MMMM yyyy') : 'Select delivery date'}
+                    </button>
+                    {showDeliveryCalendar && (
+                      <div className="absolute z-50 mt-2 bg-white rounded-lg shadow-xl border border-gray-200 p-4">
+                        <DayPicker
+                          mode="single"
+                          selected={deliveryDate}
+                          onSelect={(date) => {
+                            setDeliveryDate(date);
+                            setShowDeliveryCalendar(false);
+                          }}
+                          disabled={isDateDisabled}
+                          fromDate={addDays(new Date(), 1)}
+                          modifiersClassNames={{
+                            selected: 'bg-sky-500 text-white rounded-full',
+                            disabled: 'text-gray-300 cursor-not-allowed',
+                            today: 'font-bold text-sky-600'
+                          }}
+                        />
+                        <p className="text-xs text-gray-500 mt-2">* Blocked dates are unavailable for delivery</p>
+                      </div>
+                    )}
+                  </div>
+                  {!deliveryDate && (
+                    <p className="text-red-500 text-sm mt-2">* Delivery date is required</p>
+                  )}
+                </div>
               </div>
             ) : (
               <div className="bg-white rounded-xl p-6 shadow-sm border border-border/50">
@@ -280,16 +322,43 @@ const CheckoutPage = () => {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-accent mb-2">
-                      Pickup Date
+                      Pickup Date <span className="text-red-500">*</span>
                     </label>
-                    <input
-                      data-testid="pickup-date-input"
-                      type="date"
-                      value={pickupDate}
-                      onChange={(e) => setPickupDate(e.target.value)}
-                      className="w-full px-4 py-3 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                      required
-                    />
+                    <div className="relative">
+                      <button
+                        type="button"
+                        data-testid="pickup-date-button"
+                        onClick={() => setShowPickupCalendar(!showPickupCalendar)}
+                        className={`w-full px-4 py-3 border rounded-lg text-left focus:outline-none focus:ring-2 focus:ring-primary ${
+                          !pickupDate ? 'border-red-300 bg-red-50/50' : 'border-input'
+                        }`}
+                      >
+                        {pickupDate ? format(pickupDate, 'EEEE, dd MMMM yyyy') : 'Select pickup date'}
+                      </button>
+                      {showPickupCalendar && (
+                        <div className="absolute z-50 mt-2 bg-white rounded-lg shadow-xl border border-gray-200 p-4">
+                          <DayPicker
+                            mode="single"
+                            selected={pickupDate}
+                            onSelect={(date) => {
+                              setPickupDate(date);
+                              setShowPickupCalendar(false);
+                            }}
+                            disabled={isDateDisabled}
+                            fromDate={addDays(new Date(), 1)}
+                            modifiersClassNames={{
+                              selected: 'bg-sky-500 text-white rounded-full',
+                              disabled: 'text-gray-300 cursor-not-allowed',
+                              today: 'font-bold text-sky-600'
+                            }}
+                          />
+                          <p className="text-xs text-gray-500 mt-2">* Blocked dates are unavailable for pickup</p>
+                        </div>
+                      )}
+                    </div>
+                    {!pickupDate && (
+                      <p className="text-red-500 text-sm mt-2">* Pickup date is required</p>
+                    )}
                   </div>
                 </div>
               </div>
