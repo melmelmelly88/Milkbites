@@ -40,6 +40,7 @@ const AdminDashboard = () => {
   const [savingSettings, setSavingSettings] = useState(false);
   const [newHeroImage, setNewHeroImage] = useState('');
   const [newBlockedDate, setNewBlockedDate] = useState('');
+  const [uploadingHeroImage, setUploadingHeroImage] = useState(false);
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
 
@@ -115,6 +116,34 @@ const AdminDashboard = () => {
     }));
     setNewHeroImage('');
     toast.success('Image added to slider');
+  };
+
+  const handleHeroImageFileUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error('Image size must be less than 5MB');
+      return;
+    }
+
+    setUploadingHeroImage(true);
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setSiteSettings(prev => ({
+        ...prev,
+        hero_images: [...(prev.hero_images || []), reader.result]
+      }));
+      toast.success('Image uploaded and added to slider');
+      setUploadingHeroImage(false);
+      // Reset file input
+      e.target.value = '';
+    };
+    reader.onerror = () => {
+      toast.error('Failed to read image file');
+      setUploadingHeroImage(false);
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleRemoveHeroImage = (index) => {
