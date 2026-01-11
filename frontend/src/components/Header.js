@@ -76,10 +76,10 @@ const Header = () => {
 
       {/* Sidebar Menu */}
       {menuOpen && (
-        <div className="fixed inset-0 top-14 md:top-16 bg-black/50 z-40" onClick={() => setMenuOpen(false)}>
+        <div className="fixed inset-0 top-14 md:top-16 bg-white z-40" onClick={() => setMenuOpen(false)}>
           <div
             data-testid="sidebar-menu"
-            className="absolute left-0 top-0 w-56 md:w-64 h-full bg-white shadow-2xl"
+            className="absolute left-0 top-0 w-56 md:w-64 h-full bg-white shadow-2xl border-r border-gray-200"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="p-4">
