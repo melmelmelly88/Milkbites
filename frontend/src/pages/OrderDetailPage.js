@@ -95,27 +95,27 @@ const OrderDetailPage = () => {
           Back to Dashboard
         </button>
 
-        <div className="bg-white rounded-xl p-6 shadow-lg border border-border/50 mb-6">
-          <div className="flex justify-between items-start mb-6">
-            <div>
-              <h1 className="text-3xl font-bold text-accent mb-2">
+        <div className="bg-white rounded-xl p-4 md:p-6 shadow-lg border border-border/50 mb-6">
+          <div className="flex flex-col gap-3 mb-6">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <h1 className="text-xl md:text-3xl font-bold text-accent">
                 Order #{order.order_number}
               </h1>
-              <p className="text-muted-foreground">
-                {new Date(order.created_at).toLocaleDateString('en-US', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                  hour: '2-digit',
-                  minute: '2-digit'
-                })}
-              </p>
+              <span
+                className={`px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap ${getStatusColor(order.status)}`}
+              >
+                {getStatusText(order.status)}
+              </span>
             </div>
-            <span
-              className={`px-4 py-2 rounded-full text-sm font-medium ${getStatusColor(order.status)}`}
-            >
-              {getStatusText(order.status)}
-            </span>
+            <p className="text-sm text-muted-foreground">
+              {new Date(order.created_at).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+              })}
+            </p>
           </div>
 
           {/* Delivery Info */}
