@@ -324,7 +324,7 @@ const CheckoutPage = () => {
                       className="w-full px-4 py-3 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                     >
                       <option value="Cilandak">Cilandak - Jl. Cilandak 1 No. 28</option>
-                      <option value="Menara Mandiri">Menara Mandiri (weekday only)</option>
+                      <option value="Wisma Mandiri">Wisma Mandiri (weekday only)</option>
                     </select>
                   </div>
                   <div>
