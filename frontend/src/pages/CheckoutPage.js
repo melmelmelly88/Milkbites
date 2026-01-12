@@ -368,6 +368,13 @@ const CheckoutPage = () => {
                     )}
                   </div>
                 </div>
+
+                {/* Pickup Information */}
+                <div className="mt-6 p-4 bg-sky-50 border border-sky-200 rounded-lg">
+                  <p className="text-sm text-sky-800">
+                    <span className="font-semibold">Pickup Information:</span> Self-pickup or courier pickup (Grab, Gojek, Lalamove) is available on the selected date. Kindly confirm the specific pickup time via WhatsApp in advance.
+                  </p>
+                </div>
               </div>
             )}
 
