@@ -142,11 +142,10 @@ const Header = () => {
       {/* Full Screen Menu Overlay - Milk Bar Style */}
       {menuOpen && (
         <div 
-          className="fixed inset-0 bg-white z-[100]"
-          style={{ top: '0' }}
+          className="fixed inset-0 z-[9999] bg-white"
         >
           {/* Header inside menu */}
-          <div className="sticky top-0 bg-white border-b border-gray-100 px-4 py-3 flex items-center justify-between">
+          <div className="sticky top-0 bg-white border-b border-gray-100 px-4 py-3 flex items-center justify-between shadow-sm">
             <button
               onClick={() => setMenuOpen(false)}
               className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
@@ -163,7 +162,7 @@ const Header = () => {
             <div className="w-10" /> {/* Spacer for alignment */}
           </div>
 
-          <div className="h-full overflow-y-auto pb-20">
+          <div className="overflow-y-auto" style={{ height: 'calc(100vh - 60px)' }}>
             <div className="max-w-lg mx-auto px-4 py-6">
               {/* Quick Links */}
               <nav className="mb-8">
