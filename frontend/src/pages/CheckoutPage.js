@@ -301,6 +301,13 @@ const CheckoutPage = () => {
                     <p className="text-red-500 text-sm mt-2">* Delivery date is required</p>
                   )}
                 </div>
+
+                {/* Shipping Fee Information */}
+                <div className="mt-6 p-4 bg-sky-50 border border-sky-200 rounded-lg">
+                  <p className="text-sm text-sky-800">
+                    <span className="font-semibold">Shipping Information:</span> Shipping fees are calculated based on the delivery distance and item weight. Details will be informed separately through WhatsApp.
+                  </p>
+                </div>
               </div>
             ) : (
               <div className="bg-white rounded-xl p-6 shadow-sm border border-border/50">
