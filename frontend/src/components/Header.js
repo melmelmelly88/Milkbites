@@ -141,114 +141,117 @@ const Header = () => {
 
       {/* Full Screen Menu Overlay - Milk Bar Style */}
       {menuOpen && (
-        <div 
-          className="fixed inset-0 z-[9999] bg-white"
-        >
-          {/* Header inside menu */}
-          <div className="sticky top-0 bg-white border-b border-gray-100 px-4 py-3 flex items-center justify-between shadow-sm">
-            <button
-              onClick={() => setMenuOpen(false)}
-              className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
-            >
-              <X size={24} className="text-gray-700" />
-            </button>
-            <Link to="/" onClick={() => setMenuOpen(false)}>
-              <img 
-                src="https://customer-assets.emergentagent.com/job_cake-commerce-4/artifacts/qna9h32i_IMG-4835.PNG" 
-                alt="Milkbites" 
-                className="h-12 w-auto object-contain"
-              />
-            </Link>
-            <div className="w-10" /> {/* Spacer for alignment */}
-          </div>
+        <>
+          {/* Backdrop to block clicks */}
+          <div className="fixed inset-0 z-[9998] bg-white" />
+          
+          <div className="fixed inset-0 z-[9999] bg-white flex flex-col">
+            {/* Header inside menu */}
+            <div className="bg-white border-b border-gray-100 px-4 py-3 flex items-center justify-between shadow-sm flex-shrink-0">
+              <button
+                onClick={() => setMenuOpen(false)}
+                className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+              >
+                <X size={24} className="text-gray-700" />
+              </button>
+              <Link to="/" onClick={() => setMenuOpen(false)}>
+                <img 
+                  src="https://customer-assets.emergentagent.com/job_cake-commerce-4/artifacts/qna9h32i_IMG-4835.PNG" 
+                  alt="Milkbites" 
+                  className="h-12 w-auto object-contain"
+                />
+              </Link>
+              <div className="w-10" /> {/* Spacer for alignment */}
+            </div>
 
-          <div className="overflow-y-auto" style={{ height: 'calc(100vh - 60px)' }}>
-            <div className="max-w-lg mx-auto px-4 py-6">
-              {/* Quick Links */}
-              <nav className="mb-8">
-                {quickLinks.map((link) => (
-                  <Link
-                    key={link.name}
-                    to={link.path}
-                    onClick={() => setMenuOpen(false)}
-                    className="flex items-center justify-between py-4 border-b border-gray-100 text-lg font-semibold text-gray-900 hover:text-sky-600 transition-colors"
-                  >
-                    <span>{link.name}</span>
-                    <ChevronRight size={20} className="text-gray-400" />
-                  </Link>
-                ))}
-              </nav>
+            <div className="flex-1 overflow-y-auto bg-white">
+              <div className="max-w-lg mx-auto px-4 py-6">
+                {/* Quick Links */}
+                <nav className="mb-8">
+                  {quickLinks.map((link) => (
+                    <Link
+                      key={link.name}
+                      to={link.path}
+                      onClick={() => setMenuOpen(false)}
+                      className="flex items-center justify-between py-4 border-b border-gray-100 text-lg font-semibold text-gray-900 hover:text-sky-600 transition-colors"
+                    >
+                      <span>{link.name}</span>
+                      <ChevronRight size={20} className="text-gray-400" />
+                    </Link>
+                  ))}
+                </nav>
 
-              {/* Category Grid with Images */}
-              <h3 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-4">Shop by Category</h3>
-              <div className="grid grid-cols-2 gap-3 mb-8">
-                {categories.map((category) => (
-                  <Link
-                    key={category.name}
-                    to={category.path}
-                    data-testid={`menu-category-${category.name.toLowerCase()}`}
-                    onClick={() => setMenuOpen(false)}
-                    className="relative group overflow-hidden rounded-xl aspect-square"
-                  >
-                    <img 
-                      src={category.image} 
-                      alt={category.name}
-                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                    <div className="absolute bottom-0 left-0 right-0 p-3">
-                      <span className="text-white font-bold text-base uppercase tracking-wide">
-                        {category.name}
-                      </span>
-                    </div>
-                  </Link>
-                ))}
+                {/* Category Grid with Images */}
+                <h3 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-4">Shop by Category</h3>
+                <div className="grid grid-cols-2 gap-3 mb-8">
+                  {categories.map((category) => (
+                    <Link
+                      key={category.name}
+                      to={category.path}
+                      data-testid={`menu-category-${category.name.toLowerCase()}`}
+                      onClick={() => setMenuOpen(false)}
+                      className="relative group overflow-hidden rounded-xl aspect-square"
+                    >
+                      <img 
+                        src={category.image} 
+                        alt={category.name}
+                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                      <div className="absolute bottom-0 left-0 right-0 p-3">
+                        <span className="text-white font-bold text-base uppercase tracking-wide">
+                          {category.name}
+                        </span>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+
+                {/* User Actions */}
+                {token ? (
+                  <div className="space-y-2 pt-4 border-t border-gray-200">
+                    <Link
+                      to="/dashboard"
+                      onClick={() => setMenuOpen(false)}
+                      className="flex items-center gap-3 py-3 px-4 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+                    >
+                      <User size={20} />
+                      <span className="font-medium">My Account</span>
+                    </Link>
+                    <Link
+                      to="/cart"
+                      onClick={() => setMenuOpen(false)}
+                      className="flex items-center gap-3 py-3 px-4 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+                    >
+                      <ShoppingCart size={20} />
+                      <span className="font-medium">My Cart</span>
+                    </Link>
+                    <button
+                      onClick={() => {
+                        handleLogout();
+                        setMenuOpen(false);
+                      }}
+                      className="w-full flex items-center gap-3 py-3 px-4 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                    >
+                      <LogOut size={20} />
+                      <span className="font-medium">Sign Out</span>
+                    </button>
+                  </div>
+                ) : (
+                  <div className="pt-4 border-t border-gray-200">
+                    <Link
+                      to="/login"
+                      onClick={() => setMenuOpen(false)}
+                      className="block w-full text-center bg-sky-500 text-white py-3 rounded-full font-semibold hover:bg-sky-600 transition-colors"
+                    >
+                      Login / Sign Up
+                    </Link>
+                  </div>
+                )}
               </div>
-
-              {/* User Actions */}
-              {token ? (
-                <div className="space-y-2 pt-4 border-t border-gray-200">
-                  <Link
-                    to="/dashboard"
-                    onClick={() => setMenuOpen(false)}
-                    className="flex items-center gap-3 py-3 px-4 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
-                  >
-                    <User size={20} />
-                    <span className="font-medium">My Account</span>
-                  </Link>
-                  <Link
-                    to="/cart"
-                    onClick={() => setMenuOpen(false)}
-                    className="flex items-center gap-3 py-3 px-4 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
-                  >
-                    <ShoppingCart size={20} />
-                    <span className="font-medium">My Cart</span>
-                  </Link>
-                  <button
-                    onClick={() => {
-                      handleLogout();
-                      setMenuOpen(false);
-                    }}
-                    className="w-full flex items-center gap-3 py-3 px-4 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                  >
-                    <LogOut size={20} />
-                    <span className="font-medium">Sign Out</span>
-                  </button>
-                </div>
-              ) : (
-                <div className="pt-4 border-t border-gray-200">
-                  <Link
-                    to="/login"
-                    onClick={() => setMenuOpen(false)}
-                    className="block w-full text-center bg-sky-500 text-white py-3 rounded-full font-semibold hover:bg-sky-600 transition-colors"
-                  >
-                    Login / Sign Up
-                  </Link>
-                </div>
-              )}
             </div>
           </div>
-        </div>
+        </>
       )}
     </header>
   );
