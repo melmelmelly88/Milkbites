@@ -70,82 +70,95 @@ const Header = () => {
     if (!menuOpen) return null;
     
     return createPortal(
-      <div 
-        className="fixed inset-0 bg-white flex flex-col"
-        style={{ zIndex: 99999 }}
-      >
-        {/* Header inside menu */}
-        <div className="bg-white border-b border-gray-100 px-4 py-3 flex items-center justify-between shadow-sm flex-shrink-0">
-          <button
-            onClick={() => setMenuOpen(false)}
-            className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
-          >
-            <X size={24} className="text-gray-700" />
-          </button>
-          <Link to="/" onClick={() => setMenuOpen(false)}>
-            <img 
-              src="https://customer-assets.emergentagent.com/job_cake-commerce-4/artifacts/qna9h32i_IMG-4835.PNG" 
-              alt="Milkbites" 
-              className="h-28 md:h-36 w-auto object-contain"
-            />
-          </Link>
-          <div className="w-10" />
-        </div>
+      <>
+        {/* Backdrop */}
+        <div 
+          className="fixed inset-0 bg-black/50"
+          style={{ zIndex: 99998 }}
+          onClick={() => setMenuOpen(false)}
+        />
+        
+        {/* Sidebar Menu */}
+        <div 
+          className="fixed top-0 left-0 h-full w-64 md:w-72 bg-white flex flex-col shadow-2xl"
+          style={{ zIndex: 99999 }}
+        >
+          {/* Header inside menu */}
+          <div className="bg-white border-b border-gray-100 px-4 py-3 flex items-center justify-between flex-shrink-0">
+            <button
+              onClick={() => setMenuOpen(false)}
+              className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+            >
+              <X size={24} className="text-gray-700" />
+            </button>
+          </div>
 
-        <div className="flex-1 overflow-y-auto bg-white">
-          <div className="max-w-lg mx-auto px-4 py-6">
-            {/* Categories */}
-            <nav className="mb-6">
-              {categories.map((category) => (
-                <Link
-                  key={category.name}
-                  to={category.path}
-                  data-testid={`menu-category-${category.name.toLowerCase()}`}
-                  onClick={() => setMenuOpen(false)}
-                  className="flex items-center justify-between py-4 border-b border-gray-100 text-lg font-semibold text-gray-900 hover:text-sky-600 transition-colors"
-                >
-                  <span>{category.name}</span>
-                  <ChevronRight size={20} className="text-gray-400" />
-                </Link>
-              ))}
-            </nav>
+          {/* Logo */}
+          <div className="px-4 py-4 border-b border-gray-100">
+            <Link to="/" onClick={() => setMenuOpen(false)} className="block">
+              <img 
+                src="https://customer-assets.emergentagent.com/job_cake-commerce-4/artifacts/qna9h32i_IMG-4835.PNG" 
+                alt="Milkbites" 
+                className="h-16 w-auto object-contain"
+              />
+            </Link>
+          </div>
 
-            {/* User Actions */}
-            {token ? (
-              <div className="space-y-1 pt-4 border-t border-gray-200">
-                <Link
-                  to="/dashboard"
-                  onClick={() => setMenuOpen(false)}
-                  className="flex items-center justify-between py-4 text-lg font-semibold text-gray-900 hover:text-sky-600 transition-colors"
-                >
-                  <span>My Account</span>
-                  <ChevronRight size={20} className="text-gray-400" />
-                </Link>
-                <button
-                  onClick={() => {
-                    handleLogout();
-                    setMenuOpen(false);
-                  }}
-                  className="w-full flex items-center justify-between py-4 text-lg font-semibold text-red-600 hover:text-red-700 transition-colors"
-                >
-                  <span>Logout</span>
-                  <LogOut size={20} />
-                </button>
-              </div>
-            ) : (
-              <div className="pt-4 border-t border-gray-200">
-                <Link
-                  to="/login"
-                  onClick={() => setMenuOpen(false)}
-                  className="block w-full text-center bg-sky-500 text-white py-3 rounded-full font-semibold hover:bg-sky-600 transition-colors"
-                >
-                  Login / Sign Up
-                </Link>
-              </div>
-            )}
+          <div className="flex-1 overflow-y-auto bg-white">
+            <div className="px-4 py-4">
+              {/* Categories */}
+              <nav className="mb-4">
+                {categories.map((category) => (
+                  <Link
+                    key={category.name}
+                    to={category.path}
+                    data-testid={`menu-category-${category.name.toLowerCase()}`}
+                    onClick={() => setMenuOpen(false)}
+                    className="flex items-center justify-between py-3 border-b border-gray-100 text-base font-semibold text-gray-900 hover:text-sky-600 transition-colors"
+                  >
+                    <span>{category.name}</span>
+                    <ChevronRight size={18} className="text-gray-400" />
+                  </Link>
+                ))}
+              </nav>
+
+              {/* User Actions */}
+              {token ? (
+                <div className="space-y-1 pt-3 border-t border-gray-200">
+                  <Link
+                    to="/dashboard"
+                    onClick={() => setMenuOpen(false)}
+                    className="flex items-center justify-between py-3 text-base font-semibold text-gray-900 hover:text-sky-600 transition-colors"
+                  >
+                    <span>My Account</span>
+                    <ChevronRight size={18} className="text-gray-400" />
+                  </Link>
+                  <button
+                    onClick={() => {
+                      handleLogout();
+                      setMenuOpen(false);
+                    }}
+                    className="w-full flex items-center justify-between py-3 text-base font-semibold text-red-600 hover:text-red-700 transition-colors"
+                  >
+                    <span>Logout</span>
+                    <LogOut size={18} />
+                  </button>
+                </div>
+              ) : (
+                <div className="pt-4 border-t border-gray-200">
+                  <Link
+                    to="/login"
+                    onClick={() => setMenuOpen(false)}
+                    className="block w-full text-center bg-sky-500 text-white py-2.5 rounded-full font-semibold hover:bg-sky-600 transition-colors text-sm"
+                  >
+                    Login / Sign Up
+                  </Link>
+                </div>
+              )}
+            </div>
           </div>
         </div>
-      </div>,
+      </>,
       document.body
     );
   };
