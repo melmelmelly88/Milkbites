@@ -417,10 +417,18 @@ const CheckoutPage = () => {
                   <span>Subtotal</span>
                   <span>Rp {calculateSubtotal().toLocaleString('id-ID')}</span>
                 </div>
-                <div className="flex justify-between text-muted-foreground">
-                  <span>Shipping</span>
-                  <span>Rp {getShippingFee().toLocaleString('id-ID')}</span>
-                </div>
+                {deliveryType === 'delivery' && (
+                  <div className="flex justify-between text-muted-foreground text-sm">
+                    <span>Shipping</span>
+                    <span className="text-sky-600">To be informed via WhatsApp</span>
+                  </div>
+                )}
+                {deliveryType === 'pickup' && (
+                  <div className="flex justify-between text-muted-foreground">
+                    <span>Shipping</span>
+                    <span className="text-green-600">FREE (Pick Up)</span>
+                  </div>
+                )}
                 {discountAmount > 0 && (
                   <div className="flex justify-between text-green-600">
                     <span>Discount</span>
@@ -432,6 +440,9 @@ const CheckoutPage = () => {
                     <span>Total</span>
                     <span data-testid="checkout-total">Rp {calculateTotal().toLocaleString('id-ID')}</span>
                   </div>
+                  {deliveryType === 'delivery' && (
+                    <p className="text-xs text-muted-foreground mt-1">* Shipping fee not included</p>
+                  )}
                 </div>
               </div>
 
