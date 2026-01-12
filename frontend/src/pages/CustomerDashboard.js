@@ -192,25 +192,25 @@ const CustomerDashboard = () => {
                   data-testid={`order-${order.id}`}
                   className="bg-white rounded-xl p-4 md:p-6 shadow-sm border border-border/50"
                 >
-                  <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-4 gap-3">
-                    <div>
-                      <h3 className="text-lg md:text-xl font-semibold text-accent mb-1">
+                  <div className="flex flex-col gap-3 mb-4">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <h3 className="text-lg md:text-xl font-semibold text-accent">
                         Order #{order.order_number}
                       </h3>
-                      <p className="text-xs md:text-sm text-muted-foreground">
-                        {new Date(order.created_at).toLocaleDateString('en-US', {
-                          year: 'numeric',
-                          month: 'long',
-                          day: 'numeric'
-                        })}
-                      </p>
+                      <span
+                        data-testid={`order-status-${order.id}`}
+                        className={`px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap ${getStatusColor(order.status)}`}
+                      >
+                        {getStatusText(order.status)}
+                      </span>
                     </div>
-                    <span
-                      data-testid={`order-status-${order.id}`}
-                      className={`px-3 md:px-4 py-1 md:py-2 rounded-full text-xs md:text-sm font-medium ${getStatusColor(order.status)}`}
-                    >
-                      {getStatusText(order.status)}
-                    </span>
+                    <p className="text-xs md:text-sm text-muted-foreground">
+                      {new Date(order.created_at).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                      })}
+                    </p>
                   </div>
 
                   <div className="space-y-2 mb-4">
