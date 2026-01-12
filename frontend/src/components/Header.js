@@ -59,16 +59,10 @@ const Header = () => {
   };
 
   const categories = [
-    { name: 'Cookies', path: '/?category=Cookies', image: 'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=300&q=80' },
-    { name: 'Babka', path: '/?category=Babka', image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=300&q=80' },
-    { name: 'Cake', path: '/?category=Cake', image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=300&q=80' },
-    { name: 'Hampers', path: '/?category=Hampers', image: 'https://images.unsplash.com/photo-1607478900766-efe13248b125?w=300&q=80' }
-  ];
-
-  const quickLinks = [
-    { name: 'Shop All', path: '/' },
-    { name: 'About Us', path: '/' },
-    { name: 'Contact', path: '/' }
+    { name: 'Hampers', path: '/?category=Hampers' },
+    { name: 'Babka', path: '/?category=Babka' },
+    { name: 'Cookies', path: '/?category=Cookies' },
+    { name: 'Cake', path: '/?category=Cake' }
   ];
 
   // Full screen menu component
@@ -100,75 +94,42 @@ const Header = () => {
 
         <div className="flex-1 overflow-y-auto bg-white">
           <div className="max-w-lg mx-auto px-4 py-6">
-            {/* Quick Links */}
-            <nav className="mb-8">
-              {quickLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  to={link.path}
-                  onClick={() => setMenuOpen(false)}
-                  className="flex items-center justify-between py-4 border-b border-gray-100 text-lg font-semibold text-gray-900 hover:text-sky-600 transition-colors"
-                >
-                  <span>{link.name}</span>
-                  <ChevronRight size={20} className="text-gray-400" />
-                </Link>
-              ))}
-            </nav>
-
-            {/* Category Grid with Images */}
-            <h3 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-4">Shop by Category</h3>
-            <div className="grid grid-cols-2 gap-3 mb-8">
+            {/* Categories */}
+            <nav className="mb-6">
               {categories.map((category) => (
                 <Link
                   key={category.name}
                   to={category.path}
                   data-testid={`menu-category-${category.name.toLowerCase()}`}
                   onClick={() => setMenuOpen(false)}
-                  className="relative group overflow-hidden rounded-xl aspect-square"
+                  className="flex items-center justify-between py-4 border-b border-gray-100 text-lg font-semibold text-gray-900 hover:text-sky-600 transition-colors"
                 >
-                  <img 
-                    src={category.image} 
-                    alt={category.name}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-3">
-                    <span className="text-white font-bold text-base uppercase tracking-wide">
-                      {category.name}
-                    </span>
-                  </div>
+                  <span>{category.name}</span>
+                  <ChevronRight size={20} className="text-gray-400" />
                 </Link>
               ))}
-            </div>
+            </nav>
 
             {/* User Actions */}
             {token ? (
-              <div className="space-y-2 pt-4 border-t border-gray-200">
+              <div className="space-y-1 pt-4 border-t border-gray-200">
                 <Link
                   to="/dashboard"
                   onClick={() => setMenuOpen(false)}
-                  className="flex items-center gap-3 py-3 px-4 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+                  className="flex items-center justify-between py-4 text-lg font-semibold text-gray-900 hover:text-sky-600 transition-colors"
                 >
-                  <User size={20} />
-                  <span className="font-medium">My Account</span>
-                </Link>
-                <Link
-                  to="/cart"
-                  onClick={() => setMenuOpen(false)}
-                  className="flex items-center gap-3 py-3 px-4 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
-                >
-                  <ShoppingCart size={20} />
-                  <span className="font-medium">My Cart</span>
+                  <span>My Account</span>
+                  <ChevronRight size={20} className="text-gray-400" />
                 </Link>
                 <button
                   onClick={() => {
                     handleLogout();
                     setMenuOpen(false);
                   }}
-                  className="w-full flex items-center gap-3 py-3 px-4 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                  className="w-full flex items-center justify-between py-4 text-lg font-semibold text-red-600 hover:text-red-700 transition-colors"
                 >
+                  <span>Logout</span>
                   <LogOut size={20} />
-                  <span className="font-medium">Sign Out</span>
                 </button>
               </div>
             ) : (
