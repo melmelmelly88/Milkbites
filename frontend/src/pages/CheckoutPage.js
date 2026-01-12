@@ -92,11 +92,12 @@ const CheckoutPage = () => {
   };
 
   const getShippingFee = () => {
-    return deliveryType === 'pickup' ? 0 : 25000;
+    // Shipping fee calculation removed - will be informed separately via WhatsApp
+    return 0;
   };
 
   const calculateTotal = () => {
-    return calculateSubtotal() + getShippingFee() - discountAmount;
+    return calculateSubtotal() - discountAmount;
   };
 
   const handleApplyDiscount = async () => {
@@ -190,7 +191,6 @@ const CheckoutPage = () => {
                   }`}
                 >
                   <div className="font-semibold">Delivery</div>
-                  <div className="text-sm mt-1">Rp 25.000</div>
                 </button>
                 <button
                   data-testid="pickup-option"
@@ -202,7 +202,7 @@ const CheckoutPage = () => {
                   }`}
                 >
                   <div className="font-semibold">Pick Up</div>
-                  <div className="text-sm mt-1">FREE</div>
+                  <div className="text-sm mt-1 text-green-600">FREE</div>
                 </button>
               </div>
             </div>
