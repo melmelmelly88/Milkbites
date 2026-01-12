@@ -93,17 +93,6 @@ const Header = () => {
             </button>
           </div>
 
-          {/* Logo */}
-          <div className="px-4 py-4 border-b border-gray-100">
-            <Link to="/" onClick={() => setMenuOpen(false)} className="block">
-              <img 
-                src="https://customer-assets.emergentagent.com/job_cake-commerce-4/artifacts/qna9h32i_IMG-4835.PNG" 
-                alt="Milkbites" 
-                className="h-16 w-auto object-contain"
-              />
-            </Link>
-          </div>
-
           <div className="flex-1 overflow-y-auto bg-white">
             <div className="px-4 py-4">
               {/* Categories */}
