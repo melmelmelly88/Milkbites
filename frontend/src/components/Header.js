@@ -86,7 +86,7 @@ const Header = () => {
             <img 
               src="https://customer-assets.emergentagent.com/job_cake-commerce-4/artifacts/qna9h32i_IMG-4835.PNG" 
               alt="Milkbites" 
-              className="h-12 w-auto object-contain"
+              className="h-28 md:h-36 w-auto object-contain"
             />
           </Link>
           <div className="w-10" />
