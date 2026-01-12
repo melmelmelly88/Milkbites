@@ -211,7 +211,7 @@ const CheckoutPage = () => {
             {deliveryType === 'delivery' ? (
               <div className="bg-white rounded-xl p-6 shadow-sm border border-border/50">
                 <h2 className="text-xl font-semibold text-accent mb-4">
-                  Delivery Address & Date <span className="text-red-500">*</span>
+                  Delivery Address & Date
                 </h2>
                 
                 {/* Saved Addresses Dropdown */}
