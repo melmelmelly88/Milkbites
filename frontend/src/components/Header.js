@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Menu, X, ShoppingCart, User, LogOut } from 'lucide-react';
+import { Menu, X, ShoppingCart, User, LogOut, ChevronRight } from 'lucide-react';
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -31,6 +31,18 @@ const Header = () => {
     };
   }, [token]);
 
+  // Prevent body scroll when menu is open
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [menuOpen]);
+
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
@@ -38,7 +50,6 @@ const Header = () => {
   };
 
   const handleGuestCartClick = () => {
-    // Show guest cart or redirect to login
     const guestCart = JSON.parse(localStorage.getItem('guestCart') || '{"items":[]}');
     if (guestCart.items.length > 0) {
       navigate('/login');
@@ -48,27 +59,37 @@ const Header = () => {
   };
 
   const categories = [
-    { name: 'Cookies', path: '/?category=Cookies' },
-    { name: 'Babka', path: '/?category=Babka' },
-    { name: 'Cake', path: '/?category=Cake' },
-    { name: 'Hampers', path: '/?category=Hampers' }
+    { name: 'Cookies', path: '/?category=Cookies', image: 'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=300&q=80' },
+    { name: 'Babka', path: '/?category=Babka', image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=300&q=80' },
+    { name: 'Cake', path: '/?category=Cake', image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=300&q=80' },
+    { name: 'Hampers', path: '/?category=Hampers', image: 'https://images.unsplash.com/photo-1607478900766-efe13248b125?w=300&q=80' }
+  ];
+
+  const quickLinks = [
+    { name: 'Shop All', path: '/' },
+    { name: 'About Us', path: '/' },
+    { name: 'Contact', path: '/' }
   ];
 
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-border shadow-soft">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14 md:h-16">
-          {/* Burger Menu */}
+          {/* Burger Menu Button */}
           <button
             data-testid="burger-menu-button"
             onClick={() => setMenuOpen(!menuOpen)}
-            className="p-2 rounded-lg hover:bg-secondary/50 transition-colors"
+            className="p-2 rounded-lg hover:bg-secondary/50 transition-colors z-50"
           >
-            {menuOpen ? <X size={20} className="text-accent md:w-6 md:h-6" /> : <Menu size={20} className="text-accent md:w-6 md:h-6" />}
+            {menuOpen ? (
+              <X size={24} className="text-accent" />
+            ) : (
+              <Menu size={24} className="text-accent" />
+            )}
           </button>
 
           {/* Logo */}
-          <Link to="/" className="flex items-center">
+          <Link to="/" className="flex items-center" onClick={() => setMenuOpen(false)}>
             <img 
               src="https://customer-assets.emergentagent.com/job_cake-commerce-4/artifacts/qna9h32i_IMG-4835.PNG" 
               alt="Milkbites by Keka Cakery" 
@@ -118,48 +139,109 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Sidebar Menu */}
-      {menuOpen && (
-        <div className="fixed inset-0 top-14 md:top-16 bg-white z-40" onClick={() => setMenuOpen(false)}>
-          <div
-            data-testid="sidebar-menu"
-            className="absolute left-0 top-0 w-56 md:w-64 h-full bg-white shadow-2xl border-r border-gray-200"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="p-4">
-              <h3 className="text-sm font-bold text-gray-900 mb-4 pb-2 border-b border-gray-200 uppercase tracking-wide">Categories</h3>
-              <nav className="space-y-1">
-                {categories.map((category) => (
-                  <Link
-                    key={category.name}
-                    to={category.path}
-                    data-testid={`category-${category.name.toLowerCase()}`}
-                    className="block px-3 py-2.5 text-sm font-medium text-gray-800 hover:bg-sky-50 hover:text-sky-600 rounded-lg transition-all"
-                    onClick={() => setMenuOpen(false)}
-                  >
-                    {category.name}
-                  </Link>
-                ))}
-              </nav>
-              
-              {token && (
-                <div className="mt-6 pt-4 border-t border-gray-200">
-                  <button
-                    onClick={() => {
-                      handleLogout();
-                      setMenuOpen(false);
-                    }}
-                    className="w-full flex items-center gap-2 px-3 py-2.5 text-sm font-medium text-red-600 hover:bg-red-50 rounded-lg transition-all"
-                  >
-                    <LogOut size={16} />
-                    Sign Out
-                  </button>
-                </div>
-              )}
+      {/* Full Screen Menu Overlay - Milk Bar Style */}
+      <div 
+        className={`fixed inset-0 bg-white z-40 transition-all duration-300 ease-in-out ${
+          menuOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
+        }`}
+        style={{ top: '56px' }}
+      >
+        <div className="h-full overflow-y-auto">
+          <div className="max-w-7xl mx-auto px-4 py-6">
+            {/* Close Button - Top Right */}
+            <div className="flex justify-end mb-4">
+              <button
+                onClick={() => setMenuOpen(false)}
+                className="text-gray-500 hover:text-gray-700 text-sm font-medium flex items-center gap-1"
+              >
+                Hide navigation
+              </button>
             </div>
+
+            {/* Quick Links */}
+            <nav className="mb-8">
+              {quickLinks.map((link) => (
+                <Link
+                  key={link.name}
+                  to={link.path}
+                  onClick={() => setMenuOpen(false)}
+                  className="flex items-center justify-between py-4 border-b border-gray-100 text-lg font-semibold text-gray-900 hover:text-sky-600 transition-colors"
+                >
+                  <span>{link.name}</span>
+                  <ChevronRight size={20} className="text-gray-400" />
+                </Link>
+              ))}
+            </nav>
+
+            {/* Category Grid with Images */}
+            <div className="grid grid-cols-2 gap-4 mb-8">
+              {categories.map((category) => (
+                <Link
+                  key={category.name}
+                  to={category.path}
+                  data-testid={`menu-category-${category.name.toLowerCase()}`}
+                  onClick={() => setMenuOpen(false)}
+                  className="relative group overflow-hidden rounded-xl aspect-square"
+                >
+                  <img 
+                    src={category.image} 
+                    alt={category.name}
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-4">
+                    <span className="text-white font-bold text-lg uppercase tracking-wide">
+                      {category.name}
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+
+            {/* User Actions */}
+            {token ? (
+              <div className="space-y-2 pt-4 border-t border-gray-200">
+                <Link
+                  to="/dashboard"
+                  onClick={() => setMenuOpen(false)}
+                  className="flex items-center gap-3 py-3 px-4 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+                >
+                  <User size={20} />
+                  <span className="font-medium">My Account</span>
+                </Link>
+                <Link
+                  to="/cart"
+                  onClick={() => setMenuOpen(false)}
+                  className="flex items-center gap-3 py-3 px-4 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+                >
+                  <ShoppingCart size={20} />
+                  <span className="font-medium">My Cart</span>
+                </Link>
+                <button
+                  onClick={() => {
+                    handleLogout();
+                    setMenuOpen(false);
+                  }}
+                  className="w-full flex items-center gap-3 py-3 px-4 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                >
+                  <LogOut size={20} />
+                  <span className="font-medium">Sign Out</span>
+                </button>
+              </div>
+            ) : (
+              <div className="pt-4 border-t border-gray-200">
+                <Link
+                  to="/login"
+                  onClick={() => setMenuOpen(false)}
+                  className="block w-full text-center bg-sky-500 text-white py-3 rounded-full font-semibold hover:bg-sky-600 transition-colors"
+                >
+                  Login / Sign Up
+                </Link>
+              </div>
+            )}
           </div>
         </div>
-      )}
+      </div>
     </header>
   );
 };
