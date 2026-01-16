@@ -17,8 +17,12 @@ const CartPage = () => {
   const token = localStorage.getItem('token');
 
   useEffect(() => {
-    fetchCart();
-  }, []);
+    if (token) {
+      fetchCart();
+    } else {
+      fetchGuestCart();
+    }
+  }, [token]);
 
   const fetchCart = async () => {
     try {
@@ -31,8 +35,12 @@ const CartPage = () => {
       const productIds = [...new Set(response.data.items.map((item) => item.product_id))];
       const productDetails = {};
       for (const id of productIds) {
-        const prod = await axios.get(`${API}/products/${id}`);
-        productDetails[id] = prod.data;
+        try {
+          const prod = await axios.get(`${API}/products/${id}`);
+          productDetails[id] = prod.data;
+        } catch (err) {
+          console.error(`Failed to fetch product ${id}`);
+        }
       }
       setProducts(productDetails);
     } catch (error) {
@@ -43,15 +51,51 @@ const CartPage = () => {
     }
   };
 
-  const handleRemoveItem = async (productId) => {
+  const fetchGuestCart = async () => {
     try {
-      await axios.delete(`${API}/cart/item/${productId}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      toast.success('Product removed from cart');
-      fetchCart();
+      const guestCart = JSON.parse(localStorage.getItem('guestCart') || '{"items":[]}');
+      setCart(guestCart);
+
+      // Fetch product details for guest cart
+      if (guestCart.items && guestCart.items.length > 0) {
+        const productIds = [...new Set(guestCart.items.map((item) => item.product_id))];
+        const productDetails = {};
+        for (const id of productIds) {
+          try {
+            const prod = await axios.get(`${API}/products/${id}`);
+            productDetails[id] = prod.data;
+          } catch (err) {
+            console.error(`Failed to fetch product ${id}`);
+          }
+        }
+        setProducts(productDetails);
+      }
     } catch (error) {
-      toast.error('Failed to remove product');
+      console.error('Error fetching guest cart:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleRemoveItem = async (productId) => {
+    if (token) {
+      try {
+        await axios.delete(`${API}/cart/item/${productId}`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        toast.success('Product removed from cart');
+        fetchCart();
+      } catch (error) {
+        toast.error('Failed to remove product');
+      }
+    } else {
+      // Guest cart - remove from localStorage
+      const guestCart = JSON.parse(localStorage.getItem('guestCart') || '{"items":[]}');
+      guestCart.items = guestCart.items.filter(item => item.product_id !== productId);
+      localStorage.setItem('guestCart', JSON.stringify(guestCart));
+      setCart(guestCart);
+      toast.success('Product removed from cart');
+      window.dispatchEvent(new Event('cartUpdated'));
     }
   };
 
@@ -62,32 +106,58 @@ const CartPage = () => {
     }
     
     setUpdating(productId);
-    try {
-      await axios.put(
-        `${API}/cart/item/${productId}`,
-        { quantity: newQuantity },
-        { headers: { Authorization: `Bearer ${token}` } }
+    
+    if (token) {
+      try {
+        await axios.put(
+          `${API}/cart/item/${productId}`,
+          { quantity: newQuantity },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        
+        setCart(prev => ({
+          ...prev,
+          items: prev.items.map(item => 
+            item.product_id === productId 
+              ? { ...item, quantity: newQuantity }
+              : item
+          )
+        }));
+      } catch (error) {
+        toast.error('Failed to update quantity');
+      }
+    } else {
+      // Guest cart - update localStorage
+      const guestCart = JSON.parse(localStorage.getItem('guestCart') || '{"items":[]}');
+      guestCart.items = guestCart.items.map(item => 
+        item.product_id === productId 
+          ? { ...item, quantity: newQuantity }
+          : item
       );
-      
-      // Update local state immediately for better UX
-      setCart(prev => ({
-        ...prev,
-        items: prev.items.map(item => 
-          item.product_id === productId 
-            ? { ...item, quantity: newQuantity }
-            : item
-        )
-      }));
-    } catch (error) {
-      toast.error('Failed to update quantity');
-    } finally {
-      setUpdating(null);
+      localStorage.setItem('guestCart', JSON.stringify(guestCart));
+      setCart(guestCart);
+      window.dispatchEvent(new Event('cartUpdated'));
     }
+    
+    setUpdating(null);
   };
 
   const calculateTotal = () => {
     if (!cart || !cart.items) return 0;
-    return cart.items.reduce((total, item) => total + item.price * item.quantity, 0);
+    return cart.items.reduce((total, item) => {
+      const product = products[item.product_id];
+      const price = item.price || product?.price || 0;
+      return total + price * item.quantity;
+    }, 0);
+  };
+
+  const handleProceedToCheckout = () => {
+    if (!token) {
+      toast('Please login to proceed with checkout', { icon: '🔐' });
+      navigate('/login');
+      return;
+    }
+    navigate('/checkout');
   };
 
   if (loading) {
@@ -125,6 +195,7 @@ const CartPage = () => {
               {cart.items.map((item, index) => {
                 const product = products[item.product_id];
                 if (!product) return null;
+                const price = item.price || product.price;
 
                 return (
                   <div
@@ -144,6 +215,13 @@ const CartPage = () => {
                           <p className="text-xs md:text-sm text-muted-foreground mb-2">
                             Variants: {Array.isArray(item.customization.variants) ? item.customization.variants.join(', ') : item.customization.variants}
                           </p>
+                        )}
+                        {item.customization && item.customization.variant_types && (
+                          <div className="text-xs md:text-sm text-muted-foreground mb-2">
+                            {Object.entries(item.customization.variant_types).map(([type, variants]) => (
+                              <p key={type}>{type}: {Array.isArray(variants) ? variants.join(', ') : variants}</p>
+                            ))}
+                          </div>
                         )}
                         <div className="flex items-center justify-between mt-3">
                           <div className="flex items-center gap-3">
@@ -170,7 +248,7 @@ const CartPage = () => {
                               </button>
                             </div>
                             <p className="text-base md:text-lg font-bold text-primary">
-                              Rp {(item.price * item.quantity).toLocaleString('id-ID')}
+                              Rp {(price * item.quantity).toLocaleString('id-ID')}
                             </p>
                           </div>
                           <button
@@ -182,7 +260,7 @@ const CartPage = () => {
                           </button>
                         </div>
                         <p className="text-xs text-muted-foreground mt-2">
-                          Rp {item.price.toLocaleString('id-ID')} each
+                          Rp {price.toLocaleString('id-ID')} each
                         </p>
                       </div>
                     </div>
@@ -211,11 +289,17 @@ const CartPage = () => {
 
                 <button
                   data-testid="checkout-button"
-                  onClick={() => navigate('/checkout')}
+                  onClick={handleProceedToCheckout}
                   className="w-full bg-primary text-white py-3 rounded-full hover:bg-primary/90 transition-all font-semibold text-sm md:text-base"
                 >
                   Proceed to Checkout
                 </button>
+
+                {!token && (
+                  <p className="text-xs text-muted-foreground text-center mt-3">
+                    You will need to login to complete your order
+                  </p>
+                )}
               </div>
             </div>
           </div>
