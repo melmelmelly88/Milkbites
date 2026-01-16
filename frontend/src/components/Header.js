@@ -50,12 +50,7 @@ const Header = () => {
   };
 
   const handleGuestCartClick = () => {
-    const guestCart = JSON.parse(localStorage.getItem('guestCart') || '{"items":[]}');
-    if (guestCart.items.length > 0) {
-      navigate('/login');
-    } else {
-      navigate('/login');
-    }
+    navigate('/cart');
   };
 
   const categories = [
