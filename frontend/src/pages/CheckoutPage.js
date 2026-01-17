@@ -460,6 +460,58 @@ const CheckoutPage = () => {
                 </div>
               </div>
 
+              {/* Payment Type Selection */}
+              <div className="mb-6">
+                <h3 className="text-lg font-semibold text-accent mb-3">Payment Option</h3>
+                <div className="space-y-2">
+                  <label className={`flex items-center justify-between p-3 border-2 rounded-lg cursor-pointer transition-all ${
+                    paymentType === 'full' ? 'border-primary bg-primary/10' : 'border-border hover:border-primary/50'
+                  }`}>
+                    <div className="flex items-center gap-3">
+                      <input
+                        type="radio"
+                        name="paymentType"
+                        value="full"
+                        checked={paymentType === 'full'}
+                        onChange={(e) => setPaymentType(e.target.value)}
+                        className="w-4 h-4 text-primary"
+                      />
+                      <span className="font-medium">Full Payment</span>
+                    </div>
+                    <span className="font-bold text-primary">Rp {calculateTotal().toLocaleString('id-ID')}</span>
+                  </label>
+                  <label className={`flex items-center justify-between p-3 border-2 rounded-lg cursor-pointer transition-all ${
+                    paymentType === 'dp50' ? 'border-primary bg-primary/10' : 'border-border hover:border-primary/50'
+                  }`}>
+                    <div className="flex items-center gap-3">
+                      <input
+                        type="radio"
+                        name="paymentType"
+                        value="dp50"
+                        checked={paymentType === 'dp50'}
+                        onChange={(e) => setPaymentType(e.target.value)}
+                        className="w-4 h-4 text-primary"
+                      />
+                      <span className="font-medium">Down Payment 50%</span>
+                    </div>
+                    <span className="font-bold text-primary">Rp {(calculateTotal() * 0.5).toLocaleString('id-ID')}</span>
+                  </label>
+                </div>
+                {paymentType === 'dp50' && (
+                  <p className="text-xs text-muted-foreground mt-2">
+                    * Remaining Rp {(calculateTotal() * 0.5).toLocaleString('id-ID')} to be paid before delivery/pickup
+                  </p>
+                )}
+              </div>
+
+              {/* Amount to Pay */}
+              <div className="bg-sky-50 p-4 rounded-lg mb-6">
+                <div className="flex justify-between font-bold text-accent text-lg">
+                  <span>Amount to Pay</span>
+                  <span className="text-primary" data-testid="payment-amount">Rp {calculatePaymentAmount().toLocaleString('id-ID')}</span>
+                </div>
+              </div>
+
               <button
                 data-testid="submit-order-button"
                 onClick={handleSubmitOrder}
