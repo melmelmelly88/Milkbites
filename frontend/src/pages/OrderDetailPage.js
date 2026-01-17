@@ -209,10 +209,12 @@ const OrderDetailPage = () => {
                 <span>Subtotal</span>
                 <span>Rp {order.total_amount.toLocaleString('id-ID')}</span>
               </div>
-              <div className="flex justify-between text-muted-foreground">
-                <span>Shipping</span>
-                <span>Rp {order.shipping_fee.toLocaleString('id-ID')}</span>
-              </div>
+              {order.shipping_fee > 0 && (
+                <div className="flex justify-between text-muted-foreground">
+                  <span>Shipping</span>
+                  <span>Rp {order.shipping_fee.toLocaleString('id-ID')}</span>
+                </div>
+              )}
               {order.discount_amount > 0 && (
                 <div className="flex justify-between text-green-600">
                   <span>Discount</span>
@@ -225,6 +227,33 @@ const OrderDetailPage = () => {
                   <span>Rp {order.final_amount.toLocaleString('id-ID')}</span>
                 </div>
               </div>
+            </div>
+          </div>
+
+          {/* Payment Info */}
+          <div className="mt-6 p-4 bg-sky-50 border border-sky-200 rounded-lg">
+            <h3 className="text-lg font-semibold text-accent mb-3">Payment Information</h3>
+            <div className="space-y-2">
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Payment Option</span>
+                <span className="font-semibold">
+                  {order.payment_type === 'dp50' ? 'Down Payment 50%' : 'Full Payment'}
+                </span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Amount Paid</span>
+                <span className="font-bold text-primary">
+                  Rp {(order.payment_amount || order.final_amount).toLocaleString('id-ID')}
+                </span>
+              </div>
+              {order.payment_type === 'dp50' && (
+                <div className="flex justify-between text-orange-600">
+                  <span>Remaining Balance</span>
+                  <span className="font-semibold">
+                    Rp {(order.final_amount - (order.payment_amount || order.final_amount * 0.5)).toLocaleString('id-ID')}
+                  </span>
+                </div>
+              )}
             </div>
           </div>
 
