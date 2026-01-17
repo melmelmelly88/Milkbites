@@ -101,6 +101,11 @@ const CheckoutPage = () => {
     return calculateSubtotal() - discountAmount;
   };
 
+  const calculatePaymentAmount = () => {
+    const total = calculateTotal();
+    return paymentType === 'dp50' ? total * 0.5 : total;
+  };
+
   const handleApplyDiscount = async () => {
     if (!discountCode) return;
 
@@ -141,6 +146,7 @@ const CheckoutPage = () => {
         pickup_location: deliveryType === 'pickup' ? pickupLocation : null,
         pickup_date: deliveryType === 'pickup' ? format(pickupDate, 'yyyy-MM-dd') : (deliveryDate ? format(deliveryDate, 'yyyy-MM-dd') : null),
         discount_code: discountCode || null,
+        payment_type: paymentType,
         notes
       };
 
