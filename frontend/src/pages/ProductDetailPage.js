@@ -135,12 +135,17 @@ const ProductDetailPage = () => {
     const variantName = typeof variant === 'object' ? variant.name : variant;
     
     if (selectedVariants.includes(variantName)) {
+      // Unselect if already selected
       setSelectedVariants(selectedVariants.filter((v) => v !== variantName));
     } else {
-      if (selectedVariants.length < requiredCount) {
+      if (requiredCount === 1) {
+        // For single selection, replace the existing selection
+        setSelectedVariants([variantName]);
+      } else if (selectedVariants.length < requiredCount) {
+        // For multiple selections, add if under limit
         setSelectedVariants([...selectedVariants, variantName]);
       } else {
-        toast.error(`Maximum ${requiredCount} variants`);
+        toast.error(`Maximum ${requiredCount} variants. Unselect one first.`);
       }
     }
   };
@@ -157,14 +162,20 @@ const ProductDetailPage = () => {
         [typeName]: currentSelected.filter((v) => v !== variantName)
       });
     } else {
-      // Add variant
-      if (currentSelected.length < maxCount) {
+      if (maxCount === 1) {
+        // For single selection, replace the existing selection
+        setSelectedVariantsByType({
+          ...selectedVariantsByType,
+          [typeName]: [variantName]
+        });
+      } else if (currentSelected.length < maxCount) {
+        // For multiple selections, add if under limit
         setSelectedVariantsByType({
           ...selectedVariantsByType,
           [typeName]: [...currentSelected, variantName]
         });
       } else {
-        toast.error(`Maximum ${maxCount} selections`);
+        toast.error(`Maximum ${maxCount} selections. Unselect one first.`);
       }
     }
   };
