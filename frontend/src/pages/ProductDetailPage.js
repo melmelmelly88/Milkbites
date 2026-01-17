@@ -255,12 +255,6 @@ const ProductDetailPage = () => {
               <span className="text-3xl font-bold text-primary">
                 Rp {calculatePrice().toLocaleString('id-ID')}
               </span>
-              {isKaastengelFeeApplicable() && (selectedVariants.some((v) => v.includes('Kaastengel')) || 
-                (selectedVariantsByType['cookies'] || []).some((v) => v.includes('Kaastengel'))) && (
-                <p className="text-sm text-muted-foreground mt-2">
-                  *Includes Kaastengel additional fee (Rp 10,000)
-                </p>
-              )}
             </div>
 
             {/* Customization Options */}
@@ -277,11 +271,13 @@ const ProductDetailPage = () => {
                         </h3>
                         <div className="grid grid-cols-2 gap-3">
                           {typeConfig.variants.map((variant) => {
-                            const isSelected = (selectedVariantsByType[typeName] || []).includes(variant);
+                            const variantName = getVariantName(variant);
+                            const additionalPrice = getVariantAdditionalPrice(variant);
+                            const isSelected = (selectedVariantsByType[typeName] || []).includes(variantName);
                             return (
                               <button
-                                key={variant}
-                                data-testid={`variant-${typeName}-${variant}`}
+                                key={variantName}
+                                data-testid={`variant-${typeName}-${variantName}`}
                                 onClick={() => handleVariantTypeToggle(typeName, variant, typeConfig.required_count)}
                                 className={`px-4 py-3 rounded-lg border-2 transition-all ${
                                   isSelected
@@ -289,9 +285,9 @@ const ProductDetailPage = () => {
                                     : 'border-border hover:border-primary/50'
                                 }`}
                               >
-                                {variant}
-                                {isKaastengelFeeApplicable() && variant.includes('Kaastengel') && (
-                                  <span className="text-xs block mt-1">+Rp 10.000</span>
+                                {variantName}
+                                {additionalPrice > 0 && (
+                                  <span className="text-xs block mt-1 text-orange-600">+Rp {additionalPrice.toLocaleString('id-ID')}</span>
                                 )}
                               </button>
                             );
@@ -307,23 +303,28 @@ const ProductDetailPage = () => {
                       Select Variants ({selectedVariants.length}/{product.customization_options.required_count})
                     </h3>
                     <div className="grid grid-cols-2 gap-3">
-                      {product.customization_options.variants.map((variant) => (
-                        <button
-                          key={variant}
-                          data-testid={`variant-${variant}`}
-                          onClick={() => handleVariantToggle(variant)}
-                          className={`px-4 py-3 rounded-lg border-2 transition-all ${
-                            selectedVariants.includes(variant)
-                              ? 'border-primary bg-primary/10 text-primary'
-                              : 'border-border hover:border-primary/50'
-                          }`}
-                        >
-                          {variant}
-                          {isKaastengelFeeApplicable() && variant.includes('Kaastengel') && (
-                            <span className="text-xs block mt-1">+Rp 10.000</span>
-                          )}
-                        </button>
-                      ))}
+                      {product.customization_options.variants.map((variant) => {
+                        const variantName = getVariantName(variant);
+                        const additionalPrice = getVariantAdditionalPrice(variant);
+                        const isSelected = selectedVariants.includes(variantName);
+                        return (
+                          <button
+                            key={variantName}
+                            data-testid={`variant-${variantName}`}
+                            onClick={() => handleVariantToggle(variant)}
+                            className={`px-4 py-3 rounded-lg border-2 transition-all ${
+                              isSelected
+                                ? 'border-primary bg-primary/10 text-primary'
+                                : 'border-border hover:border-primary/50'
+                            }`}
+                          >
+                            {variantName}
+                            {additionalPrice > 0 && (
+                              <span className="text-xs block mt-1 text-orange-600">+Rp {additionalPrice.toLocaleString('id-ID')}</span>
+                            )}
+                          </button>
+                        );
+                      })}
                     </div>
                   </div>
                 )}
