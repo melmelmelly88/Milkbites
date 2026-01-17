@@ -778,6 +778,19 @@ const AdminDashboard = () => {
 
                   {/* Payment & Dates Settings */}
                   <div className="space-y-6">
+                    {/* WhatsApp Number for Notifications */}
+                    <div className="bg-white rounded-xl p-6 shadow-sm border border-border/50">
+                      <h3 className="text-lg font-semibold text-accent mb-4">WhatsApp Number for Order Notifications</h3>
+                      <input
+                        type="text"
+                        value={siteSettings.whatsapp_number || ''}
+                        onChange={(e) => setSiteSettings(prev => ({ ...prev, whatsapp_number: e.target.value }))}
+                        className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                        placeholder="6281234567890 (with country code, no + symbol)"
+                      />
+                      <p className="text-xs text-muted-foreground mt-1">Enter number with country code (e.g., 6281234567890). This number will receive order notifications from customers.</p>
+                    </div>
+
                     {/* Payment Instruction */}
                     <div className="bg-white rounded-xl p-6 shadow-sm border border-border/50">
                       <h3 className="text-lg font-semibold text-accent mb-4">Payment Instruction</h3>
