@@ -179,6 +179,8 @@ class Order(BaseModel):
     shipping_fee: float
     discount_amount: float
     final_amount: float
+    payment_type: str = "full"  # full or dp50 (down payment 50%)
+    payment_amount: float = 0  # Amount to pay based on payment type
     delivery_type: str  # delivery or pickup
     delivery_address: Optional[str] = None
     pickup_location: Optional[str] = None
@@ -196,6 +198,7 @@ class OrderCreate(BaseModel):
     pickup_location: Optional[str] = None
     pickup_date: Optional[str] = None
     discount_code: Optional[str] = None
+    payment_type: str = "full"  # full or dp50
     notes: Optional[str] = None
 
 class OrderStatusUpdate(BaseModel):
