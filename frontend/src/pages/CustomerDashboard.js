@@ -219,11 +219,25 @@ const CustomerDashboard = () => {
                       <span className="font-medium capitalize">{order.delivery_type}</span>
                     </div>
                     <div className="flex justify-between text-xs md:text-sm">
-                      <span className="text-muted-foreground">Total Payment</span>
-                      <span className="font-bold text-primary">
-                        Rp {order.final_amount.toLocaleString('id-ID')}
+                      <span className="text-muted-foreground">Payment Option</span>
+                      <span className="font-medium">
+                        {order.payment_type === 'dp50' ? 'DP 50%' : 'Full Payment'}
                       </span>
                     </div>
+                    <div className="flex justify-between text-xs md:text-sm">
+                      <span className="text-muted-foreground">Amount Paid</span>
+                      <span className="font-bold text-primary">
+                        Rp {(order.payment_amount || order.final_amount).toLocaleString('id-ID')}
+                      </span>
+                    </div>
+                    {order.payment_type === 'dp50' && (
+                      <div className="flex justify-between text-xs md:text-sm">
+                        <span className="text-muted-foreground">Remaining</span>
+                        <span className="font-medium text-orange-600">
+                          Rp {(order.final_amount - (order.payment_amount || order.final_amount * 0.5)).toLocaleString('id-ID')}
+                        </span>
+                      </div>
+                    )}
                   </div>
 
                   {order.delivery_type === 'pickup' && order.pickup_location && (
