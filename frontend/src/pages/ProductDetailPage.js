@@ -131,12 +131,14 @@ const ProductDetailPage = () => {
 
   const handleVariantToggle = (variant) => {
     const requiredCount = product.customization_options?.required_count || 1;
+    // Get variant name (handle both string and object format)
+    const variantName = typeof variant === 'object' ? variant.name : variant;
     
-    if (selectedVariants.includes(variant)) {
-      setSelectedVariants(selectedVariants.filter((v) => v !== variant));
+    if (selectedVariants.includes(variantName)) {
+      setSelectedVariants(selectedVariants.filter((v) => v !== variantName));
     } else {
       if (selectedVariants.length < requiredCount) {
-        setSelectedVariants([...selectedVariants, variant]);
+        setSelectedVariants([...selectedVariants, variantName]);
       } else {
         toast.error(`Maximum ${requiredCount} variants`);
       }
@@ -145,19 +147,21 @@ const ProductDetailPage = () => {
 
   const handleVariantTypeToggle = (typeName, variant, maxCount) => {
     const currentSelected = selectedVariantsByType[typeName] || [];
+    // Get variant name (handle both string and object format)
+    const variantName = typeof variant === 'object' ? variant.name : variant;
     
-    if (currentSelected.includes(variant)) {
+    if (currentSelected.includes(variantName)) {
       // Remove variant
       setSelectedVariantsByType({
         ...selectedVariantsByType,
-        [typeName]: currentSelected.filter((v) => v !== variant)
+        [typeName]: currentSelected.filter((v) => v !== variantName)
       });
     } else {
       // Add variant
       if (currentSelected.length < maxCount) {
         setSelectedVariantsByType({
           ...selectedVariantsByType,
-          [typeName]: [...currentSelected, variant]
+          [typeName]: [...currentSelected, variantName]
         });
       } else {
         toast.error(`Maximum ${maxCount} selections`);
@@ -165,33 +169,41 @@ const ProductDetailPage = () => {
     }
   };
 
-  // Products excluded from Kaastengel additional fee
-  const kaastengelExcludedProducts = [
-    'Hampers Double Cookies',
-    'Hampers Babka & Cookies',
-    'Hampers 4 Cookies'
-  ];
+  // Get additional price for a variant
+  const getVariantAdditionalPrice = (variant) => {
+    if (typeof variant === 'object' && variant.additional_price !== undefined) {
+      return variant.additional_price;
+    }
+    return 0;
+  };
 
-  const isKaastengelFeeApplicable = () => {
-    return product && !kaastengelExcludedProducts.includes(product.name);
+  // Get variant name
+  const getVariantName = (variant) => {
+    return typeof variant === 'object' ? variant.name : variant;
   };
 
   const calculatePrice = () => {
     let price = product.price;
     
-    // Only add Kaastengel fee if product is not in excluded list
-    if (isKaastengelFeeApplicable()) {
-      // Check new format with variant_types
-      if (product.customization_options?.variant_types) {
-        // Count Kaastengel from cookies type
-        const cookiesSelected = selectedVariantsByType['cookies'] || [];
-        const kaastengelCount = cookiesSelected.filter((v) => v.includes('Kaastengel')).length;
-        price += kaastengelCount * 10000;
-      } else if (selectedVariants.length > 0) {
-        // Old format
-        const kaastengelCount = selectedVariants.filter((v) => v.includes('Kaastengel')).length;
-        price += kaastengelCount * 10000;
-      }
+    // Calculate additional prices from variant_types format
+    if (product.customization_options?.variant_types) {
+      Object.entries(product.customization_options.variant_types).forEach(([typeName, typeConfig]) => {
+        const selectedNames = selectedVariantsByType[typeName] || [];
+        selectedNames.forEach(selectedName => {
+          const variant = typeConfig.variants.find(v => getVariantName(v) === selectedName);
+          if (variant) {
+            price += getVariantAdditionalPrice(variant);
+          }
+        });
+      });
+    } else if (product.customization_options?.variants) {
+      // Old format - check for additional prices
+      selectedVariants.forEach(selectedName => {
+        const variant = product.customization_options.variants.find(v => getVariantName(v) === selectedName);
+        if (variant) {
+          price += getVariantAdditionalPrice(variant);
+        }
+      });
     }
     
     return price * quantity;
