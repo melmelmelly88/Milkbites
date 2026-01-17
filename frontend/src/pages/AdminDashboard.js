@@ -34,6 +34,7 @@ const AdminDashboard = () => {
     footer_contact_2: 'Fari: 081386163292',
     footer_pickup_location: 'Cilandak & Menara Mandiri',
     payment_instruction: 'Please transfer to:\nBank BCA\nAccount: 1234567890\nName: Keka Cakery\n\nAfter payment, please upload your payment proof.',
+    whatsapp_number: '6281294607788',
     available_dates: [],
     blocked_dates: []
   });
