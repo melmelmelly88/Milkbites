@@ -488,6 +488,26 @@ const AdminDashboard = () => {
                           <span className="text-muted-foreground">Type:</span>
                           <span className="font-medium ml-2 capitalize">{order.delivery_type}</span>
                         </div>
+                        <div>
+                          <span className="text-muted-foreground">Payment:</span>
+                          <span className="font-medium ml-2">
+                            {order.payment_type === 'dp50' ? 'DP 50%' : 'Full'}
+                          </span>
+                        </div>
+                        <div>
+                          <span className="text-muted-foreground">Paid:</span>
+                          <span className="font-bold text-green-600 ml-2">
+                            Rp {(order.payment_amount || order.final_amount).toLocaleString('id-ID')}
+                          </span>
+                        </div>
+                        {order.payment_type === 'dp50' && (
+                          <div className="col-span-2">
+                            <span className="text-muted-foreground">Remaining:</span>
+                            <span className="font-medium text-orange-600 ml-2">
+                              Rp {(order.final_amount - (order.payment_amount || order.final_amount * 0.5)).toLocaleString('id-ID')}
+                            </span>
+                          </div>
+                        )}
                       </div>
 
                       <div className="mt-4 flex items-center gap-3 flex-wrap">
