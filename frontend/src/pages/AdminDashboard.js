@@ -345,7 +345,16 @@ const AdminDashboard = () => {
       <header className="bg-white border-b border-border shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <h1 className="text-2xl font-bold text-accent">Admin Dashboard - Milkbites</h1>
+            <div className="flex items-center gap-4">
+              <Link to="/" className="flex items-center">
+                <img 
+                  src="https://customer-assets.emergentagent.com/job_cake-commerce-4/artifacts/qna9h32i_IMG-4835.PNG" 
+                  alt="Milkbites" 
+                  className="h-12 w-auto object-contain"
+                />
+              </Link>
+              <h1 className="text-xl font-bold text-accent hidden md:block">Admin Dashboard</h1>
+            </div>
             <button
               data-testid="admin-logout-button"
               onClick={handleLogout}
