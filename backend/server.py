@@ -545,8 +545,8 @@ async def create_order(order_data: OrderCreate, current_user = Depends(get_curre
     # Calculate amounts
     total = sum(item.price * item.quantity for item in order_data.items)
     
-    # Shipping fee
-    shipping_fee = 0 if order_data.delivery_type == "pickup" else 25000
+    # Shipping fee - no longer calculated, will be informed separately
+    shipping_fee = 0
     
     # Discount
     discount_amount = 0
@@ -560,6 +560,13 @@ async def create_order(order_data: OrderCreate, current_user = Depends(get_curre
     
     final_amount = total + shipping_fee - discount_amount
     
+    # Calculate payment amount based on payment type
+    payment_type = order_data.payment_type or "full"
+    if payment_type == "dp50":
+        payment_amount = final_amount * 0.5
+    else:
+        payment_amount = final_amount
+    
     # Generate order number
     order_count = await db.orders.count_documents({}) + 1
     order_number = f"MB{datetime.now().strftime('%Y%m%d')}{order_count:04d}"
@@ -572,6 +579,8 @@ async def create_order(order_data: OrderCreate, current_user = Depends(get_curre
         shipping_fee=shipping_fee,
         discount_amount=discount_amount,
         final_amount=final_amount,
+        payment_type=payment_type,
+        payment_amount=payment_amount,
         delivery_type=order_data.delivery_type,
         delivery_address=order_data.delivery_address,
         pickup_location=order_data.pickup_location,
