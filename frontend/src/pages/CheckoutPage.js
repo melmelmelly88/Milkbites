@@ -19,6 +19,7 @@ const CheckoutPage = () => {
   const [pickupDate, setPickupDate] = useState(null);
   const [discountCode, setDiscountCode] = useState('');
   const [discountAmount, setDiscountAmount] = useState(0);
+  const [paymentType, setPaymentType] = useState('full');
   const [notes, setNotes] = useState('');
   const [loading, setLoading] = useState(false);
   const [savedAddresses, setSavedAddresses] = useState([]);
