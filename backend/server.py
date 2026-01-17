@@ -246,6 +246,7 @@ class SiteSettings(BaseModel):
     footer_contact_2: str = "Fari: 081386163292"
     footer_pickup_location: str = "Cilandak & Menara Mandiri"
     payment_instruction: str = "Please transfer to:\nBank BCA\nAccount: 1234567890\nName: Keka Cakery\n\nAfter payment, please upload your payment proof."
+    whatsapp_number: str = "6281294607788"  # WhatsApp number for order notifications
     available_dates: List[str] = []
     blocked_dates: List[str] = []
     updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
@@ -262,6 +263,7 @@ class SiteSettingsUpdate(BaseModel):
     footer_contact_2: Optional[str] = None
     footer_pickup_location: Optional[str] = None
     payment_instruction: Optional[str] = None
+    whatsapp_number: Optional[str] = None
     available_dates: Optional[List[str]] = None
     blocked_dates: Optional[List[str]] = None
 
