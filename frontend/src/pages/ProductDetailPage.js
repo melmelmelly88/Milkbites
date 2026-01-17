@@ -138,14 +138,13 @@ const ProductDetailPage = () => {
       // Unselect if already selected
       setSelectedVariants(selectedVariants.filter((v) => v !== variantName));
     } else {
-      if (requiredCount === 1) {
-        // For single selection, replace the existing selection
-        setSelectedVariants([variantName]);
-      } else if (selectedVariants.length < requiredCount) {
-        // For multiple selections, add if under limit
+      if (selectedVariants.length < requiredCount) {
+        // Add if under limit
         setSelectedVariants([...selectedVariants, variantName]);
       } else {
-        toast.error(`Maximum ${requiredCount} variants. Unselect one first.`);
+        // Replace the oldest selection with the new one
+        const newSelection = [...selectedVariants.slice(1), variantName];
+        setSelectedVariants(newSelection);
       }
     }
   };
@@ -162,20 +161,19 @@ const ProductDetailPage = () => {
         [typeName]: currentSelected.filter((v) => v !== variantName)
       });
     } else {
-      if (maxCount === 1) {
-        // For single selection, replace the existing selection
-        setSelectedVariantsByType({
-          ...selectedVariantsByType,
-          [typeName]: [variantName]
-        });
-      } else if (currentSelected.length < maxCount) {
-        // For multiple selections, add if under limit
+      if (currentSelected.length < maxCount) {
+        // Add if under limit
         setSelectedVariantsByType({
           ...selectedVariantsByType,
           [typeName]: [...currentSelected, variantName]
         });
       } else {
-        toast.error(`Maximum ${maxCount} selections. Unselect one first.`);
+        // Replace the oldest selection with the new one
+        const newSelection = [...currentSelected.slice(1), variantName];
+        setSelectedVariantsByType({
+          ...selectedVariantsByType,
+          [typeName]: newSelection
+        });
       }
     }
   };
